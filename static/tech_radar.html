@@ -680,111 +680,28 @@
     </div>
 
     <script>
-        // Configuration object - easily modifiable
-        let radarConfig = {
-            title: "Configurable Tech Radar",
-            date: "2025.05",
-            quadrants: {
-                q1: { name: "Datastores", items: [] },
-                q2: { name: "Data Management", items: [] },
-                q3: { name: "Infrastructure", items: [] },
-                q4: { name: "Languages", items: [] }
-            },
-            technologies: [
-                {
-                    id: 1,
-                    name: "React",
-                    status: "adopt",
-                    quadrant: "q4",
-                    description: "JavaScript library for building user interfaces",
-                    url: "https://reactjs.org/",
-                    movement: "none",
-                    position: { x: 25, y: 35 }
-                },
-                {
-                    id: 2,
-                    name: "Vue.js",
-                    status: "trial",
-                    quadrant: "q4",
-                    description: "Progressive JavaScript framework for building UIs",
-                    url: "https://vuejs.org/",
-                    movement: "up",
-                    position: { x: 35, y: 25 }
-                },
-                {
-                    id: 3,
-                    name: "PostgreSQL",
-                    status: "adopt",
-                    quadrant: "q1",
-                    description: "Advanced open-source relational database",
-                    url: "https://www.postgresql.org/",
-                    movement: "none",
-                    position: { x: 30, y: 45 }
-                },
-                {
-                    id: 4,
-                    name: "MongoDB",
-                    status: "assess",
-                    quadrant: "q1",
-                    description: "Document-oriented NoSQL database",
-                    url: "https://www.mongodb.com/",
-                    movement: "new",
-                    position: { x: 45, y: 20 }
-                },
-                {
-                    id: 5,
-                    name: "Docker",
-                    status: "adopt",
-                    quadrant: "q3",
-                    description: "Platform for developing, shipping, and running applications",
-                    url: "https://www.docker.com/",
-                    movement: "none",
-                    position: { x: 25, y: 40 }
-                },
-                {
-                    id: 6,
-                    name: "Kubernetes",
-                    status: "trial",
-                    quadrant: "q3",
-                    description: "Container orchestration platform",
-                    url: "https://kubernetes.io/",
-                    movement: "up",
-                    position: { x: 35, y: 30 }
-                },
-                {
-                    id: 7,
-                    name: "Apache Kafka",
-                    status: "adopt",
-                    quadrant: "q2",
-                    description: "Distributed event streaming platform",
-                    url: "https://kafka.apache.org/",
-                    movement: "none",
-                    position: { x: 30, y: 45 }
-                },
-                {
-                    id: 8,
-                    name: "Elasticsearch",
-                    status: "assess",
-                    quadrant: "q2",
-                    description: "Search and analytics engine",
-                    url: "https://www.elastic.co/",
-                    movement: "down",
-                    position: { x: 40, y: 25 }
-                }
-            ]
-        };
-
+        // Configuration object - loaded from json
+        let radarConfig = {};
         let editingItemId = null;
 
         // Initialize radar
-        function initializeRadar() {
+        async function initializeRadar() {
+            try {
+                const response = await fetch('radar_config.json');
+                radarConfig = await response.json();
+                renderAll();
+            } catch (error) {
+                console.error('Error loading radar configuration:', error);
+                alert('Could not load radar configuration. Please check the console for details.');
+            }
+        }
+
+        function renderAll() {
             updateRadarHeader();
             updateQuadrantLabels();
             renderRadar();
             renderItemsSections();
-        }
-
-        function updateRadarHeader() {
+        }        function updateRadarHeader() {
             document.getElementById('radar-title').textContent = radarConfig.title;
             document.getElementById('radar-date').textContent = radarConfig.date;
         }
