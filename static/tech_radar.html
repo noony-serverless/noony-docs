@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurable Tech Radar</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8f9fa;
+            color: #333;
+        }
+
+        .header {
+            background: white;
+            padding: 20px;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .header .date {
+            color: #6c757d;
+            font-size: 1rem;
+        }
+
+        .controls {
+            background: white;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .controls button {
+            padding: 8px 16px;
+            border: 1px solid #dee2e6;
+            background: #f8f9fa;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+
+        .controls button:hover {
+            background: #e9ecef;
+        }
+
+        .controls button.primary {
+            background: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+
+        .controls button.primary:hover {
+            background: #0056b3;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 300px 1fr 300px;
+            gap: 20px;
+            padding: 20px;
+            min-height: calc(100vh - 180px);
+        }
+
+        .sidebar {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            max-height: 800px;
+        }
+
+        .sidebar h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .category {
+            margin-bottom: 20px;
+        }
+
+        .category-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+            padding: 5px 0;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .category-title.adopt { color: #28a745; }
+        .category-title.trial { color: #17a2b8; }
+        .category-title.assess { color: #ffc107; }
+        .category-title.hold { color: #6c757d; }
+
+        .tech-item {
+            display: flex;
+            align-items: center;
+            padding: 4px 0;
+            cursor: pointer;
+            transition: background 0.2s;
+            border-radius: 4px;
+            padding-left: 5px;
+        }
+
+        .tech-item:hover {
+            background: #f8f9fa;
+        }
+
+        .tech-number {
+            font-weight: bold;
+            margin-right: 8px;
+            min-width: 20px;
+            font-size: 0.9rem;
+        }
+
+        .tech-name {
+            font-size: 0.9rem;
+        }
+
+        .radar-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 40px;
+        }
+
+        .radar {
+            position: relative;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, 
+                rgba(40, 167, 69, 0.1) 0%, 
+                rgba(40, 167, 69, 0.1) 25%, 
+                rgba(23, 162, 184, 0.1) 25%, 
+                rgba(23, 162, 184, 0.1) 50%, 
+                rgba(255, 193, 7, 0.1) 50%, 
+                rgba(255, 193, 7, 0.1) 75%, 
+                rgba(108, 117, 125, 0.1) 75%);
+        }
+
+        .radar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 2px;
+            height: 100%;
+            background: #dee2e6;
+            transform: translateX(-50%);
+        }
+
+        .radar::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #dee2e6;
+            transform: translateY(-50%);
+        }
+
+        .ring {
+            position: absolute;
+            border: 2px solid #dee2e6;
+            border-radius: 50%;
+        }
+
+        .ring.adopt {
+            width: 150px;
+            height: 150px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .ring.trial {
+            width: 300px;
+            height: 300px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .ring.assess {
+            width: 450px;
+            height: 450px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .ring.hold {
+            width: 600px;
+            height: 600px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .quadrant-label {
+            position: absolute;
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #495057;
+        }
+
+        .quadrant-label.q1 {
+            top: 20px;
+            left: 20px;
+        }
+
+        .quadrant-label.q2 {
+            top: 20px;
+            right: 20px;
+        }
+
+        .quadrant-label.q3 {
+            bottom: 20px;
+            left: 20px;
+        }
+
+        .quadrant-label.q4 {
+            bottom: 20px;
+            right: 20px;
+        }
+
+        .tech-dot {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            z-index: 10;
+        }
+
+        .tech-dot:hover {
+            transform: scale(1.2);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 20;
+        }
+
+        .tech-dot.adopt { background: #28a745; }
+        .tech-dot.trial { background: #17a2b8; }
+        .tech-dot.assess { background: #ffc107; color: #333; }
+        .tech-dot.hold { background: #6c757d; }
+
+        .watermark {
+            position: absolute;
+            font-size: 2rem;
+            font-weight: bold;
+            color: rgba(0,0,0,0.08);
+            pointer-events: none;
+            z-index: 1;
+            white-space: nowrap;
+        }
+
+        .watermark.adopt {
+            top: 47%;
+            left: 47%;
+            transform: translate(-50%, -50%);
+            font-size: 1.2rem;
+        }
+
+        .watermark.trial {
+            top: 35%;
+            left: 35%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5rem;
+        }
+
+        .watermark.assess {
+            top: 25%;
+            left: 25%;
+            transform: translate(-50%, -50%);
+            font-size: 1.8rem;
+        }
+
+        .watermark.hold {
+            top: 15%;
+            left: 15%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+        }
+
+        .legend {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .tooltip {
+            position: absolute;
+            background: rgba(0,0,0,0.9);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            max-width: 250px;
+            z-index: 1000;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .tooltip.show {
+            opacity: 1;
+        }
+
+        .tooltip h4 {
+            margin-bottom: 5px;
+            color: #fff;
+        }
+
+        .tooltip .status {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .tooltip .status.adopt { color: #28a745; }
+        .tooltip .status.trial { color: #17a2b8; }
+        .tooltip .status.assess { color: #ffc107; }
+        .tooltip .status.hold { color: #6c757d; }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .close {
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #aaa;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .form-group textarea {
+            height: 80px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .config-section {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        .config-section h4 {
+            margin-bottom: 10px;
+            color: #495057;
+        }
+
+        pre {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-size: 0.85rem;
+            border: 1px solid #dee2e6;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1 id="radar-title">Configurable Tech Radar</h1>
+        <div class="date" id="radar-date">2025.05</div>
+    </div>
+
+    <div class="controls">
+        <button class="primary" onclick="openConfigModal()">⚙️ Configure Radar</button>
+        <button onclick="openItemModal()">➕ Add Technology</button>
+        <button onclick="exportConfig()">📤 Export Config</button>
+        <button onclick="importConfig()">📥 Import Config</button>
+        <button onclick="resetRadar()">🔄 Reset to Default</button>
+        <input type="file" id="fileInput" accept=".json" style="display: none;" onchange="handleFileImport(event)">
+    </div>
+
+    <div class="container">
+        <!-- Left Sidebar -->
+        <div class="sidebar" id="leftSidebar"></div>
+
+        <!-- Center Radar -->
+        <div class="radar-container">
+            <div class="radar" id="radar">
+                <!-- Rings -->
+                <div class="ring adopt"></div>
+                <div class="ring trial"></div>
+                <div class="ring assess"></div>
+                <div class="ring hold"></div>
+
+                <!-- Quadrant Labels -->
+                <div class="quadrant-label q1" id="q1-label"></div>
+                <div class="quadrant-label q2" id="q2-label"></div>
+                <div class="quadrant-label q3" id="q3-label"></div>
+                <div class="quadrant-label q4" id="q4-label"></div>
+
+                <!-- Watermarks -->
+                <div class="watermark adopt">ADOPT</div>
+                <div class="watermark trial">TRIAL</div>
+                <div class="watermark assess">ASSESS</div>
+                <div class="watermark hold">HOLD</div>
+            </div>
+
+            <div class="legend">
+                <div class="legend-item">
+                    <span>▲</span> moved up
+                </div>
+                <div class="legend-item">
+                    <span>▼</span> moved down
+                </div>
+                <div class="legend-item">
+                    <span>★</span> new
+                </div>
+                <div class="legend-item">
+                    <span>●</span> no change
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Sidebar -->
+        <div class="sidebar" id="rightSidebar"></div>
+    </div>
+
+    <!-- Tooltip -->
+    <div class="tooltip" id="tooltip">
+        <h4 id="tooltip-title"></h4>
+        <div class="status" id="tooltip-status"></div>
+        <div id="tooltip-description"></div>
+    </div>
+
+    <!-- Configuration Modal -->
+    <div id="configModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Configure Radar</h2>
+                <span class="close" onclick="closeConfigModal()">&times;</span>
+            </div>
+            
+            <div class="config-section">
+                <h4>Radar Information</h4>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="radarTitle">Radar Title:</label>
+                        <input type="text" id="radarTitle" placeholder="Tech Radar Title">
+                    </div>
+                    <div class="form-group">
+                        <label for="radarDate">Date:</label>
+                        <input type="text" id="radarDate" placeholder="2025.05">
+                    </div>
+                </div>
+            </div>
+
+            <div class="config-section">
+                <h4>Quadrant Names</h4>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="q1Name">Quadrant 1 (Top-Left):</label>
+                        <input type="text" id="q1Name" placeholder="Datastores">
+                    </div>
+                    <div class="form-group">
+                        <label for="q2Name">Quadrant 2 (Top-Right):</label>
+                        <input type="text" id="q2Name" placeholder="Data Management">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="q3Name">Quadrant 3 (Bottom-Left):</label>
+                        <input type="text" id="q3Name" placeholder="Infrastructure">
+                    </div>
+                    <div class="form-group">
+                        <label for="q4Name">Quadrant 4 (Bottom-Right):</label>
+                        <input type="text" id="q4Name" placeholder="Languages">
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: right;">
+                <button onclick="closeConfigModal()">Cancel</button>
+                <button class="primary" onclick="saveRadarConfig()">Save Configuration</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Item Modal -->
+    <div id="itemModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="itemModalTitle">Add Technology</h2>
+                <span class="close" onclick="closeItemModal()">&times;</span>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="itemName">Technology Name:</label>
+                    <input type="text" id="itemName" placeholder="e.g., React">
+                </div>
+                <div class="form-group">
+                    <label for="itemStatus">Status:</label>
+                    <select id="itemStatus">
+                        <option value="adopt">ADOPT</option>
+                        <option value="trial">TRIAL</option>
+                        <option value="assess">ASSESS</option>
+                        <option value="hold">HOLD</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="itemQuadrant">Quadrant:</label>
+                    <select id="itemQuadrant">
+                        <option value="q1">Quadrant 1 (Top-Left)</option>
+                        <option value="q2">Quadrant 2 (Top-Right)</option>
+                        <option value="q3">Quadrant 3 (Bottom-Left)</option>
+                        <option value="q4">Quadrant 4 (Bottom-Right)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="itemMovement">Movement:</label>
+                    <select id="itemMovement">
+                        <option value="none">No Change</option>
+                        <option value="up">Moved Up</option>
+                        <option value="down">Moved Down</option>
+                        <option value="new">New</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="itemDescription">Description:</label>
+                <textarea id="itemDescription" placeholder="Describe the technology and its use case..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="itemUrl">Documentation URL:</label>
+                <input type="url" id="itemUrl" placeholder="https://example.com/docs">
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="itemX">X Position (0-100%):</label>
+                    <input type="number" id="itemX" min="0" max="100" placeholder="50">
+                </div>
+                <div class="form-group">
+                    <label for="itemY">Y Position (0-100%):</label>
+                    <input type="number" id="itemY" min="0" max="100" placeholder="50">
+                </div>
+            </div>
+
+            <div style="text-align: right;">
+                <button onclick="closeItemModal()">Cancel</button>
+                <button class="primary" onclick="saveItem()">Save Technology</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration object - easily modifiable
+        let radarConfig = {
+            title: "Configurable Tech Radar",
+            date: "2025.05",
+            quadrants: {
+                q1: { name: "Datastores", items: [] },
+                q2: { name: "Data Management", items: [] },
+                q3: { name: "Infrastructure", items: [] },
+                q4: { name: "Languages", items: [] }
+            },
+            technologies: [
+                {
+                    id: 1,
+                    name: "React",
+                    status: "adopt",
+                    quadrant: "q4",
+                    description: "JavaScript library for building user interfaces",
+                    url: "https://reactjs.org/",
+                    movement: "none",
+                    position: { x: 25, y: 35 }
+                },
+                {
+                    id: 2,
+                    name: "Vue.js",
+                    status: "trial",
+                    quadrant: "q4",
+                    description: "Progressive JavaScript framework for building UIs",
+                    url: "https://vuejs.org/",
+                    movement: "up",
+                    position: { x: 35, y: 25 }
+                },
+                {
+                    id: 3,
+                    name: "PostgreSQL",
+                    status: "adopt",
+                    quadrant: "q1",
+                    description: "Advanced open-source relational database",
+                    url: "https://www.postgresql.org/",
+                    movement: "none",
+                    position: { x: 30, y: 45 }
+                },
+                {
+                    id: 4,
+                    name: "MongoDB",
+                    status: "assess",
+                    quadrant: "q1",
+                    description: "Document-oriented NoSQL database",
+                    url: "https://www.mongodb.com/",
+                    movement: "new",
+                    position: { x: 45, y: 20 }
+                },
+                {
+                    id: 5,
+                    name: "Docker",
+                    status: "adopt",
+                    quadrant: "q3",
+                    description: "Platform for developing, shipping, and running applications",
+                    url: "https://www.docker.com/",
+                    movement: "none",
+                    position: { x: 25, y: 40 }
+                },
+                {
+                    id: 6,
+                    name: "Kubernetes",
+                    status: "trial",
+                    quadrant: "q3",
+                    description: "Container orchestration platform",
+                    url: "https://kubernetes.io/",
+                    movement: "up",
+                    position: { x: 35, y: 30 }
+                },
+                {
+                    id: 7,
+                    name: "Apache Kafka",
+                    status: "adopt",
+                    quadrant: "q2",
+                    description: "Distributed event streaming platform",
+                    url: "https://kafka.apache.org/",
+                    movement: "none",
+                    position: { x: 30, y: 45 }
+                },
+                {
+                    id: 8,
+                    name: "Elasticsearch",
+                    status: "assess",
+                    quadrant: "q2",
+                    description: "Search and analytics engine",
+                    url: "https://www.elastic.co/",
+                    movement: "down",
+                    position: { x: 40, y: 25 }
+                }
+            ]
+        };
+
+        let editingItemId = null;
+
+        // Initialize radar
+        function initializeRadar() {
+            updateRadarHeader();
+            updateQuadrantLabels();
+            renderRadar();
+            renderSidebars();
+        }
+
+        function updateRadarHeader() {
+            document.getElementById('radar-title').textContent = radarConfig.title;
+            document.getElementById('radar-date').textContent = radarConfig.date;
+        }
+
+        function updateQuadrantLabels() {
+            document.getElementById('q1-label').textContent = radarConfig.quadrants.q1.name;
+            document.getElementById('q2-label').textContent = radarConfig.quadrants.q2.name;
+            document.getElementById('q3-label').textContent = radarConfig.quadrants.q3.name;
+            document.getElementById('q4-label').textContent = radarConfig.quadrants.q4.name;
+        }
+
+        function getPositionForQuadrant(quadrant, position, status) {
+            const rings = {
+                adopt: { min: 0, max: 12.5 },
+                trial: { min: 12.5, max: 25 },
+                assess: { min: 25, max: 37.5 },
+                hold: { min: 37.5, max: 50 }
+            };
+
+            const ring = rings[status];
+            const radius = ring.min + (ring.max - ring.min) * (position.x / 100);
+            const angle = (position.y / 100) * 90; // 90 degrees per quadrant
+
+            let baseAngle = 0;
+            switch(quadrant) {
+                case 'q1': baseAngle = 180; break; // Top-left
+                case 'q2': baseAngle = 270; break; // Top-right  
+                case 'q3': baseAngle = 90; break;  // Bottom-left
+                case 'q4': baseAngle = 0; break;   // Bottom-right
+            }
+
+            const finalAngle = (baseAngle + angle) * Math.PI / 180;
+            const x = 50 + radius * Math.cos(finalAngle);
+            const y = 50 + radius * Math.sin(finalAngle);
+
+            return { x: Math.max(2, Math.min(98, x)), y: Math.max(2, Math.min(98, y)) };
+        }
+
+        function renderRadar() {
+            const radar = document.getElementById('radar');
+            
+            // Remove existing dots
+            const existingDots = radar.querySelectorAll('.tech-dot');
+            existingDots.forEach(dot => dot.remove());
+
+            // Add technology dots
+            radarConfig.technologies.forEach(tech => {
+                const position = getPositionForQuadrant(tech.quadrant, tech.position, tech.status);
+                const dot = document.createElement('div');
+                dot.className = `tech-dot ${tech.status}`;
+                dot.dataset.id = tech.id;
+                dot.style.left = position.x + '%';
+                dot.style.top = position.y + '%';
+                dot.textContent = tech.id;
+                
+                // Add event listeners
+                addTechEventListeners(dot, tech);
+                
+                radar.appendChild(dot);
+            });
+        }
+
+        function renderSidebars() {
+            const leftSidebar = document.getElementById('leftSidebar');
+            const rightSidebar = document.getElementById('rightSidebar');
+            
+            leftSidebar.innerHTML = '';
+            rightSidebar.innerHTML = '';
+
+            // Group technologies by quadrant and status
+            const quadrantGroups = {
+                q1: groupByStatus(radarConfig.technologies.filter(t => t.quadrant === 'q1')),
+                q2: groupByStatus(radarConfig.technologies.filter(t => t.quadrant === 'q2')),
+                q3: groupByStatus(radarConfig.technologies.filter(t => t.quadrant === 'q3')),
+                q4: groupByStatus(radarConfig.technologies.filter(t => t.quadrant === 'q4'))
+            };
+
+            // Render left sidebar (Q1 and Q3)
+            renderQuadrantSidebar(leftSidebar, 'q1', quadrantGroups.q1);
+            renderQuadrantSidebar(leftSidebar, 'q3', quadrantGroups.q3);
+
+            // Render right sidebar (Q2 and Q4)
+            renderQuadrantSidebar(rightSidebar, 'q2', quadrantGroups.q2);
+            renderQuadrantSidebar(rightSidebar, 'q4', quadrantGroups.q4);
+        }
+
+        function groupByStatus(technologies) {
+            return {
+                adopt: technologies.filter(t => t.status === 'adopt'),
+                trial: technologies.filter(t => t.status === 'trial'),
+                assess: technologies.filter(t => t.status === 'assess'),
+                hold: technologies.filter(t => t.status === 'hold')
+            };
+        }
+
+        function renderQuadrantSidebar(container, quadrant, groups) {
+            const quadrantName = radarConfig.quadrants[quadrant].name;
+            
+            const section = document.createElement('div');
+            section.innerHTML = `<h3>${quadrantName}</h3>`;
+            
+            ['adopt', 'trial', 'assess', 'hold'].forEach(status => {
+                if (groups[status].length > 0) {
+                    const category = document.createElement('div');
+                    category.className = 'category';
+                    category.innerHTML = `<div class="category-title ${status}">${status.toUpperCase()}</div>`;
+                    
+                    groups[status].forEach(tech => {
+                        const item = document.createElement('div');
+                        item.className = 'tech-item';
+                        item.dataset.id = tech.id;
+                        item.innerHTML = `
+                            <span class="tech-number">${tech.id}.</span>
+                            <span class="tech-name">${tech.name}</span>
+                        `;
+                        
+                        addTechEventListeners(item, tech);
+                        category.appendChild(item);
+                    });
+                    
+                    section.appendChild(category);
+                }
+            });
+            
+            container.appendChild(section);
+        }
+
+        function addTechEventListeners(element, tech) {
+            element.addEventListener('mouseenter', () => showTooltip(element, tech));
+            element.addEventListener('mouseleave', hideTooltip);
+            element.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (e.shiftKey) {
+                    editTech(tech.id);
+                } else if (tech.url) {
+                    window.open(tech.url, '_blank');
+                }
+            });
+            element.addEventListener('contextmenu', (e) => {
+                e.preventDefault();
+                editTech(tech.id);
+            });
+
+            // Cross-highlighting
+            element.addEventListener('mouseenter', () => {
+                document.querySelectorAll(`[data-id="${tech.id}"]`).forEach(el => {
+                    el.style.background = '#e3f2fd';
+                    if (el.classList.contains('tech-dot')) {
+                        el.style.transform = 'scale(1.3)';
+                        el.style.boxShadow = '0 4px 20px rgba(0,0,0,0.4)';
+                    }
+                });
+            });
+            
+            element.addEventListener('mouseleave', () => {
+                document.querySelectorAll(`[data-id="${tech.id}"]`).forEach(el => {
+                    el.style.background = '';
+                    if (el.classList.contains('tech-dot')) {
+                        el.style.transform = '';
+                        el.style.boxShadow = '';
+                    }
+                });
+            });
+        }
+
+        // Tooltip functions
+        const tooltip = document.getElementById('tooltip');
+        const tooltipTitle = document.getElementById('tooltip-title');
+        const tooltipStatus = document.getElementById('tooltip-status');
+        const tooltipDescription = document.getElementById('tooltip-description');
+
+        function showTooltip(element, tech) {
+            tooltipTitle.textContent = tech.name;
+            tooltipStatus.textContent = tech.status.toUpperCase();
+            tooltipStatus.className = `status ${tech.status}`;
+            tooltipDescription.innerHTML = `${tech.description}<br><small>💡 Shift+Click or Right-click to edit</small>`;
+            
+            const rect = element.getBoundingClientRect();
+            tooltip.style.left = rect.left + rect.width / 2 + 'px';
+            tooltip.style.top = rect.top - tooltip.offsetHeight - 10 + 'px';
+            tooltip.classList.add('show');
+        }
+
+        function hideTooltip() {
+            tooltip.classList.remove('show');
+        }
+
+        // Modal functions
+        function openConfigModal() {
+            document.getElementById('radarTitle').value = radarConfig.title;
+            document.getElementById('radarDate').value = radarConfig.date;
+            document.getElementById('q1Name').value = radarConfig.quadrants.q1.name;
+            document.getElementById('q2Name').value = radarConfig.quadrants.q2.name;
+            document.getElementById('q3Name').value = radarConfig.quadrants.q3.name;
+            document.getElementById('q4Name').value = radarConfig.quadrants.q4.name;
+            document.getElementById('configModal').style.display = 'block';
+        }
+
+        function closeConfigModal() {
+            document.getElementById('configModal').style.display = 'none';
+        }
+
+        function saveRadarConfig() {
+            radarConfig.title = document.getElementById('radarTitle').value;
+            radarConfig.date = document.getElementById('radarDate').value;
+            radarConfig.quadrants.q1.name = document.getElementById('q1Name').value;
+            radarConfig.quadrants.q2.name = document.getElementById('q2Name').value;
+            radarConfig.quadrants.q3.name = document.getElementById('q3Name').value;
+            radarConfig.quadrants.q4.name = document.getElementById('q4Name').value;
+            
+            updateRadarHeader();
+            updateQuadrantLabels();
+            renderSidebars();
+            closeConfigModal();
+        }
+
+        function openItemModal(techId = null) {
+            editingItemId = techId;
+            const modal = document.getElementById('itemModal');
+            const title = document.getElementById('itemModalTitle');
+            
+            if (techId) {
+                const tech = radarConfig.technologies.find(t => t.id === techId);
+                title.textContent = 'Edit Technology';
+                document.getElementById('itemName').value = tech.name;
+                document.getElementById('itemStatus').value = tech.status;
+                document.getElementById('itemQuadrant').value = tech.quadrant;
+                document.getElementById('itemMovement').value = tech.movement;
+                document.getElementById('itemDescription').value = tech.description;
+                document.getElementById('itemUrl').value = tech.url;
+                document.getElementById('itemX').value = tech.position.x;
+                document.getElementById('itemY').value = tech.position.y;
+            } else {
+                title.textContent = 'Add Technology';
+                document.getElementById('itemName').value = '';
+                document.getElementById('itemStatus').value = 'assess';
+                document.getElementById('itemQuadrant').value = 'q1';
+                document.getElementById('itemMovement').value = 'new';
+                document.getElementById('itemDescription').value = '';
+                document.getElementById('itemUrl').value = '';
+                document.getElementById('itemX').value = '50';
+                document.getElementById('itemY').value = '50';
+            }
+            
+            modal.style.display = 'block';
+        }
+
+        function closeItemModal() {
+            document.getElementById('itemModal').style.display = 'none';
+            editingItemId = null;
+        }
+
+        function saveItem() {
+            const name = document.getElementById('itemName').value;
+            const status = document.getElementById('itemStatus').value;
+            const quadrant = document.getElementById('itemQuadrant').value;
+            const movement = document.getElementById('itemMovement').value;
+            const description = document.getElementById('itemDescription').value;
+            const url = document.getElementById('itemUrl').value;
+            const x = parseInt(document.getElementById('itemX').value);
+            const y = parseInt(document.getElementById('itemY').value);
+
+            if (!name.trim()) {
+                alert('Technology name is required');
+                return;
+            }
+
+            if (editingItemId) {
+                // Edit existing
+                const tech = radarConfig.technologies.find(t => t.id === editingItemId);
+                tech.name = name;
+                tech.status = status;
+                tech.quadrant = quadrant;
+                tech.movement = movement;
+                tech.description = description;
+                tech.url = url;
+                tech.position = { x, y };
+            } else {
+                // Add new
+                const maxId = Math.max(...radarConfig.technologies.map(t => t.id), 0);
+                radarConfig.technologies.push({
+                    id: maxId + 1,
+                    name,
+                    status,
+                    quadrant,
+                    movement,
+                    description,
+                    url,
+                    position: { x, y }
+                });
+            }
+
+            renderRadar();
+            renderSidebars();
+            closeItemModal();
+        }
+
+        function editTech(techId) {
+            openItemModal(techId);
+        }
+
+        function exportConfig() {
+            const dataStr = JSON.stringify(radarConfig, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'radar-config.json';
+            link.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function importConfig() {
+            document.getElementById('fileInput').click();
+        }
+
+        function handleFileImport(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const newConfig = JSON.parse(e.target.result);
+                    radarConfig = newConfig;
+                    initializeRadar();
+                    alert('Configuration imported successfully!');
+                } catch (error) {
+                    alert('Error importing configuration: ' + error.message);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function resetRadar() {
+            if (confirm('Reset to default configuration? This will lose all current data.')) {
+                location.reload();
+            }
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', initializeRadar);
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            const configModal = document.getElementById('configModal');
+            const itemModal = document.getElementById('itemModal');
+            if (event.target === configModal) {
+                closeConfigModal();
+            }
+            if (event.target === itemModal) {
+                closeItemModal();
+            }
+        }
+    </script>
+</body>
+</html>
