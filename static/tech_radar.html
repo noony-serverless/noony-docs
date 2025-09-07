@@ -681,20 +681,7 @@
 
     <script>
         // Configuration object - loaded from json
-        let radarConfig = {};
-        let editingItemId = null;
-
-        // Initialize radar
-        async function initializeRadar() {
-            try {
-                const response = await fetch('radar_config.json');
-                radarConfig = await response.json();
-                renderAll();
-            } catch (error) {
-                console.error('Error loading radar configuration:', error);
-                alert('Could not load radar configuration. Please check the console for details.');
-            }
-        }
+        `
 
         function renderAll() {
             updateRadarHeader();
