@@ -1,92 +1,252 @@
 {
-    "title": "Configurable Tech Radar",
-    "date": "2025.05",
+    "title": "CloudFlow Functions Tech Radar",
+    "date": "2025.01",
     "quadrants": {
-        "q1": { "name": "Datastores", "items": [] },
-        "q2": { "name": "Data Management", "items": [] },
-        "q3": { "name": "Infrastructure", "items": [] },
-        "q4": { "name": "Languages", "items": [] }
+        "q1": { "name": "Serverless Platforms", "items": [] },
+        "q2": { "name": "Development Tools", "items": [] },
+        "q3": { "name": "Infrastructure & DevOps", "items": [] },
+        "q4": { "name": "Languages & Runtimes", "items": [] }
     },
     "technologies": [
         {
             "id": 1,
-            "name": "React",
+            "name": "CloudFlow Functions",
+            "status": "adopt",
+            "quadrant": "q1",
+            "description": "Next-generation serverless platform with sub-50ms cold starts and auto-scaling",
+            "url": "https://cloudflow.dev/",
+            "movement": "new",
+            "position": { "x": 20, "y": 30 }
+        },
+        {
+            "id": 2,
+            "name": "AWS Lambda",
+            "status": "adopt",
+            "quadrant": "q1",
+            "description": "Mature serverless compute service with extensive ecosystem",
+            "url": "https://aws.amazon.com/lambda/",
+            "movement": "none",
+            "position": { "x": 35, "y": 45 }
+        },
+        {
+            "id": 3,
+            "name": "Vercel Functions",
+            "status": "trial",
+            "quadrant": "q1",
+            "description": "Edge functions optimized for frontend frameworks",
+            "url": "https://vercel.com/docs/functions",
+            "movement": "up",
+            "position": { "x": 40, "y": 25 }
+        },
+        {
+            "id": 4,
+            "name": "Azure Functions",
+            "status": "assess",
+            "quadrant": "q1",
+            "description": "Microsoft's serverless computing service",
+            "url": "https://azure.microsoft.com/en-us/services/functions/",
+            "movement": "none",
+            "position": { "x": 50, "y": 35 }
+        },
+        {
+            "id": 5,
+            "name": "Google Cloud Functions",
+            "status": "assess",
+            "quadrant": "q1",
+            "description": "Event-driven serverless compute platform",
+            "url": "https://cloud.google.com/functions",
+            "movement": "down",
+            "position": { "x": 45, "y": 40 }
+        },
+        {
+            "id": 6,
+            "name": "Node.js",
             "status": "adopt",
             "quadrant": "q4",
-            "description": "JavaScript library for building user interfaces",
-            "url": "https://reactjs.org/",
+            "description": "JavaScript runtime for high-performance serverless functions",
+            "url": "https://nodejs.org/",
             "movement": "none",
             "position": { "x": 25, "y": 35 }
         },
         {
-            "id": 2,
-            "name": "Vue.js",
-            "status": "trial",
+            "id": 7,
+            "name": "Python",
+            "status": "adopt",
             "quadrant": "q4",
-            "description": "Progressive JavaScript framework for building UIs",
-            "url": "https://vuejs.org/",
-            "movement": "up",
-            "position": { "x": 35, "y": 25 }
+            "description": "Versatile language for data processing and ML functions",
+            "url": "https://www.python.org/",
+            "movement": "none",
+            "position": { "x": 30, "y": 25 }
         },
         {
-            "id": 3,
-            "name": "PostgreSQL",
+            "id": 8,
+            "name": "Go",
+            "status": "trial",
+            "quadrant": "q4",
+            "description": "Fast, compiled language for high-performance functions",
+            "url": "https://golang.org/",
+            "movement": "up",
+            "position": { "x": 35, "y": 30 }
+        },
+        {
+            "id": 9,
+            "name": "Rust",
+            "status": "assess",
+            "quadrant": "q4",
+            "description": "Memory-safe systems programming for edge computing",
+            "url": "https://www.rust-lang.org/",
+            "movement": "up",
+            "position": { "x": 45, "y": 20 }
+        },
+        {
+            "id": 10,
+            "name": "TypeScript",
             "status": "adopt",
-            "quadrant": "q1",
-            "description": "Advanced open-source relational database",
-            "url": "https://www.postgresql.org/",
+            "quadrant": "q4",
+            "description": "Type-safe JavaScript for robust serverless applications",
+            "url": "https://www.typescriptlang.org/",
+            "movement": "none",
+            "position": { "x": 20, "y": 40 }
+        },
+        {
+            "id": 11,
+            "name": "CloudFlow CLI",
+            "status": "adopt",
+            "quadrant": "q2",
+            "description": "Command-line interface for CloudFlow development and deployment",
+            "url": "https://docs.cloudflow.dev/cli",
+            "movement": "new",
+            "position": { "x": 15, "y": 35 }
+        },
+        {
+            "id": 12,
+            "name": "Serverless Framework",
+            "status": "trial",
+            "quadrant": "q2",
+            "description": "Multi-cloud serverless application framework",
+            "url": "https://www.serverless.com/",
+            "movement": "none",
+            "position": { "x": 40, "y": 30 }
+        },
+        {
+            "id": 13,
+            "name": "Terraform",
+            "status": "adopt",
+            "quadrant": "q2",
+            "description": "Infrastructure as code for serverless deployments",
+            "url": "https://www.terraform.io/",
             "movement": "none",
             "position": { "x": 30, "y": 45 }
         },
         {
-            "id": 4,
-            "name": "MongoDB",
-            "status": "assess",
-            "quadrant": "q1",
-            "description": "Document-oriented NoSQL database",
-            "url": "https://www.mongodb.com/",
-            "movement": "new",
-            "position": { "x": 45, "y": 20 }
+            "id": 14,
+            "name": "GitHub Actions",
+            "status": "adopt",
+            "quadrant": "q2",
+            "description": "CI/CD automation for serverless deployments",
+            "url": "https://github.com/features/actions",
+            "movement": "none",
+            "position": { "x": 25, "y": 25 }
         },
         {
-            "id": 5,
+            "id": 15,
+            "name": "OpenTelemetry",
+            "status": "trial",
+            "quadrant": "q2",
+            "description": "Observability framework for distributed systems",
+            "url": "https://opentelemetry.io/",
+            "movement": "up",
+            "position": { "x": 35, "y": 40 }
+        },
+        {
+            "id": 16,
             "name": "Docker",
             "status": "adopt",
             "quadrant": "q3",
-            "description": "Platform for developing, shipping, and running applications",
+            "description": "Containerization for consistent function packaging",
             "url": "https://www.docker.com/",
             "movement": "none",
             "position": { "x": 25, "y": 40 }
         },
         {
-            "id": 6,
+            "id": 17,
             "name": "Kubernetes",
+            "status": "assess",
+            "quadrant": "q3",
+            "description": "Container orchestration for self-hosted serverless",
+            "url": "https://kubernetes.io/",
+            "movement": "none",
+            "position": { "x": 50, "y": 30 }
+        },
+        {
+            "id": 18,
+            "name": "API Gateway",
+            "status": "adopt",
+            "quadrant": "q3",
+            "description": "Managed API endpoints for serverless functions",
+            "url": "https://aws.amazon.com/api-gateway/",
+            "movement": "none",
+            "position": { "x": 30, "y": 35 }
+        },
+        {
+            "id": 19,
+            "name": "CDN Edge Computing",
             "status": "trial",
             "quadrant": "q3",
-            "description": "Container orchestration platform",
-            "url": "https://kubernetes.io/",
+            "description": "Edge computing at CDN locations for ultra-low latency",
+            "url": "https://www.cloudflare.com/learning/cdn/what-is-edge-computing/",
             "movement": "up",
-            "position": { "x": 35, "y": 30 }
+            "position": { "x": 35, "y": 25 }
         },
         {
-            "id": 7,
-            "name": "Apache Kafka",
+            "id": 20,
+            "name": "Event Sourcing",
+            "status": "assess",
+            "quadrant": "q3",
+            "description": "Event-driven architecture pattern for serverless systems",
+            "url": "https://martinfowler.com/eaaDev/EventSourcing.html",
+            "movement": "up",
+            "position": { "x": 45, "y": 45 }
+        },
+        {
+            "id": 21,
+            "name": "GraphQL",
+            "status": "trial",
+            "quadrant": "q2",
+            "description": "Query language for APIs with serverless resolvers",
+            "url": "https://graphql.org/",
+            "movement": "none",
+            "position": { "x": 40, "y": 35 }
+        },
+        {
+            "id": 22,
+            "name": "WebAssembly",
+            "status": "assess",
+            "quadrant": "q4",
+            "description": "High-performance runtime for edge computing",
+            "url": "https://webassembly.org/",
+            "movement": "up",
+            "position": { "x": 50, "y": 25 }
+        },
+        {
+            "id": 23,
+            "name": "Deno",
+            "status": "assess",
+            "quadrant": "q4",
+            "description": "Modern JavaScript/TypeScript runtime with built-in security",
+            "url": "https://deno.land/",
+            "movement": "up",
+            "position": { "x": 45, "y": 35 }
+        },
+        {
+            "id": 24,
+            "name": "Observability Platforms",
             "status": "adopt",
             "quadrant": "q2",
-            "description": "Distributed event streaming platform",
-            "url": "https://kafka.apache.org/",
+            "description": "Monitoring and alerting for serverless applications",
+            "url": "https://www.datadoghq.com/",
             "movement": "none",
-            "position": { "x": 30, "y": 45 }
-        },
-        {
-            "id": 8,
-            "name": "Elasticsearch",
-            "status": "assess",
-            "quadrant": "q2",
-            "description": "Search and analytics engine",
-            "url": "https://www.elastic.co/",
-            "movement": "down",
-            "position": { "x": 40, "y": 25 }
+            "position": { "x": 20, "y": 30 }
         }
     ]
 }

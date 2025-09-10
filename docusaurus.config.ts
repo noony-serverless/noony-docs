@@ -5,8 +5,8 @@ import type * as Preset from '@docusaurus/preset-classic';
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 const config: Config = {
-  title: 'My Site',
-  tagline: 'Dinosaurs are cool',
+  title: 'CloudFlow Functions',
+  tagline: 'Next-generation serverless framework for modern cloud applications',
   favicon: 'img/favicon.ico',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
@@ -15,15 +15,15 @@ const config: Config = {
   },
 
   // Set the production url of your site here
-  url: 'https://your-docusaurus-site.example.com',
+  url: 'https://cloudflow-functions.dev',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'facebook', // Usually your GitHub org/user name.
-  projectName: 'docusaurus', // Usually your repo name.
+  organizationName: 'cloudflow', // Usually your GitHub org/user name.
+  projectName: 'cloudflow-functions', // Usually your repo name.
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -73,9 +73,9 @@ const config: Config = {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
-      title: 'My Site',
+      title: 'CloudFlow',
       logo: {
-        alt: 'My Site Logo',
+        alt: 'CloudFlow Functions Logo',
         src: 'img/logo.svg',
       },
       items: [
@@ -83,11 +83,16 @@ const config: Config = {
           type: 'docSidebar',
           sidebarId: 'tutorialSidebar',
           position: 'left',
-          label: 'Tutorial',
+          label: 'Documentation',
+        },
+        {
+          to: '/docs/tutorial-basics/tech-radar',
+          label: 'Tech Radar',
+          position: 'left',
         },
         {to: '/blog', label: 'Blog', position: 'left'},
         {
-          href: 'https://github.com/facebook/docusaurus',
+          href: 'https://github.com/cloudflow/cloudflow-functions',
           label: 'GitHub',
           position: 'right',
         },
@@ -97,11 +102,44 @@ const config: Config = {
       style: 'dark',
       links: [
         {
-          title: 'Docs',
+          title: 'Product',
           items: [
             {
-              label: 'Tutorial',
+              label: 'Getting Started',
               to: '/docs/intro',
+            },
+            {
+              label: 'Documentation',
+              to: '/docs/tutorial-basics/create-a-document',
+            },
+            {
+              label: 'Tech Radar',
+              to: '/docs/tutorial-basics/tech-radar',
+            },
+            {
+              label: 'Pricing',
+              href: 'https://cloudflow.dev/pricing',
+            },
+          ],
+        },
+        {
+          title: 'Developers',
+          items: [
+            {
+              label: 'API Reference',
+              href: 'https://docs.cloudflow.dev/api',
+            },
+            {
+              label: 'CLI Documentation',
+              href: 'https://docs.cloudflow.dev/cli',
+            },
+            {
+              label: 'Examples',
+              href: 'https://github.com/cloudflow/examples',
+            },
+            {
+              label: 'Status Page',
+              href: 'https://status.cloudflow.dev',
             },
           ],
         },
@@ -109,34 +147,46 @@ const config: Config = {
           title: 'Community',
           items: [
             {
-              label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+              label: 'GitHub',
+              href: 'https://github.com/cloudflow/cloudflow-functions',
             },
             {
               label: 'Discord',
-              href: 'https://discordapp.com/invite/docusaurus',
+              href: 'https://discord.gg/cloudflow',
             },
             {
-              label: 'X',
-              href: 'https://x.com/docusaurus',
+              label: 'Stack Overflow',
+              href: 'https://stackoverflow.com/questions/tagged/cloudflow',
+            },
+            {
+              label: 'Newsletter',
+              href: 'https://cloudflow.dev/newsletter',
             },
           ],
         },
         {
-          title: 'More',
+          title: 'Company',
           items: [
             {
               label: 'Blog',
               to: '/blog',
             },
             {
-              label: 'GitHub',
-              href: 'https://github.com/facebook/docusaurus',
+              label: 'About Us',
+              href: 'https://cloudflow.dev/about',
+            },
+            {
+              label: 'Careers',
+              href: 'https://cloudflow.dev/careers',
+            },
+            {
+              label: 'Contact',
+              href: 'https://cloudflow.dev/contact',
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} CloudFlow Functions. Built for the cloud, designed for developers.`,
     },
     prism: {
       theme: prismThemes.github,

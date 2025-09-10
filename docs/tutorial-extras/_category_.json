@@ -1,7 +1,8 @@
 {
-  "label": "Tutorial - Extras",
+  "label": "Advanced Topics",
   "position": 3,
   "link": {
-    "type": "generated-index"
+    "type": "generated-index",
+    "description": "Advanced topics for scaling and optimizing your CloudFlow Functions applications."
   }
 }

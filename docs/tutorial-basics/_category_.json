@@ -1,8 +1,8 @@
 {
-  "label": "Tutorial - Basics",
+  "label": "Getting Started",
   "position": 2,
   "link": {
     "type": "generated-index",
-    "description": "5 minutes to learn the most important Docusaurus concepts."
+    "description": "Everything you need to know to get started with CloudFlow Functions. From your first deployment to advanced patterns."
   }
 }

@@ -1,30 +1,307 @@
 /**
- * Any CSS included here will be global. The classic template
- * bundles Infima by default. Infima is a CSS framework designed to
- * work well for content-centric websites.
+ * CloudFlow Functions - Modern Cloud-First Design System
+ * Built for showcasing serverless framework benefits
  */
 
-/* You can override the default Infima variables here. */
+/* Import Google Fonts for better typography */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* Cloud-focused color palette and modern design variables */
 :root {
-  --ifm-color-primary: #2e8555;
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-primary-light: #33925d;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
-  --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  /* Primary cloud-inspired color scheme */
+  --ifm-color-primary: #0066cc;
+  --ifm-color-primary-dark: #0052a3;
+  --ifm-color-primary-darker: #004d99;
+  --ifm-color-primary-darkest: #003d7a;
+  --ifm-color-primary-light: #1a75d1;
+  --ifm-color-primary-lighter: #3384d6;
+  --ifm-color-primary-lightest: #66a3e0;
+
+  /* Extended color palette */
+  --cloudflow-blue: #0066cc;
+  --cloudflow-blue-light: #e6f3ff;
+  --cloudflow-blue-dark: #003d7a;
+  --cloudflow-accent: #00d4aa;
+  --cloudflow-accent-light: #e6faf7;
+  --cloudflow-gray: #64748b;
+  --cloudflow-gray-light: #f8fafc;
+  --cloudflow-gray-dark: #334155;
+  --cloudflow-success: #10b981;
+  --cloudflow-warning: #f59e0b;
+  --cloudflow-error: #ef4444;
+
+  /* Typography improvements */
+  --ifm-font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --ifm-font-family-monospace: 'JetBrains Mono', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  --ifm-font-size-base: 16px;
+  --ifm-line-height-base: 1.6;
+
+  /* Enhanced spacing and layout */
+  --ifm-spacing-horizontal: 1.5rem;
+  --ifm-spacing-vertical: 1.5rem;
+  --ifm-container-width-xl: 1280px;
+  --ifm-container-width: 1140px;
+
+  /* Modern border radius and shadows */
+  --ifm-border-radius: 8px;
+  --ifm-button-border-radius: 6px;
+  --cloudflow-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --cloudflow-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --cloudflow-shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+  /* Code highlighting improvements */
+  --ifm-code-font-size: 14px;
+  --docusaurus-highlighted-code-line-bg: rgba(102, 163, 224, 0.1);
+
+  /* Navbar enhancements */
+  --ifm-navbar-height: 70px;
+  --ifm-navbar-background-color: rgba(255, 255, 255, 0.95);
+  --ifm-navbar-shadow: var(--cloudflow-shadow);
+
+  /* Hero section variables */
+  --cloudflow-hero-bg: linear-gradient(135deg, var(--cloudflow-blue) 0%, var(--cloudflow-blue-dark) 100%);
+  --cloudflow-hero-overlay: linear-gradient(135deg, rgba(0, 102, 204, 0.9) 0%, rgba(0, 61, 122, 0.9) 100%);
 }
 
-/* For readability concerns, you should choose a lighter palette in dark mode. */
+/* Dark mode optimizations */
 [data-theme='dark'] {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-primary-lightest: #4fddbf;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  --ifm-color-primary: #4d9eff;
+  --ifm-color-primary-dark: #1a8aff;
+  --ifm-color-primary-darker: #0080ff;
+  --ifm-color-primary-darkest: #0066cc;
+  --ifm-color-primary-light: #66aaff;
+  --ifm-color-primary-lighter: #80b8ff;
+  --ifm-color-primary-lightest: #b3d1ff;
+
+  --cloudflow-blue: #4d9eff;
+  --cloudflow-blue-light: #1a2332;
+  --cloudflow-blue-dark: #b3d1ff;
+  --cloudflow-accent: #00f5d4;
+  --cloudflow-accent-light: #0a2d2a;
+  --cloudflow-gray: #94a3b8;
+  --cloudflow-gray-light: #1e293b;
+  --cloudflow-gray-dark: #cbd5e1;
+
+  --ifm-navbar-background-color: rgba(0, 0, 0, 0.9);
+  --docusaurus-highlighted-code-line-bg: rgba(77, 158, 255, 0.1);
+}
+
+/* Global typography improvements */
+body {
+  font-feature-settings: 'kern' 1, 'liga' 1;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+}
+
+.hero__title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  background: linear-gradient(135deg, #ffffff 0%, #e6f3ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero__subtitle {
+  font-size: 1.25rem;
+  font-weight: 400;
+  opacity: 0.9;
+  margin-top: 1rem;
+  line-height: 1.5;
+}
+
+/* Enhanced buttons */
+.button {
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--ifm-button-border-radius);
+  transition: all 0.2s ease-in-out;
+  border: none;
+  box-shadow: var(--cloudflow-shadow-sm);
+}
+
+.button:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--cloudflow-shadow);
+}
+
+.button--primary {
+  background: linear-gradient(135deg, var(--cloudflow-blue) 0%, var(--cloudflow-blue-dark) 100%);
+  color: white;
+}
+
+.button--secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.button--secondary:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.button--lg {
+  font-size: 1.1rem;
+  padding: 1rem 2rem;
+}
+
+/* Navbar enhancements */
+.navbar {
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.navbar__brand {
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--cloudflow-blue) !important;
+}
+
+.navbar__item {
+  font-weight: 500;
+}
+
+.navbar__link {
+  transition: color 0.2s ease-in-out;
+}
+
+.navbar__link:hover {
+  color: var(--cloudflow-blue) !important;
+}
+
+/* Cards and containers */
+.card {
+  border-radius: var(--ifm-border-radius);
+  box-shadow: var(--cloudflow-shadow);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease-in-out;
+}
+
+.card:hover {
+  box-shadow: var(--cloudflow-shadow-lg);
+  transform: translateY(-2px);
+}
+
+/* Feature sections */
+.features {
+  padding: 4rem 0;
+  background: var(--cloudflow-gray-light);
+}
+
+.feature {
+  text-align: center;
+  padding: 2rem;
+  background: white;
+  border-radius: var(--ifm-border-radius);
+  box-shadow: var(--cloudflow-shadow);
+  transition: all 0.2s ease-in-out;
+  height: 100%;
+}
+
+.feature:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--cloudflow-shadow-lg);
+}
+
+.feature__icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 1rem;
+  background: var(--cloudflow-accent-light);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: var(--cloudflow-accent);
+}
+
+/* Code blocks */
+.prism-code {
+  border-radius: var(--ifm-border-radius);
+  box-shadow: var(--cloudflow-shadow-sm);
+}
+
+/* Responsive design improvements */
+@media screen and (max-width: 996px) {
+  .hero__title {
+    font-size: 2.5rem;
+  }
+
+  .hero__subtitle {
+    font-size: 1.1rem;
+  }
+
+  .button--lg {
+    font-size: 1rem;
+    padding: 0.875rem 1.75rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .hero__title {
+    font-size: 2rem;
+  }
+
+  .feature {
+    padding: 1.5rem;
+  }
+
+  .features {
+    padding: 2rem 0;
+  }
+}
+
+/* Utilities */
+.text-gradient {
+  background: linear-gradient(135deg, var(--cloudflow-blue) 0%, var(--cloudflow-accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--cloudflow-blue) 50%, transparent 100%);
+  margin: 3rem 0;
+}
+
+/* Hero section background animation */
+@keyframes cloudFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.hero-cloud {
+  animation: cloudFloat 6s ease-in-out infinite;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--cloudflow-gray-light);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--cloudflow-gray);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--cloudflow-blue);
 }

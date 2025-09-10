@@ -2,46 +2,128 @@
 sidebar_position: 1
 ---
 
-# Tutorial Intro
+# Welcome to CloudFlow Functions
 
-Let's discover **Docusaurus in less than 5 minutes**.
+**Build serverless applications that scale instantly, cost less, and deliver exceptional performance.**
 
-## Getting Started
+CloudFlow Functions is a next-generation serverless computing platform designed from the ground up for modern cloud-native applications. Whether you're building APIs, processing data, or creating event-driven architectures, CloudFlow provides the tools and infrastructure you need to succeed.
 
-Get started by **creating a new site**.
+## 🚀 Why CloudFlow Functions?
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+### Lightning-Fast Performance
 
-### What you'll need
+- **Sub-50ms cold starts** - Industry-leading initialization times
+- **Intelligent pre-warming** - Predictive scaling based on usage patterns  
+- **Edge deployment** - Deploy closer to your users worldwide
 
-- [Node.js](https://nodejs.org/en/download/) version 18.0 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
+### Developer-First Experience
 
-## Generate a new site
+- **One-command deployments** - From code to production in seconds
+- **Built-in observability** - Real-time metrics, logs, and tracing
+- **Hot reloading** - Test changes instantly during development
+- **Multiple runtime support** - Node.js, Python, Go, Java, and more
 
-Generate a new Docusaurus site using the **classic template**.
+### Enterprise-Ready Security
 
-The classic template will automatically be added to your project after you run the command:
+- **Zero-trust architecture** - End-to-end encryption by default
+- **Compliance certifications** - SOC 2, GDPR, HIPAA ready
+- **Automatic security updates** - Stay protected without manual intervention
+- **Fine-grained permissions** - Role-based access control
+
+### Cost-Effective Scaling
+
+- **Pay-per-invocation billing** - No charges for idle time
+- **Automatic resource optimization** - Right-sizing without configuration
+- **Multi-cloud deployment** - Avoid vendor lock-in, reduce costs
+
+## 🏃‍♂️ Quick Start
+
+Get your first function running in under 2 minutes:
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) version 18.0 or above
+- A CloudFlow account (sign up for free)
+
+### Installation
+
+Install the CloudFlow CLI:
 
 ```bash
-npm init docusaurus@latest my-website classic
+npm install -g @cloudflow/cli
 ```
 
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
+### Create Your First Function
 
-The command also installs all necessary dependencies you need to run Docusaurus.
-
-## Start your site
-
-Run the development server:
+Generate a new function using our starter template:
 
 ```bash
-cd my-website
-npm run start
+cloudflow init my-first-function --template=quickstart
+cd my-first-function
 ```
 
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
+### Local Development
 
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
+Start the development server with hot reloading:
 
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+```bash
+cloudflow dev
+```
+
+Your function is now running locally at `http://localhost:3000` with automatic reloading on code changes.
+
+### Deploy to Production
+
+Deploy your function to the global CloudFlow network:
+
+```bash
+cloudflow deploy
+```
+
+🎉 **That's it!** Your function is now live and automatically scaling based on demand.
+
+## 📊 Technology Radar
+
+Explore our [Technology Radar](/docs/tutorial-basics/tech-radar) to see the tools, frameworks, and practices we recommend for building modern serverless applications.
+
+## 🔧 Core Concepts
+
+Understanding these fundamental concepts will help you make the most of CloudFlow Functions:
+
+### Functions
+
+Self-contained units of code that respond to events and HTTP requests.
+
+### Triggers
+
+Event sources that invoke your functions (HTTP requests, database changes, file uploads, scheduled events).
+
+### Environments
+
+Isolated deployment targets (development, staging, production) with independent configurations.
+
+### Observability
+
+Built-in monitoring, logging, and alerting to keep your applications healthy.
+
+## 📚 What's Next?
+
+Ready to dive deeper? Here are some recommended next steps:
+
+- **[Create Your First Function](/docs/tutorial-basics/create-a-document)** - Step-by-step tutorial
+- **[Explore Examples](/docs/tutorial-basics/create-a-page)** - Real-world use cases and patterns  
+- **[API Reference](/docs/tutorial-basics/markdown-features)** - Complete SDK documentation
+- **[Best Practices](/docs/tutorial-basics/deploy-your-site)** - Production deployment guides
+
+## 💬 Community & Support
+
+Join thousands of developers building with CloudFlow:
+
+- **[GitHub Discussions](https://github.com/cloudflow/cloudflow-functions/discussions)** - Ask questions and share ideas
+- **[Discord Community](https://discord.gg/cloudflow)** - Real-time chat with the team and community  
+- **[Documentation](https://docs.cloudflow.dev)** - Comprehensive guides and tutorials
+- **[Status Page](https://status.cloudflow.dev)** - Real-time system status and incident reports
+
+---
+
+**Ready to transform how you build serverless applications?** [Get started today](/docs/tutorial-basics/create-a-document) and experience the future of cloud computing.

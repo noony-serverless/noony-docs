@@ -1,0 +1,280 @@
+/* CloudFlow Architecture Diagram Styles */
+
+.architectureSection {
+  padding: 6rem 0;
+  background: linear-gradient(135deg, var(--cloudflow-blue-light) 0%, white 50%, var(--cloudflow-accent-light) 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.architectureSection::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 20% 20%, rgba(0, 102, 204, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(0, 212, 170, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.architectureTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.architectureSubtitle {
+  font-size: 1.125rem;
+  color: var(--cloudflow-gray);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.architectureDiagram {
+  position: relative;
+  height: 400px;
+  margin: 4rem 0;
+  background: white;
+  border-radius: 16px;
+  box-shadow: var(--cloudflow-shadow-lg);
+  border: 1px solid rgba(0, 102, 204, 0.1);
+  overflow: hidden;
+}
+
+.connectionSvg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.connectionLine {
+  stroke: var(--cloudflow-blue);
+  stroke-width: 2;
+  stroke-dasharray: 5, 5;
+  opacity: 0.6;
+  animation: dashMove 2s linear infinite;
+}
+
+@keyframes dashMove {
+  from { stroke-dashoffset: 0; }
+  to { stroke-dashoffset: 20; }
+}
+
+.architectureNode {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  background: white;
+  border-radius: 12px;
+  padding: 1rem;
+  min-width: 160px;
+  box-shadow: var(--cloudflow-shadow);
+  border: 2px solid rgba(0, 102, 204, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+
+.architectureNode:hover,
+.architectureNode.active {
+  transform: translate(-50%, -50%) scale(1.05);
+  box-shadow: var(--cloudflow-shadow-lg);
+  border-color: var(--cloudflow-blue);
+}
+
+.architectureNode.active {
+  background: linear-gradient(135deg, var(--cloudflow-blue-light) 0%, white 100%);
+}
+
+.nodeIcon {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.nodeTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--cloudflow-gray-dark);
+  margin-bottom: 0.25rem;
+  text-align: center;
+}
+
+.nodeDescription {
+  font-size: 0.75rem;
+  color: var(--cloudflow-gray);
+  text-align: center;
+  line-height: 1.3;
+  margin: 0;
+}
+
+.benefitsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-top: 4rem;
+}
+
+.benefitCard {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: var(--cloudflow-shadow);
+  border: 1px solid rgba(0, 102, 204, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.benefitCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--cloudflow-blue) 0%, var(--cloudflow-accent) 100%);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+.benefitCard:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--cloudflow-shadow-lg);
+}
+
+.benefitCard:hover::before {
+  transform: translateX(0);
+}
+
+.benefitIcon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.benefitCard h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--cloudflow-gray-dark);
+  margin-bottom: 0.75rem;
+}
+
+.benefitCard p {
+  color: var(--cloudflow-gray);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Responsive design */
+@media screen and (max-width: 996px) {
+  .architectureSection {
+    padding: 4rem 0;
+  }
+
+  .architectureTitle {
+    font-size: 2rem;
+  }
+
+  .architectureDiagram {
+    height: 300px;
+    margin: 2rem 0;
+  }
+
+  .architectureNode {
+    min-width: 120px;
+    padding: 0.75rem;
+  }
+
+  .nodeTitle {
+    font-size: 0.9rem;
+  }
+
+  .nodeDescription {
+    font-size: 0.7rem;
+  }
+
+  .benefitsGrid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .benefitCard {
+    padding: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .architectureSection {
+    padding: 3rem 0;
+  }
+
+  .architectureTitle {
+    font-size: 1.75rem;
+  }
+
+  .architectureDiagram {
+    height: 250px;
+  }
+
+  .architectureNode {
+    min-width: 100px;
+    padding: 0.5rem;
+  }
+
+  .nodeIcon {
+    font-size: 1.5rem;
+  }
+
+  .nodeTitle {
+    font-size: 0.8rem;
+  }
+
+  .nodeDescription {
+    font-size: 0.65rem;
+  }
+
+  .benefitsGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .benefitIcon {
+    font-size: 2.5rem;
+  }
+}
+
+/* Animation for nodes */
+@keyframes nodeEnter {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.architectureNode {
+  animation: nodeEnter 0.5s ease-out forwards;
+}
+
+.architectureNode:nth-child(1) { animation-delay: 0.1s; }
+.architectureNode:nth-child(2) { animation-delay: 0.2s; }
+.architectureNode:nth-child(3) { animation-delay: 0.3s; }
+.architectureNode:nth-child(4) { animation-delay: 0.4s; }
+.architectureNode:nth-child(5) { animation-delay: 0.5s; }
+.architectureNode:nth-child(6) { animation-delay: 0.6s; }

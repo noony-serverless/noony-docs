@@ -1,23 +1,230 @@
 /**
- * CSS files with the .module.css suffix will be treated as CSS modules
- * and scoped locally.
+ * CloudFlow Homepage Styles
+ * Modern hero section with cloud-themed background
  */
 
 .heroBanner {
-  padding: 4rem 0;
+  padding: 6rem 0 8rem;
   text-align: center;
   position: relative;
   overflow: hidden;
+  background: var(--cloudflow-hero-bg);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
 }
 
-@media screen and (max-width: 996px) {
-  .heroBanner {
-    padding: 2rem;
-  }
+/* Animated gradient background */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Floating cloud shapes */
+.heroBanner::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background-image: 
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 40% 70%, rgba(255, 255, 255, 0.08) 0%, transparent 50%);
+  animation: cloudFloat 20s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes cloudFloat {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(30px, -30px) rotate(1deg); }
+  66% { transform: translate(-20px, 20px) rotate(-1deg); }
+}
+
+.heroBanner::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background: linear-gradient(180deg, transparent 0%, rgba(248, 250, 252, 0.8) 80%, rgba(248, 250, 252, 1) 100%);
+  pointer-events: none;
+}
+
+/* Hero content styling */
+.heroBanner h1 {
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.heroBanner .hero__subtitle {
+  max-width: 600px;
+  margin: 0 auto 2.5rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .buttons {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+.heroButton {
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 1rem 2.5rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.heroButton:hover {
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+
+.heroButtonPrimary {
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--cloudflow-blue);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(10px);
+}
+
+.heroButtonPrimary:hover {
+  background: white;
+  color: var(--cloudflow-blue);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15), 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.heroButtonSecondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.heroButtonSecondary:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Additional sections for enhanced homepage */
+.quickStart {
+  padding: 4rem 0;
+  background: white;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.quickStartTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 3rem;
+  color: var(--cloudflow-gray-dark);
+}
+
+.codeExample {
+  background: var(--cloudflow-gray-dark);
+  border-radius: 12px;
+  padding: 2rem;
+  font-family: var(--ifm-font-family-monospace);
+  color: white;
+  overflow-x: auto;
+  box-shadow: var(--cloudflow-shadow-lg);
+  position: relative;
+}
+
+.codeExample::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--cloudflow-blue) 0%, var(--cloudflow-accent) 100%);
+}
+
+.codeHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+  color: var(--cloudflow-gray);
+}
+
+.codeDots {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.codeDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.codeDot:nth-child(1) { background: #ff5f57; }
+.codeDot:nth-child(2) { background: #ffbd2e; }
+.codeDot:nth-child(3) { background: #28ca42; }
+
+.codeContent {
+  line-height: 1.6;
+  font-size: 0.9rem;
+}
+
+.codeKeyword { color: #66d9ef; }
+.codeString { color: #a6e22e; }
+.codeComment { color: #75715e; }
+
+/* Responsive adjustments */
+@media screen and (max-width: 996px) {
+  .heroBanner {
+    padding: 4rem 0 6rem;
+  }
+  
+  .buttons {
+    flex-direction: column;
+    align-items: stretch;
+    max-width: 300px;
+    margin: 2rem auto 0;
+  }
+
+  .heroButton {
+    justify-content: center;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .heroBanner {
+    padding: 3rem 0 4rem;
+  }
+
+  .quickStart {
+    padding: 2rem 0;
+  }
+
+  .quickStartTitle {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .codeExample {
+    padding: 1.5rem;
+    font-size: 0.8rem;
+  }
 }

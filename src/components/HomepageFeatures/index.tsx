@@ -5,52 +5,100 @@ import styles from './styles.module.css';
 
 type FeatureItem = {
   title: string;
-  Svg: React.ComponentType<React.ComponentProps<'svg'>>;
+  icon: string;
   description: ReactNode;
+  metrics?: string;
 };
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Easy to Use',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    title: 'Lightning Fast Performance',
+    icon: '⚡',
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        Deploy functions in milliseconds with our optimized runtime. 
+        Cold starts under 50ms and automatic scaling ensure your applications 
+        respond instantly to user demands, no matter the load.
       </>
     ),
+    metrics: '10x faster cold starts',
   },
   {
-    title: 'Focus on What Matters',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
+    title: 'Auto-Scaling Excellence',
+    icon: '🚀',
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        Scale from zero to millions of requests seamlessly. Our intelligent 
+        auto-scaling monitors your application patterns and adjusts resources 
+        automatically, ensuring optimal performance and cost efficiency.
       </>
     ),
+    metrics: '0 to 1M requests/sec',
   },
   {
-    title: 'Powered by React',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    title: 'Developer-First Experience',
+    icon: '👨‍💻',
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        Focus on code, not infrastructure. With hot reloading, built-in debugging, 
+        integrated monitoring, and one-command deployments, you'll ship features 
+        faster than ever before.
       </>
     ),
+    metrics: '5-minute deployments',
+  },
+  {
+    title: 'Enterprise Security',
+    icon: '🔒',
+    description: (
+      <>
+        Bank-grade security with automatic encryption, built-in authentication,
+        and compliance with SOC 2, GDPR, and HIPAA standards. Your data and 
+        your users are always protected.
+      </>
+    ),
+    metrics: 'SOC 2 Type II certified',
+  },
+  {
+    title: 'Cost-Effective Scaling',
+    icon: '💰',
+    description: (
+      <>
+        Pay only for what you use with sub-second billing. Our efficient 
+        runtime reduces costs by up to 70% compared to traditional cloud 
+        solutions while delivering superior performance.
+      </>
+    ),
+    metrics: 'Up to 70% cost savings',
+  },
+  {
+    title: 'Multi-Cloud Native',
+    icon: '☁️',
+    description: (
+      <>
+        Deploy anywhere without vendor lock-in. Our framework runs on AWS, 
+        Google Cloud, Azure, and edge networks, giving you flexibility and 
+        redundancy for mission-critical applications.
+      </>
+    ),
+    metrics: '99.99% uptime SLA',
   },
 ];
 
-function Feature({title, Svg, description}: FeatureItem) {
+function Feature({title, icon, description, metrics}: FeatureItem) {
   return (
     <div className={clsx('col col--4')}>
-      <div className="text--center">
-        <Svg className={styles.featureSvg} role="img" />
-      </div>
-      <div className="text--center padding-horiz--md">
-        <Heading as="h3">{title}</Heading>
-        <p>{description}</p>
+      <div className={clsx('feature', styles.feature)}>
+        <div className={clsx('feature__icon', styles.featureIcon)}>
+          <span className={styles.iconEmoji}>{icon}</span>
+        </div>
+        <div className="text--center padding-horiz--md">
+          <Heading as="h3" className={styles.featureTitle}>{title}</Heading>
+          {metrics && (
+            <div className={styles.featureMetric}>{metrics}</div>
+          )}
+          <p className={styles.featureDescription}>{description}</p>
+        </div>
       </div>
     </div>
   );
@@ -60,10 +108,44 @@ export default function HomepageFeatures(): ReactNode {
   return (
     <section className={styles.features}>
       <div className="container">
+        <div className="text--center margin-bottom--xl">
+          <Heading as="h2" className={styles.featuresTitle}>
+            Why Choose <span className="text-gradient">CloudFlow Functions</span>?
+          </Heading>
+          <p className={styles.featuresSubtitle}>
+            Built from the ground up for modern cloud-native applications, 
+            CloudFlow delivers unmatched performance, scalability, and developer experience.
+          </p>
+        </div>
         <div className="row">
           {FeatureList.map((props, idx) => (
             <Feature key={idx} {...props} />
           ))}
+        </div>
+        
+        {/* Trust indicators */}
+        <div className={styles.trustSection}>
+          <div className="text--center margin-bottom--lg">
+            <h3 className={styles.trustTitle}>Trusted by thousands of developers worldwide</h3>
+          </div>
+          <div className={styles.trustMetrics}>
+            <div className={styles.trustMetric}>
+              <div className={styles.trustNumber}>500K+</div>
+              <div className={styles.trustLabel}>Functions Deployed</div>
+            </div>
+            <div className={styles.trustMetric}>
+              <div className={styles.trustNumber}>10B+</div>
+              <div className={styles.trustLabel}>Monthly Invocations</div>
+            </div>
+            <div className={styles.trustMetric}>
+              <div className={styles.trustNumber}>99.99%</div>
+              <div className={styles.trustLabel}>Uptime SLA</div>
+            </div>
+            <div className={styles.trustMetric}>
+              <div className={styles.trustNumber}>50ms</div>
+              <div className={styles.trustLabel}>Avg Cold Start</div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
