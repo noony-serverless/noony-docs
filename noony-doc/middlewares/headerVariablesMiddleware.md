@@ -1,4 +1,10 @@
-# HeaderVariablesMiddleware Guide
+---
+title: Header Variables
+description: Complete guide to validating and extracting HTTP headers with HeaderVariablesMiddleware
+sidebar_position: 5
+---
+
+# Header Variables Middleware
 
 A comprehensive guide to using the HeaderVariablesMiddleware for validating and extracting HTTP headers in the Noony Framework.
 

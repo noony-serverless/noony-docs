@@ -1,4 +1,10 @@
-# Noony Handler Complete Guide
+---
+title: Handler Architecture
+description: Complete guide to understanding and using the Handler class with TypeScript generics
+sidebar_position: 1
+---
+
+# Handler Architecture
 
 A comprehensive guide to understanding and using the `Handler` class with TypeScript generics in the Noony Serverless Framework. This guide covers everything from basic concepts to advanced patterns with detailed examples.
 

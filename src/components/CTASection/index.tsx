@@ -43,8 +43,8 @@ export default function CTASection(): ReactNode {
             </Link>
             <Link
               className={clsx('button button--outline button--lg', styles.ctaSecondaryButton)}
-              to="/docs/tutorial-basics/tech-radar">
-              📊 Explore Tech Stack
+              to="/docs/examples">
+              � Explore Examples
             </Link>
             <div className={styles.ctaTrust}>
               <span className={styles.trustBadge}>

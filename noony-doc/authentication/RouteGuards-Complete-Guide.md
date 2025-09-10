@@ -1,4 +1,10 @@
-# RouteGuards Complete Setup and Usage Guide
+---
+title: Route Guards Setup
+description: Comprehensive guide to implementing authentication and authorization with RouteGuards
+sidebar_position: 2
+---
+
+# Route Guards Complete Setup
 
 A comprehensive guide to implementing authentication and authorization with the Noony Framework's RouteGuards system. This guide covers everything from basic setup to complex enterprise scenarios with detailed pros/cons analysis and decision-making guidance.
 
@@ -3745,4 +3751,4 @@ RouteGuards provides a powerful, flexible authentication and authorization syste
 4. **Start Simple**: Begin with Plain permissions and add complexity only when needed
 5. **Plan for Scale**: Design permission models that grow with your application
 
-For additional help, refer to the [examples directory](../examples/) for working implementations and the [API documentation](./api/) for detailed interface specifications.
+For additional help, refer to the [examples directory](../examples/) for working implementations and the [core concepts documentation](../core-concepts/) for detailed interface specifications.

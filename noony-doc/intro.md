@@ -2,128 +2,214 @@
 sidebar_position: 1
 ---
 
-# Welcome to CloudFlow Functions
+# Welcome to Noony Serverless Framework
 
-**Build serverless applications that scale instantly, cost less, and deliver exceptional performance.**
+**Build type-safe, scalable serverless applications with powerful middleware architecture and enterprise-grade features.**
 
-CloudFlow Functions is a next-generation serverless computing platform designed from the ground up for modern cloud-native applications. Whether you're building APIs, processing data, or creating event-driven architectures, CloudFlow provides the tools and infrastructure you need to succeed.
+Noony is a next-generation TypeScript-first serverless framework designed for building robust, maintainable, and performant cloud functions. With its powerful middleware system, type safety, and flexible architecture, Noony enables developers to focus on business logic while handling the complexities of serverless development.
 
-## 🚀 Why CloudFlow Functions?
+## 🚀 Why Choose Noony?
 
-### Lightning-Fast Performance
+### Type-Safe by Design
 
-- **Sub-50ms cold starts** - Industry-leading initialization times
-- **Intelligent pre-warming** - Predictive scaling based on usage patterns  
-- **Edge deployment** - Deploy closer to your users worldwide
+- **Full TypeScript support** - End-to-end type safety with powerful generics
+- **Compile-time validation** - Catch errors before deployment
+- **IntelliSense everywhere** - Rich IDE support and autocompletion
+- **Automatic type inference** - Minimal boilerplate, maximum safety
 
-### Developer-First Experience
+### Powerful Middleware Architecture
 
-- **One-command deployments** - From code to production in seconds
-- **Built-in observability** - Real-time metrics, logs, and tracing
-- **Hot reloading** - Test changes instantly during development
-- **Multiple runtime support** - Node.js, Python, Go, Java, and more
+- **Composable middleware chain** - Build complex logic from simple components
+- **Request/Response transformation** - Seamless data processing
+- **Built-in error handling** - Robust error management and recovery
+- **Dependency injection** - Clean, testable code architecture
 
-### Enterprise-Ready Security
+### Security & Authentication
 
-- **Zero-trust architecture** - End-to-end encryption by default
-- **Compliance certifications** - SOC 2, GDPR, HIPAA ready
-- **Automatic security updates** - Stay protected without manual intervention
-- **Fine-grained permissions** - Role-based access control
+- **Route guards** - Flexible authentication and authorization
+- **Token validation** - JWT and custom token support
+- **Multi-auth strategies** - Support for multiple authentication methods
+- **Security middleware** - Built-in protection against common vulnerabilities
 
-### Cost-Effective Scaling
+### Developer Experience
 
-- **Pay-per-invocation billing** - No charges for idle time
-- **Automatic resource optimization** - Right-sizing without configuration
-- **Multi-cloud deployment** - Avoid vendor lock-in, reduce costs
+- **Framework agnostic** - Works with AWS Lambda, Azure Functions, Google Cloud Functions
+- **Hot reloading** - Fast development iteration
+- **Comprehensive testing** - Built-in testing utilities and mocking
+- **Rich documentation** - Complete guides and examples
 
 ## 🏃‍♂️ Quick Start
 
-Get your first function running in under 2 minutes:
-
-### Prerequisites
-
-- [Node.js](https://nodejs.org/) version 18.0 or above
-- A CloudFlow account (sign up for free)
+Get your first Noony function running in under 5 minutes:
 
 ### Installation
 
-Install the CloudFlow CLI:
+Install Noony via npm:
 
 ```bash
-npm install -g @cloudflow/cli
+npm install @noony/core
+# or
+yarn add @noony/core
 ```
 
-### Create Your First Function
+### Your First Handler
 
-Generate a new function using our starter template:
+Create a simple HTTP handler:
 
-```bash
-cloudflow init my-first-function --template=quickstart
-cd my-first-function
+```typescript title="src/handlers/hello.ts"
+import { Handler } from '@noony/core';
+import { httpAttributesMiddleware } from '@noony/http';
+
+const handler = new Handler()
+  .use(httpAttributesMiddleware())
+  .handle(async (context) => {
+    const { name = 'World' } = context.query;
+    
+    return {
+      statusCode: 200,
+      body: JSON.stringify({
+        message: `Hello, ${name}!`,
+        timestamp: new Date().toISOString()
+      })
+    };
+  });
+
+export default handler;
 ```
 
-### Local Development
+### Add Middleware
 
-Start the development server with hot reloading:
+Enhance your handler with powerful middleware:
 
-```bash
-cloudflow dev
+```typescript title="src/handlers/api.ts"
+import { Handler } from '@noony/core';
+import { 
+  httpAttributesMiddleware,
+  bodyParserMiddleware,
+  bodyValidationMiddleware 
+} from '@noony/http';
+import { z } from 'zod';
+
+// Define your request schema
+const requestSchema = z.object({
+  name: z.string().min(1),
+  email: z.string().email()
+});
+
+const handler = new Handler()
+  .use(httpAttributesMiddleware())
+  .use(bodyParserMiddleware())
+  .use(bodyValidationMiddleware(requestSchema))
+  .handle(async (context) => {
+    // TypeScript knows the exact shape of context.body
+    const { name, email } = context.body;
+    
+    // Your business logic here
+    const user = await createUser({ name, email });
+    
+    return {
+      statusCode: 201,
+      body: JSON.stringify(user)
+    };
+  });
+
+export default handler;
 ```
 
-Your function is now running locally at `http://localhost:3000` with automatic reloading on code changes.
+## 🧭 Documentation Structure
 
-### Deploy to Production
+Our documentation is organized to help you learn Noony progressively:
 
-Deploy your function to the global CloudFlow network:
+### [Getting Started](/docs/getting-started)
 
-```bash
-cloudflow deploy
-```
+- Installation and setup
+- Your first handler
+- Basic middleware usage
+- Development workflow
 
-🎉 **That's it!** Your function is now live and automatically scaling based on demand.
+### [Core Concepts](/docs/core-concepts)
 
-## 📊 Technology Radar
+- Handler architecture
+- Middleware system
+- TypeScript generics
+- Context and lifecycle
 
-Explore our [Technology Radar](/docs/tutorial-basics/tech-radar) to see the tools, frameworks, and practices we recommend for building modern serverless applications.
+### [Middlewares](/docs/middlewares)
 
-## 🔧 Core Concepts
+- HTTP processing
+- Body parsing and validation
+- Error handling
+- Custom middleware development
 
-Understanding these fundamental concepts will help you make the most of CloudFlow Functions:
+### [Authentication & Security](/docs/authentication)
 
-### Functions
+- Route guards
+- Token validation
+- Multi-auth patterns
+- Security best practices
 
-Self-contained units of code that respond to events and HTTP requests.
+### [Advanced Topics](/docs/advanced)
 
-### Triggers
+- Performance optimization
+- Framework integration
+- Testing strategies
+- Production deployment
 
-Event sources that invoke your functions (HTTP requests, database changes, file uploads, scheduled events).
+### [Examples & Recipes](/docs/examples)
 
-### Environments
+- Real-world use cases
+- Integration patterns
+- Code recipes
+- Best practices
 
-Isolated deployment targets (development, staging, production) with independent configurations.
+## 🛠️ Core Features
 
-### Observability
+### Handler System
 
-Built-in monitoring, logging, and alerting to keep your applications healthy.
+The `Handler` class is the heart of Noony, providing:
 
-## 📚 What's Next?
+- **Type-safe middleware composition**
+- **Request/response lifecycle management**
+- **Error handling and recovery**
+- **Framework-agnostic deployment**
 
-Ready to dive deeper? Here are some recommended next steps:
+### Middleware Ecosystem
 
-- **[Create Your First Function](/docs/tutorial-basics/create-a-document)** - Step-by-step tutorial
-- **[Explore Examples](/docs/tutorial-basics/create-a-page)** - Real-world use cases and patterns  
-- **[API Reference](/docs/tutorial-basics/markdown-features)** - Complete SDK documentation
-- **[Best Practices](/docs/tutorial-basics/deploy-your-site)** - Production deployment guides
+Built-in middleware for common tasks:
+
+- **HTTP processing** - Parse headers, query params, and bodies
+- **Validation** - Schema-based request validation
+- **Authentication** - JWT tokens, API keys, custom auth
+- **Error handling** - Graceful error responses
+- **Dependency injection** - Clean architecture patterns
+
+### Type Safety
+
+Leverage TypeScript's power:
+
+- **End-to-end type safety** from request to response
+- **Generic constraints** for middleware composition
+- **Automatic type inference** reduces boilerplate
+- **Compile-time validation** catches errors early
+
+## 🚀 Ready to Get Started?
+
+Choose your path based on your experience level:
+
+- **New to Noony?** Start with our [Getting Started](/docs/getting-started) guide
+- **Want to see code?** Jump to [Examples & Recipes](/docs/examples)
+- **Coming from another framework?** Check out [Core Concepts](/docs/core-concepts)
+- **Need specific middleware?** Browse our [Middleware documentation](/docs/middlewares)
 
 ## 💬 Community & Support
 
-Join thousands of developers building with CloudFlow:
+Join the Noony community:
 
-- **[GitHub Discussions](https://github.com/cloudflow/cloudflow-functions/discussions)** - Ask questions and share ideas
-- **[Discord Community](https://discord.gg/cloudflow)** - Real-time chat with the team and community  
-- **[Documentation](https://docs.cloudflow.dev)** - Comprehensive guides and tutorials
-- **[Status Page](https://status.cloudflow.dev)** - Real-time system status and incident reports
+- **[GitHub Repository](https://github.com/noony-org/noony)** - Source code and issues
+- **[Discord Community](https://discord.gg/noony)** - Real-time chat and support
+- **[Documentation](https://docs.noony.dev)** - Comprehensive guides
+- **[Examples Repository](https://github.com/noony-org/examples)** - Real-world examples
 
 ---
 
-**Ready to transform how you build serverless applications?** [Get started today](/docs/tutorial-basics/create-a-document) and experience the future of cloud computing.
+**Ready to build type-safe serverless applications?** [Get started](/docs/getting-started) with Noony today!

@@ -1,0 +1,8 @@
+{
+  "label": "Core Concepts",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "description": "Deep dive into Noony's core concepts including handlers, middleware architecture, and framework patterns."
+  }
+}

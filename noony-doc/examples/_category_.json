@@ -1,0 +1,8 @@
+{
+  "label": "Examples & Recipes",
+  "position": 6,
+  "link": {
+    "type": "generated-index",
+    "description": "Real-world examples and code recipes for common use cases and integration patterns."
+  }
+}

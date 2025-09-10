@@ -163,10 +163,35 @@ h1, h2, h3, h4, h5, h6 {
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
+/* Center the navbar brand (logo + title) */
+.navbar__inner {
+  justify-content: center;
+  position: relative;
+}
+
 .navbar__brand {
   font-weight: 700;
   font-size: 1.5rem;
   color: var(--cloudflow-blue) !important;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Hide the navbar logo */
+.navbar__logo {
+  display: none;
+}
+
+/* Position navbar items */
+.navbar__items--left {
+  position: absolute;
+  left: 0;
+}
+
+.navbar__items--right {
+  position: absolute;
+  right: 0;
 }
 
 .navbar__item {

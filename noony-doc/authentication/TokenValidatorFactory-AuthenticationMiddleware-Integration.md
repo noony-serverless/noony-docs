@@ -1,4 +1,10 @@
-# TokenValidatorFactory with AuthenticationMiddleware Integration
+---
+title: Token Validation
+description: Using TokenValidatorFactory with AuthenticationMiddleware for enterprise-grade authentication
+sidebar_position: 4
+---
+
+# Token Validation Integration
 
 This guide demonstrates how to use the `TokenValidatorFactory` with the `AuthenticationMiddleware` to create reusable, enterprise-grade authentication for your handlers.
 

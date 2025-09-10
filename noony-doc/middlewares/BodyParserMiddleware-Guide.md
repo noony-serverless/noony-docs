@@ -1,4 +1,10 @@
-# BodyParserMiddleware Complete Guide
+---
+title: Body Parser
+description: Complete guide to using BodyParserMiddleware for type-safe request body parsing
+sidebar_position: 1
+---
+
+# Body Parser Middleware
 
 This comprehensive guide shows you how to use the `BodyParserMiddleware` and `bodyParser` function with generics for type-safe request body parsing in your Noony Framework applications.
 

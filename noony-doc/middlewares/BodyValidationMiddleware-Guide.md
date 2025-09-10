@@ -1,4 +1,10 @@
-# BodyValidationMiddleware Complete Guide
+---
+title: Body Validation
+description: Complete guide to using BodyValidationMiddleware with Zod schemas for type-safe request validation
+sidebar_position: 2
+---
+
+# Body Validation Middleware
 
 This comprehensive guide shows you how to use the `BodyValidationMiddleware` and `bodyValidatorMiddleware` with Zod schemas for type-safe request validation in your Noony Framework applications.
 

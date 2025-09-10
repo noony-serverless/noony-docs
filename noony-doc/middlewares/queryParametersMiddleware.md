@@ -1,4 +1,10 @@
-# QueryParametersMiddleware Guide
+---
+title: Query Parameters
+description: Complete guide to extracting and validating URL query parameters with QueryParametersMiddleware
+sidebar_position: 6
+---
+
+# Query Parameters Middleware
 
 A comprehensive guide to using the QueryParametersMiddleware for extracting and validating URL query parameters in the Noony Framework.
 

@@ -27,9 +27,16 @@ function HomepageHeader() {
             🚀 Get Started
           </Link>
           <Link
-            className={clsx('button', styles.heroButton, styles.heroButtonSecondary)}
-            to="/docs/tutorial-basics/tech-radar">
-            📊 View Tech Radar
+            className="button button--secondary button--lg"
+            to="/docs/examples">
+            Explore Examples
+          </Link>
+        </div>
+        <div className={styles.button}>
+          <Link
+            className="button button--secondary button--lg"
+            to="/docs/getting-started">
+            Quick Start Guide
           </Link>
         </div>
       </div>

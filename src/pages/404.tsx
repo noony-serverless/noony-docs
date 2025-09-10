@@ -55,11 +55,11 @@ export default function NotFound(): ReactNode {
                       <p>Learn CloudFlow basics</p>
                     </div>
                   </Link>
-                  <Link to="/docs/tutorial-basics/tech-radar" className={styles.helpfulLink}>
-                    <span className={styles.linkIcon}>📊</span>
+                  <Link to="/docs/examples" className={styles.helpfulLink}>
+                    <span className={styles.linkIcon}>�</span>
                     <div>
-                      <strong>Tech Radar</strong>
-                      <p>Explore our technology stack</p>
+                      <strong>Examples</strong>
+                      <p>Browse code examples and recipes</p>
                     </div>
                   </Link>
                   <Link to="/blog" className={styles.helpfulLink}>

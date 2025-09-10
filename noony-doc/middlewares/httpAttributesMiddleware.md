@@ -1,4 +1,10 @@
-# HTTP Attributes Middleware Guide
+---
+title: HTTP Attributes
+description: Complete guide to extracting and processing HTTP attributes like headers, query parameters, and path parameters
+sidebar_position: 3
+---
+
+# HTTP Attributes Middleware
 
 A comprehensive guide to using HTTP attribute extraction middlewares for processing path parameters, headers, and query validation in the Noony Framework.
 

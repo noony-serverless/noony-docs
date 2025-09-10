@@ -1,0 +1,8 @@
+{
+  "label": "Middlewares",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "description": "Complete guide to Noony middlewares - building blocks for request processing, validation, and more."
+  }
+}

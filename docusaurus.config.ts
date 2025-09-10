@@ -5,8 +5,8 @@ import type * as Preset from '@docusaurus/preset-classic';
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 const config: Config = {
-  title: 'CloudFlow Functions',
-  tagline: 'Next-generation serverless framework for modern cloud applications',
+  title: 'Noony Framework',
+  tagline: 'Type-safe serverless framework for modern cloud applications',
   favicon: 'img/favicon.ico',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
@@ -15,18 +15,22 @@ const config: Config = {
   },
 
   // Set the production url of your site here
-  url: 'https://cloudflow-functions.dev',
+  url: 'https://noony-serverless.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/',
+  baseUrl: '/noony-docs/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'cloudflow', // Usually your GitHub org/user name.
-  projectName: 'cloudflow-functions', // Usually your repo name.
+  organizationName: 'noony-serverless', // Usually your GitHub org/user name.
+  projectName: 'noony-docs', // Usually your repo name.
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
+
+  // GitHub Pages deployment configuration
+  trailingSlash: false,
+  deploymentBranch: 'gh-pages',
 
   // Even if you don't use internationalization, you can use this field to set
   // useful metadata like html lang. For example, if your site is Chinese, you
@@ -46,22 +50,7 @@ const config: Config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/cloudflow/cloudflow-functions/tree/main/packages/create-cloudflow/templates/shared/',
-        },
-        blog: {
-          showReadingTime: true,
-          feedOptions: {
-            type: ['rss', 'atom'],
-            xslt: true,
-          },
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
-          // Useful options to enforce blogging best practices
-          onInlineTags: 'warn',
-          onInlineAuthors: 'warn',
-          onUntruncatedBlogPosts: 'warn',
+            'https://github.com/noony-serverless/noony-docs/tree/main/noony-doc/',
         },
         theme: {
           customCss: './src/css/custom.css',
@@ -70,13 +59,20 @@ const config: Config = {
     ],
   ],
 
+  themes: ['@docusaurus/theme-mermaid'],
+
+  // Enable Mermaid in Markdown
+  markdown: {
+    mermaid: true,
+  },
+
   themeConfig: {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
-      title: 'CloudFlow',
+      title: 'Noony',
       logo: {
-        alt: 'CloudFlow Functions Logo',
+        alt: 'Noony Framework Logo',
         src: 'img/logo.svg',
       },
       items: [
@@ -87,13 +83,7 @@ const config: Config = {
           label: 'Documentation',
         },
         {
-          to: '/docs/tutorial-basics/tech-radar',
-          label: 'Tech Radar',
-          position: 'left',
-        },
-        {to: '/blog', label: 'Blog', position: 'left'},
-        {
-          href: 'https://github.com/cloudflow/cloudflow-functions',
+          href: 'https://github.com/noony-serverless/noony-docs',
           label: 'GitHub',
           position: 'right',
         },
@@ -111,15 +101,11 @@ const config: Config = {
             },
             {
               label: 'Documentation',
-              to: '/docs/tutorial-basics/create-a-document',
+              to: '/docs/getting-started',
             },
             {
-              label: 'Tech Radar',
-              to: '/docs/tutorial-basics/tech-radar',
-            },
-            {
-              label: 'Pricing',
-              href: 'https://cloudflow.dev/pricing',
+              label: 'Examples',
+              to: '/docs/examples',
             },
           ],
         },
@@ -127,20 +113,20 @@ const config: Config = {
           title: 'Developers',
           items: [
             {
-              label: 'API Reference',
-              href: 'https://docs.cloudflow.dev/api',
+              label: 'Core Concepts',
+              to: '/docs/core-concepts',
             },
             {
-              label: 'CLI Documentation',
-              href: 'https://docs.cloudflow.dev/cli',
+              label: 'Middlewares',
+              to: '/docs/middlewares',
             },
             {
-              label: 'Examples',
-              href: 'https://github.com/cloudflow/examples',
+              label: 'Authentication',
+              to: '/docs/authentication',
             },
             {
-              label: 'Status Page',
-              href: 'https://status.cloudflow.dev',
+              label: 'Advanced Topics',
+              to: '/docs/advanced',
             },
           ],
         },
@@ -149,49 +135,48 @@ const config: Config = {
           items: [
             {
               label: 'GitHub',
-              href: 'https://github.com/cloudflow/cloudflow-functions',
+              href: 'https://github.com/noony-serverless/noony-docs',
             },
             {
               label: 'Discord',
-              href: 'https://discord.gg/cloudflow',
+              href: 'https://discord.gg/noony',
             },
             {
-              label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/cloudflow',
+              label: 'Documentation',
+              href: 'https://noony-serverless.github.io/noony-docs',
             },
             {
-              label: 'Newsletter',
-              href: 'https://cloudflow.dev/newsletter',
+              label: 'Examples Repository',
+              href: 'https://github.com/noony-serverless/examples',
             },
           ],
         },
         {
-          title: 'Company',
+          title: 'More',
           items: [
             {
-              label: 'Blog',
-              to: '/blog',
+              label: 'Changelog',
+              href: 'https://github.com/noony-serverless/noony-docs/releases',
             },
             {
-              label: 'About Us',
-              href: 'https://cloudflow.dev/about',
+              label: 'Contributing',
+              href: 'https://github.com/noony-serverless/noony-docs/blob/main/CONTRIBUTING.md',
             },
             {
-              label: 'Careers',
-              href: 'https://cloudflow.dev/careers',
-            },
-            {
-              label: 'Contact',
-              href: 'https://cloudflow.dev/contact',
+              label: 'npm Package',
+              href: 'https://www.npmjs.com/package/@noony/core',
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} CloudFlow Functions. Built for the cloud, designed for developers.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Noony Framework. Type-safe serverless for modern developers.`,
     },
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
+    },
+    mermaid: {
+      theme: {light: 'neutral', dark: 'dark'},
     },
   } satisfies Preset.ThemeConfig,
 };

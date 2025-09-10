@@ -1,4 +1,10 @@
-# RouteGuards Getting Started Guide
+---
+title: Getting Started
+description: Quick guide to implementing authentication and authorization with RouteGuards
+sidebar_position: 1
+---
+
+# Getting Started with Route Guards
 
 A practical, focused guide to quickly implement authentication and authorization with the Noony Framework's RouteGuards system. This guide is designed for developers who want to get up and running quickly with copy-paste examples.
 

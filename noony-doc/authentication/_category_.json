@@ -1,0 +1,8 @@
+{
+  "label": "Authentication & Security",
+  "position": 4,
+  "link": {
+    "type": "generated-index",
+    "description": "Secure your functions with route guards, token validation, and authentication middlewares."
+  }
+}

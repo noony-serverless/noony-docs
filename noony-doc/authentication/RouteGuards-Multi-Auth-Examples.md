@@ -1,4 +1,10 @@
-# RouteGuards Multi-Authentication Examples
+---
+title: Multi-Auth Examples
+description: Comprehensive examples using RouteGuards with JWT, OAuth, API Keys, and more
+sidebar_position: 3
+---
+
+# Multi-Authentication Examples
 
 A comprehensive guide demonstrating how to use the Noony Framework's RouteGuards system with multiple authentication types: JWT, OAuth, API Keys, Basic Auth, and Google OAuth.
 

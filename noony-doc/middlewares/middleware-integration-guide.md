@@ -1,3 +1,9 @@
+---
+title: Integration Guide
+description: How to combine multiple middlewares for robust, type-safe request processing pipelines
+sidebar_position: 10
+---
+
 # Middleware Integration Guide
 
 A comprehensive guide showing how QueryParametersMiddleware, HeaderVariablesMiddleware, and HTTP Attributes middleware work together to create robust, type-safe request processing pipelines in the Noony Framework.

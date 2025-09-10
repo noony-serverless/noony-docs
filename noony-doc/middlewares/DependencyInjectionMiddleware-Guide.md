@@ -1,4 +1,10 @@
-# DependencyInjectionMiddleware Complete Guide
+---
+title: Dependency Injection
+description: Complete guide to using DependencyInjectionMiddleware for better code organization and reusability
+sidebar_position: 4
+---
+
+# Dependency Injection Middleware
 
 This comprehensive guide shows you how to use the `DependencyInjectionMiddleware` with named functions for better code organization, reusability, and maintainability.
 
