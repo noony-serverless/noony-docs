@@ -4,11 +4,11 @@ description: Complete guide to using BodyValidationMiddleware with Zod schemas f
 sidebar_position: 2
 ---
 
-# Body Validation Middleware
+# BodyValidationMiddleware Complete Guide
 
 This comprehensive guide shows you how to use the `BodyValidationMiddleware` and `bodyValidatorMiddleware` with Zod schemas for type-safe request validation in your Noony Framework applications.
 
-> **Important**: The `BodyValidationMiddleware` supports dual generics `<T, U>` where `T` is the request body type and `U` is the user/context type. This enables full type safety across your entire middleware chain.
+> **Important**: The `BodyValidationMiddleware` uses a single generic `<T>` where `T` is the request body type. User/context types are handled via `context.user` from authentication middleware. This provides full type safety across your entire middleware chain.
 
 ## Table of Contents
 
@@ -60,32 +60,30 @@ const createUserHandler = new Handler<UserRequest>()
 
 The framework provides two ways to validate request bodies:
 
-### 1. Class-based Approach: `BodyValidationMiddleware<T, U>`
+### 1. Class-based Approach: `BodyValidationMiddleware<T>`
 
 ```typescript
 import { BodyValidationMiddleware } from '@/middlewares/bodyValidationMiddleware';
 
-// Full dual generics support: <RequestType, UserType>
-const handler = new Handler<UserRequest, AuthenticatedUser>()
-  .use(new BodyValidationMiddleware<UserRequest, AuthenticatedUser>(userSchema))
+const handler = new Handler<UserRequest>()
+  .use(new BodyValidationMiddleware<UserRequest>(userSchema))
   .handle(async (context) => {
     const data = context.req.validatedBody!; // Type: UserRequest
-    const user = context.user!; // Type: AuthenticatedUser
+    const user = context.user!;
     return { success: true };
   });
 ```
 
-### 2. Functional Approach: `bodyValidatorMiddleware<T, U>()`
+### 2. Functional Approach: `bodyValidatorMiddleware<T>()`
 
 ```typescript
 import { bodyValidatorMiddleware } from '@/middlewares/bodyValidationMiddleware';
 
-// Full dual generics support: <RequestType, UserType>
-const handler = new Handler<UserRequest, AuthenticatedUser>()
-  .use(bodyValidatorMiddleware<UserRequest, AuthenticatedUser>(userSchema))
+const handler = new Handler<UserRequest>()
+  .use(bodyValidatorMiddleware<UserRequest>(userSchema))
   .handle(async (context) => {
     const data = context.req.parsedBody as UserRequest; // Type: UserRequest
-    const user = context.user!; // Type: AuthenticatedUser  
+    const user = context.user!;
     return { success: true };
   });
 ```
@@ -99,12 +97,11 @@ const handler = new Handler<UserRequest, AuthenticatedUser>()
 | **Type Safety** | Explicit via generics | Requires type assertion |
 | **Recommended For** | New projects, explicit APIs | Quick setup, functional style |
 
-## Dual Generics Pattern
+## Generics Pattern
 
-The `BodyValidationMiddleware` supports dual generics `<T, U>` for complete type safety:
+The `BodyValidationMiddleware` supports a generic `<T>` for type safety:
 
-- **T**: Request body type (validated data)  
-- **U**: User/context type (authenticated user)
+- **T**: Request body type (validated data)
 
 ### Complete Integration Example
 
@@ -130,10 +127,10 @@ interface AuthenticatedUser {
   roles: string[];
 }
 
-// 3. Handler with full dual generic type safety
-async function handleCreateUser(context: Context<CreateUserRequest, AuthenticatedUser>) {
+// 3. Handler with full type safety
+async function handleCreateUser(context: Context<CreateUserRequest>) {
   const userData = context.req.validatedBody!; // Type: CreateUserRequest
-  const currentUser = context.user!; // Type: AuthenticatedUser
+  const currentUser = context.user! as AuthenticatedUser; // Type assertion for user
   
   console.log(`${currentUser.name} creating user: ${userData.name}`);
   
@@ -147,19 +144,19 @@ async function handleCreateUser(context: Context<CreateUserRequest, Authenticate
   };
 }
 
-// 4. Complete middleware chain with dual generics
-export const createUserHandler = new Handler<CreateUserRequest, AuthenticatedUser>()
-  .use(new AuthenticationMiddleware<AuthenticatedUser>(tokenVerifier))
-  .use(new BodyValidationMiddleware<CreateUserRequest, AuthenticatedUser>(createUserSchema))
+// 4. Complete middleware chain
+export const createUserHandler = new Handler<CreateUserRequest>()
+  .use(new AuthenticationMiddleware(tokenVerifier))
+  .use(new BodyValidationMiddleware(createUserSchema))
   .handle(handleCreateUser);
 ```
 
-### Benefits of Dual Generics
+### Benefits of Generics
 
-✅ **Full Type Safety**: Both request data and user context are typed  
+✅ **Full Type Safety**: Request data and user context are typed  
 ✅ **IntelliSense Support**: Auto-completion for all properties  
 ✅ **Compile-time Validation**: Catch type errors during development  
-✅ **Middleware Compatibility**: Works seamlessly with other typed middlewares  
+✅ **Middleware Compatibility**: Works seamlessly with other typed middlewares
 
 ## Basic Usage Examples
 
@@ -483,9 +480,9 @@ const profileUpdateSchema = z.object({
 
 type ProfileUpdateRequest = z.infer<typeof profileUpdateSchema>;
 
-async function handleUpdateProfile(context: Context<ProfileUpdateRequest, AuthenticatedUser>) {
+async function handleUpdateProfile(context: Context<ProfileUpdateRequest>) {
   const updates = context.req.validatedBody!; // Typed as ProfileUpdateRequest
-  const user = context.user!; // Typed as AuthenticatedUser
+  const user = context.user! as AuthenticatedUser;
   
   console.log(`User ${user.name} (${user.email}) updating profile`);
   
@@ -502,7 +499,7 @@ async function handleUpdateProfile(context: Context<ProfileUpdateRequest, Authen
   return { success: true, profile: updatedProfile };
 }
 
-export const updateProfileHandler = new Handler<ProfileUpdateRequest, AuthenticatedUser>()
+export const updateProfileHandler = new Handler<ProfileUpdateRequest>()
   .use(new AuthenticationMiddleware(tokenVerifier))
   .use(new BodyValidationMiddleware(profileUpdateSchema))
   .handle(handleUpdateProfile);
@@ -559,7 +556,7 @@ export const createUserWithServicesHandler = new Handler<UserCreationRequest>()
 
 ```typescript
 // Complete middleware stack example
-const completeUserHandler = new Handler<UserCreationRequest, AuthenticatedUser>()
+const completeUserHandler = new Handler<UserCreationRequest>()
   .use(new ErrorHandlerMiddleware()) // 1. First - catches all errors
   .use(new DependencyInjectionMiddleware(services)) // 2. Setup DI container
   .use(new AuthenticationMiddleware(tokenVerifier)) // 3. Authenticate user
@@ -695,9 +692,9 @@ export type CreateOrderRequest = z.infer<typeof createOrderSchema>;
 
 ```typescript
 // handlers/order-handlers.ts
-async function handleCreateOrder(context: Context<CreateOrderRequest, AuthenticatedUser>) {
+async function handleCreateOrder(context: Context<CreateOrderRequest>) {
   const orderData = context.req.validatedBody!;
-  const user = context.user!;
+  const user = context.user! as AuthenticatedUser;
   
   console.log(`Creating order for ${user.name} with ${orderData.items.length} items`);
   
@@ -762,7 +759,7 @@ async function handleCreateOrder(context: Context<CreateOrderRequest, Authentica
   };
 }
 
-export const createOrderHandler = new Handler<CreateOrderRequest, AuthenticatedUser>()
+export const createOrderHandler = new Handler<CreateOrderRequest>()
   .use(new AuthenticationMiddleware(tokenVerifier))
   .use(new BodyValidationMiddleware(createOrderSchema))
   .handle(handleCreateOrder);
@@ -792,9 +789,9 @@ export type BlogPostRequest = z.infer<typeof blogPostSchema>;
 
 ```typescript
 // handlers/blog-handlers.ts
-async function handleCreateBlogPost(context: Context<BlogPostRequest, AuthenticatedUser>) {
+async function handleCreateBlogPost(context: Context<BlogPostRequest>) {
   const postData = context.req.validatedBody!;
-  const author = context.user!;
+  const author = context.user! as AuthenticatedUser;
   
   // Check if user can create featured posts
   if (postData.featured && !author.roles.includes('editor')) {
@@ -842,7 +839,7 @@ async function handleCreateBlogPost(context: Context<BlogPostRequest, Authentica
   return { success: true, post: blogPost };
 }
 
-export const createBlogPostHandler = new Handler<BlogPostRequest, AuthenticatedUser>()
+export const createBlogPostHandler = new Handler<BlogPostRequest>()
   .use(new AuthenticationMiddleware(tokenVerifier))
   .use(new BodyValidationMiddleware(blogPostSchema))
   .handle(handleCreateBlogPost);
@@ -899,13 +896,13 @@ const userWithAddressSchema = z.object({
 
 ```typescript
 // ✅ Good: Use Handler generics for full type safety
-async function handleTypedRequest(context: Context<UserRequest, AuthenticatedUser>) {
+async function handleTypedRequest(context: Context<UserRequest>) {
   const userData = context.req.validatedBody!; // Type: UserRequest
-  const user = context.user!; // Type: AuthenticatedUser
+  const user = context.user! as AuthenticatedUser;
   // Both are fully typed
 }
 
-const typedHandler = new Handler<UserRequest, AuthenticatedUser>()
+const typedHandler = new Handler<UserRequest>()
   .use(new BodyValidationMiddleware(userSchema))
   .handle(handleTypedRequest);
 

@@ -4,7 +4,7 @@ description: Complete guide to validating and extracting HTTP headers with Heade
 sidebar_position: 5
 ---
 
-# Header Variables Middleware
+# HeaderVariablesMiddleware Guide
 
 A comprehensive guide to using the HeaderVariablesMiddleware for validating and extracting HTTP headers in the Noony Framework.
 
@@ -166,7 +166,7 @@ interface APIResponse {
   };
 }
 
-const typedApiHandler = new Handler<any, APIResponse>()
+const typedApiHandler = new Handler<any>()
   .use(new HeaderVariablesMiddleware(['authorization', 'content-type', 'x-api-key']))
   .handle(async (context) => {
     // Type assertion with confidence due to middleware validation
@@ -195,11 +195,11 @@ const typedApiHandler = new Handler<any, APIResponse>()
 
 ```typescript
 // Generic factory for header-validated handlers
-function createHeaderValidatedHandler<THeaders extends Record<string, any>, TResponse>(
+function createHeaderValidatedHandler<THeaders extends Record<string>, TResponse>(
   requiredHeaders: (keyof THeaders)[],
   handler: (headers: THeaders, context: Context) => Promise<TResponse>
 ) {
-  return new Handler<any, TResponse>()
+  return new Handler<any>()
     .use(new HeaderVariablesMiddleware(requiredHeaders as string[]))
     .handle(async (context) => {
       const headers = context.req.headers as THeaders;
@@ -214,7 +214,7 @@ interface TenantHeaders {
   'x-client-id': string;
 }
 
-const tenantHandler = createHeaderValidatedHandler<TenantHeaders, TenantResponse>(
+const tenantHandler = createHeaderValidatedHandler<TenantHeaders>(
   ['x-tenant-id', 'authorization', 'x-client-id'],
   async (headers) => {
     const tenant = await getTenantById(headers['x-tenant-id']);
@@ -250,7 +250,7 @@ function createAdvancedHeaderHandler<
   config: HeaderValidationConfig<THeaders>,
   handler: (headers: Required<Pick<THeaders, keyof THeaders>>, context: Context) => Promise<TResponse>
 ) {
-  return new Handler<any, TResponse>()
+  return new Handler<any>()
     .use(new HeaderVariablesMiddleware(config.required as string[]))
     .handle(async (context) => {
       const headers = context.req.headers as THeaders;
@@ -273,7 +273,7 @@ interface ComplexHeaders {
   'x-client-version'?: string;
 }
 
-const complexHandler = createAdvancedHeaderHandler<ComplexHeaders, ComplexResponse>({
+const complexHandler = createAdvancedHeaderHandler<ComplexHeaders>({
   required: ['authorization', 'x-tenant-id', 'content-type'],
   optional: ['accept', 'x-client-version'],
   validator: (headers) => {
@@ -1135,7 +1135,7 @@ const secureHandler = new Handler()
     
     // Validate auth token format
     const auth = headers.authorization as string;
-    if (!auth.match(/^Bearer [A-Za-z0-9-._~+/]+=*$/)) {
+    if (!auth.match(/^Bearer [A-Za-z0-9-._~+\/]+=*$/)) {
       throw new SecurityError('Invalid authorization token format');
     }
     

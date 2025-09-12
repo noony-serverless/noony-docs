@@ -4,7 +4,7 @@ description: Complete guide to extracting and processing HTTP attributes like he
 sidebar_position: 3
 ---
 
-# HTTP Attributes Middleware
+# HTTP Attributes Middleware Guide
 
 A comprehensive guide to using HTTP attribute extraction middlewares for processing path parameters, headers, and query validation in the Noony Framework.
 
@@ -15,10 +15,9 @@ A comprehensive guide to using HTTP attribute extraction middlewares for process
 3. [HeaderVariablesValidator](#headervariablesvalidator)
 4. [ValidatedQueryParameters](#validatedqueryparameters)
 5. [TypeScript Generics Integration](#typescript-generics-integration)
-6. [Advanced Examples](#advanced-examples)
-7. [Error Handling](#error-handling)
-8. [Performance Considerations](#performance-considerations)
-9. [Best Practices](#best-practices)
+6. [Error Handling](#error-handling)
+7. [Performance Considerations](#performance-considerations)
+8. [Best Practices](#best-practices)
 
 ## Overview
 
@@ -80,7 +79,7 @@ interface UserResponse {
   user: User;
 }
 
-const typedUserHandler = new Handler<UserParams, UserResponse>()
+const typedUserHandler = new Handler<UserParams>()
   .use(new PathParametersMiddleware())
   .handle(async (context) => {
     // Type-safe parameter access
@@ -101,7 +100,7 @@ interface NestedResourceParams {
   taskId: string;
 }
 
-const nestedResourceHandler = new Handler<NestedResourceParams, TaskResponse>()
+const nestedResourceHandler = new Handler<NestedResourceParams>()
   .use(new PathParametersMiddleware())
   .handle(async (context) => {
     const { orgId, projectId, taskId } = context.req.params as NestedResourceParams;
@@ -128,7 +127,7 @@ interface ProductParams {
   productId: string;
 }
 
-const productDetailHandler = new Handler<ProductParams, ProductDetailResponse>()
+const productDetailHandler = new Handler<ProductParams>()
   .use(new PathParametersMiddleware())
   .handle(async (context) => {
     const { category, productId } = context.req.params as ProductParams;
@@ -174,10 +173,10 @@ const blogPostHandler = new Handler()
 
 ```typescript
 // Generic factory for typed path parameters
-function createResourceHandler<TParams extends Record<string, string>, TResponse>(
+function createResourceHandler<TParams extends Record<string>, TResponse>(
   handler: (params: TParams) => Promise<TResponse>
 ) {
-  return new Handler<TParams, TResponse>()
+  return new Handler<TParams>()
     .use(new PathParametersMiddleware())
     .handle(async (context) => {
       const params = context.req.params as TParams;
@@ -191,7 +190,7 @@ interface OrderParams {
   orderId: string;
 }
 
-const orderHandler = createResourceHandler<OrderParams, OrderResponse>(
+const orderHandler = createResourceHandler<OrderParams>(
   async ({ userId, orderId }) => {
     const order = await getOrderForUser(orderId, userId);
     const items = await getOrderItems(orderId);
@@ -363,18 +362,18 @@ const paginatedListHandler = new Handler()
 const searchSchema = z.object({
   q: z.string().min(1, 'Search query is required'),
   category: z.string().optional(),
-  price_min: z.string().regex(/^\d+(\.\d{2})?$/, 'Invalid price format').optional(),
-  price_max: z.string().regex(/^\d+(\.\d{2})?$/, 'Invalid price format').optional(),
+  price_min: z.string().regex(/^\d+(\.\d{2})?$/).optional(),
+  price_max: z.string().regex(/^\d+(\.\d{2})?$/).optional(),
   in_stock: z.enum(['true', 'false']).optional(),
   brand: z.string().optional(),
-  rating_min: z.string().regex(/^[1-5]$/, 'Rating must be 1-5').optional(),
+  rating_min: z.string().regex(/^[1-5]$/).optional(),
   sort_by: z.enum(['price', 'rating', 'name', 'popularity']).default('name'),
   sort_order: z.enum(['asc', 'desc']).default('asc')
 });
 
 type SearchQuery = z.infer<typeof searchSchema>;
 
-const productSearchHandler = new Handler<SearchQuery, SearchResponse>()
+const productSearchHandler = new Handler<SearchQuery>()
   .use(validatedQueryParameters(searchSchema))
   .handle(async (context) => {
     const query = context.req.query as SearchQuery;
@@ -415,8 +414,8 @@ const productSearchHandler = new Handler<SearchQuery, SearchResponse>()
 ```typescript
 // Analytics reporting with date validation
 const reportingSchema = z.object({
-  start_date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Date must be YYYY-MM-DD format'),
-  end_date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Date must be YYYY-MM-DD format'),
+  start_date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+  end_date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
   granularity: z.enum(['hour', 'day', 'week', 'month']).default('day'),
   metrics: z.string().transform(val => val.split(',').map(m => m.trim())).optional(),
   segment: z.string().optional(),
@@ -495,7 +494,7 @@ const userUpdateQuerySchema = z.object({
   include_profile: z.enum(['true', 'false']).default('false')
 });
 
-const updateUserHandler = new Handler<UserResourceParams, UserUpdateResponse>()
+const updateUserHandler = new Handler<UserResourceParams>()
   .use(new PathParametersMiddleware()) // Extract userId from path
   .use(headerVariablesValidator(['content-type', 'authorization', 'x-client-id'])) // Validate headers
   .use(validatedQueryParameters(userUpdateQuerySchema)) // Validate query params
@@ -558,7 +557,7 @@ function createResourceHandler<
     middlewares.push(validatedQueryParameters(options.querySchema));
   }
   
-  return new Handler<TParams, TResponse>()
+  return new Handler<TParams>()
     .use(...middlewares)
     .handle(async (context) => {
       const params = context.req.params as TParams;
@@ -756,7 +755,7 @@ interface ResourceParams {
   resourceId: string;
 }
 
-const typedHandler = new Handler<ResourceParams, ResourceResponse>()
+const typedHandler = new Handler<ResourceParams>()
   .use(new PathParametersMiddleware())
   .handle(async (context) => {
     const params = context.req.params as ResourceParams;

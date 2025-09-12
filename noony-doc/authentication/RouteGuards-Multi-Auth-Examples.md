@@ -4,14 +4,13 @@ description: Comprehensive examples using RouteGuards with JWT, OAuth, API Keys,
 sidebar_position: 3
 ---
 
-# Multi-Authentication Examples
+# RouteGuards Multi-Authentication Examples
 
 A comprehensive guide demonstrating how to use the Noony Framework's RouteGuards system with multiple authentication types: JWT, OAuth, API Keys, Basic Auth, and Google OAuth.
 
 ## Table of Contents
 
-- [RouteGuards Multi-Authentication Examples](#routeguards-multi-authentication-examples)
-  - [Table of Contents](#table-of-contents)
+- [Table of Contents](#table-of-contents)
   - [JWT Authentication](#jwt-authentication)
     - [Standard JWT Setup](#standard-jwt-setup)
   - [OAuth Authentication](#oauth-authentication)
@@ -626,7 +625,7 @@ const basicAuthVerifier: CustomTokenVerificationPort<BasicAuthUser> = {
       // Reset failed attempts and update last login
       await database.users.updateOne(
         { _id: user._id },
-        { 
+        {
           $set: { 
             failedLoginAttempts: 0,
             lastLogin: new Date()

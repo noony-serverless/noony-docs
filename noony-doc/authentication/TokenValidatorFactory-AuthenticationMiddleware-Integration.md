@@ -4,7 +4,7 @@ description: Using TokenValidatorFactory with AuthenticationMiddleware for enter
 sidebar_position: 4
 ---
 
-# Token Validation Integration
+# TokenValidatorFactory with AuthenticationMiddleware Integration
 
 This guide demonstrates how to use the `TokenValidatorFactory` with the `AuthenticationMiddleware` to create reusable, enterprise-grade authentication for your handlers.
 
@@ -913,7 +913,7 @@ export interface AuthenticatedUser {
 }
 
 // Use with handlers for full type safety
-const typedHandler = new Handler<any, AuthenticatedUser>()
+const typedHandler = new Handler<any>()
   .use(authMiddleware)
   .handle(async (request, context) => {
     // context.user is now fully typed as AuthenticatedUser

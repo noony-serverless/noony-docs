@@ -4,7 +4,7 @@ description: Complete guide to extracting and validating URL query parameters wi
 sidebar_position: 6
 ---
 
-# Query Parameters Middleware
+# QueryParametersMiddleware Guide
 
 A comprehensive guide to using the QueryParametersMiddleware for extracting and validating URL query parameters in the Noony Framework.
 
@@ -153,7 +153,7 @@ interface SearchResponse {
 }
 
 // Type-safe handler with generics
-const searchProductsHandler = new Handler<SearchQuery, SearchResponse>()
+const searchProductsHandler = new Handler<SearchQuery>()
   .use(new QueryParametersMiddleware(['q'])) // 'q' is required
   .handle(async (context) => {
     // context.req.query is now typed, but still needs runtime parsing
@@ -185,11 +185,11 @@ const searchProductsHandler = new Handler<SearchQuery, SearchResponse>()
 
 ```typescript
 // Generic query parameter handler factory
-function createQueryHandler<TQuery extends Record<string, any>, TResponse>(
+function createQueryHandler<TQuery extends Record<string>, TResponse>(
   requiredParams: (keyof TQuery)[],
   handler: (query: TQuery) => Promise<TResponse>
 ) {
-  return new Handler<TQuery, TResponse>()
+  return new Handler<TQuery>()
     .use(new QueryParametersMiddleware(requiredParams as string[]))
     .handle(async (context) => {
       const query = context.req.query as unknown as TQuery;
@@ -214,7 +214,7 @@ interface UserListResponse {
   };
 }
 
-const userListHandler = createQueryHandler<PaginationQuery, UserListResponse>(
+const userListHandler = createQueryHandler<PaginationQuery>( // TResponse is inferred
   ['page', 'limit'], // Required parameters
   async (query) => {
     const page = parseInt(query.page);
@@ -256,7 +256,7 @@ interface ProductFilterQuery {
   limit?: string;
 }
 
-const productFilterHandler = new Handler<ProductFilterQuery, ProductResponse>()
+const productFilterHandler = new Handler<ProductFilterQuery>()
   .use(new QueryParametersMiddleware(['category'])) // Category is required
   .handle(async (context) => {
     const query = context.req.query as unknown as ProductFilterQuery;
@@ -301,7 +301,7 @@ interface AnalyticsQuery {
   format?: 'json' | 'csv' | 'excel';
 }
 
-const analyticsHandler = new Handler<AnalyticsQuery, AnalyticsResponse>()
+const analyticsHandler = new Handler<AnalyticsQuery>()
   .use(new QueryParametersMiddleware(['start_date', 'end_date']))
   .handle(async (context) => {
     const query = context.req.query as unknown as AnalyticsQuery;
@@ -350,7 +350,7 @@ interface SearchQuery {
   include_content?: 'true' | 'false';
 }
 
-const searchHandler = new Handler<SearchQuery, SearchResponse>()
+const searchHandler = new Handler<SearchQuery>()
   .use(new QueryParametersMiddleware(['q']))
   .handle(async (context) => {
     const query = context.req.query as unknown as SearchQuery;
@@ -461,7 +461,7 @@ const searchQuerySchema = z.object({
 
 type SearchQuery = z.infer<typeof searchQuerySchema>;
 
-const zodValidatedHandler = new Handler<SearchQuery, SearchResponse>()
+const zodValidatedHandler = new Handler<SearchQuery>()
   .use(new QueryParametersMiddleware(['q']))
   .handle(async (context) => {
     // Validate with Zod

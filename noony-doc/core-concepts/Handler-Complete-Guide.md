@@ -4,7 +4,7 @@ description: Complete guide to understanding and using the Handler class with Ty
 sidebar_position: 1
 ---
 
-# Handler Architecture
+# Noony Handler Complete Guide
 
 A comprehensive guide to understanding and using the `Handler` class with TypeScript generics in the Noony Serverless Framework. This guide covers everything from basic concepts to advanced patterns with detailed examples.
 
@@ -19,7 +19,7 @@ A comprehensive guide to understanding and using the `Handler` class with TypeSc
 7. [Framework Integration](#framework-integration)
 8. [Performance Optimizations](#performance-optimizations)
 9. [Best Practices](#best-practices)
-10. [Testing Strategies](#testing-strategies)
+10. [Testing Strategies](#5-testing-strategies)
 
 ## Introduction
 
@@ -39,13 +39,13 @@ The `Handler` class is the core orchestrator of the Noony Serverless Framework. 
 ### Handler Class Structure
 
 ```typescript
-export class Handler<T = unknown, U = unknown> {
-  private baseMiddlewares: BaseMiddleware<T, U>[] = [];
-  private handler!: (context: Context<T, U>) => Promise<void>;
+export class Handler<T = unknown> {
+  private baseMiddlewares: BaseMiddleware<T>[] = [];
+  private handler!: (context: Context<T>) => Promise<void>;
   
   // Performance optimizations
-  private reversedMiddlewares: BaseMiddleware<T, U>[] = [];
-  private errorMiddlewares: BaseMiddleware<T, U>[] = [];
+  private reversedMiddlewares: BaseMiddleware<T>[] = [];
+  private errorMiddlewares: BaseMiddleware<T>[] = [];
   private middlewaresPrecomputed = false;
 }
 ```
@@ -57,10 +57,10 @@ export class Handler<T = unknown, U = unknown> {
 ### BaseMiddleware Interface
 
 ```typescript
-export interface BaseMiddleware<T = unknown, U = unknown> {
-  before?: (context: Context<T, U>) => Promise<void>;
-  after?: (context: Context<T, U>) => Promise<void>;
-  onError?: (error: Error, context: Context<T, U>) => Promise<void>;
+export interface BaseMiddleware<T = unknown> {
+  before?: (context: Context<T>) => Promise<void>;
+  after?: (context: Context<T>) => Promise<void>;
+  onError?: (error: Error, context: Context<T>) => Promise<void>;
 }
 ```
 
@@ -72,7 +72,7 @@ export interface BaseMiddleware<T = unknown, U = unknown> {
 ### Context Object
 
 ```typescript
-export interface Context<T = unknown, V = unknown> {
+export interface Context<T = unknown> {
   readonly req: GenericRequest<T>;           // Request with typed body
   readonly res: GenericResponse;             // Framework-agnostic response
   container?: Container;                     // TypeDI container
@@ -117,8 +117,8 @@ The Handler supports type transformations through the `use` method:
 
 ```typescript
 use<NewT = T, NewU = U>(
-  middleware: BaseMiddleware<NewT, NewU>
-): Handler<NewT, NewU>
+  middleware: BaseMiddleware<NewT>
+): Handler<T>
 ```
 
 This allows middleware to transform types as they flow through the pipeline.
@@ -331,10 +331,10 @@ interface AuthenticatedUser {
 }
 
 // 2. Create authentication middleware
-class JWTAuthMiddleware implements BaseMiddleware<unknown, AuthenticatedUser> {
+class JWTAuthMiddleware implements BaseMiddleware<unknown> {
   constructor(private tokenVerifier: CustomTokenVerificationPort<AuthenticatedUser>) {}
 
-  async before(context: Context<unknown, AuthenticatedUser>): Promise<void> {
+  async before(context: Context<unknown>): Promise<void> {
     const authHeader = context.req.headers.authorization;
     if (!authHeader?.startsWith('Bearer ')) {
       throw new Error('Authorization header required');
@@ -349,11 +349,11 @@ class JWTAuthMiddleware implements BaseMiddleware<unknown, AuthenticatedUser> {
 }
 
 // 3. Create handler with both request and user types
-const secureUserHandler = new Handler<CreateUserRequest, AuthenticatedUser>()
+const secureUserHandler = new Handler<CreateUserRequest>()
   .use(new ErrorHandlerMiddleware())
   .use(new JWTAuthMiddleware(tokenVerifier))
   .use(new BodyValidationMiddleware(createUserSchema))
-  .handle(async (context: Context<CreateUserRequest, AuthenticatedUser>) => {
+  .handle(async (context: Context<CreateUserRequest>) => {
     const userData = context.req.validatedBody!;  // Type: CreateUserRequest
     const currentUser = context.user!;            // Type: AuthenticatedUser
     
@@ -405,8 +405,8 @@ interface ProcessedOrder extends ValidatedOrderData {
 }
 
 // Middleware that transforms raw data to validated data
-class ProductValidationMiddleware implements BaseMiddleware<RawOrderData, AuthenticatedUser> {
-  async before(context: Context<RawOrderData, AuthenticatedUser>): Promise<void> {
+class ProductValidationMiddleware implements BaseMiddleware<RawOrderData> {
+  async before(context: Context<RawOrderData>): Promise<void> {
     const rawData = context.req.validatedBody!;
     
     // Fetch product details
@@ -437,12 +437,12 @@ class ProductValidationMiddleware implements BaseMiddleware<RawOrderData, Authen
 }
 
 // Handler with type transformation
-const orderHandler = new Handler<RawOrderData, AuthenticatedUser>()
+const orderHandler = new Handler<RawOrderData>()
   .use(new ErrorHandlerMiddleware())
   .use(new JWTAuthMiddleware(tokenVerifier))
   .use(new BodyValidationMiddleware(rawOrderSchema))
   .use(new ProductValidationMiddleware())
-  .handle(async (context: Context<RawOrderData, AuthenticatedUser>) => {
+  .handle(async (context: Context<RawOrderData>) => {
     const validatedOrder = context.businessData.get('validatedOrder') as ValidatedOrderData;
     const user = context.user!;
     
@@ -548,9 +548,9 @@ class ValidationMiddlewareFactory {
       requireAll?: boolean;
       customCheck?: (user: U, permissions: string[]) => boolean;
     } = {}
-  ): BaseMiddleware<unknown, U> {
+  ): BaseMiddleware<unknown> {
     return {
-      async before(context: Context<unknown, U>): Promise<void> {
+      async before(context: Context<unknown>): Promise<void> {
         if (!context.user) {
           throw new Error('Authentication required');
         }
@@ -580,7 +580,7 @@ class ValidationMiddlewareFactory {
 }
 
 // Usage of generic middleware factory
-const adminUserHandler = new Handler<CreateUserRequest, AuthenticatedUser>()
+const adminUserHandler = new Handler<CreateUserRequest>()
   .use(new ErrorHandlerMiddleware())
   .use(new JWTAuthMiddleware(tokenVerifier))
   .use(ValidationMiddlewareFactory.createTypedValidator(createUserSchema, {
@@ -594,7 +594,7 @@ const adminUserHandler = new Handler<CreateUserRequest, AuthenticatedUser>()
     ['user:create', 'admin:users'], 
     { requireAll: false } // User needs either permission
   ))
-  .handle(async (context: Context<CreateUserRequest, AuthenticatedUser>) => {
+  .handle(async (context: Context<CreateUserRequest>) => {
     // Fully typed and validated context
     const userData = context.req.validatedBody!;
     const currentUser = context.user!;
@@ -783,7 +783,7 @@ The Handler uses container pooling to avoid creating new TypeDI containers for e
 ```typescript
 // Performance optimization: Use container pool instead of creating new containers
 const container = containerPool.acquire();
-const context = createContext<T, U>(genericReq, genericRes, { container });
+const context = createContext<T>(genericReq, genericRes, { container });
 
 try {
   // Execute middleware pipeline
@@ -1005,7 +1005,7 @@ function getBusinessData<T>(context: Context, key: string, guard: (value: unknow
 }
 
 // Usage in handler
-.handle(async (context: Context<CreateUserRequest, AuthenticatedUser>) => {
+.handle(async (context: Context<CreateUserRequest>) => {
   // Type-safe user access
   if (!context.user || !isValidUser(context.user)) {
     throw new AuthenticationError('Invalid user context');
@@ -1033,9 +1033,9 @@ function getBusinessData<T>(context: Context, key: string, guard: (value: unknow
 import { Handler, Context } from '@noony-serverless/core';
 
 // Create test context factory
-function createTestContext<T, U>(
-  overrides: Partial<Context<T, U>> = {}
-): Context<T, U> {
+function createTestContext<T>(
+  overrides: Partial<Context<T>> = {}
+): Context<T> {
   return {
     req: {
       method: 'POST',
@@ -1059,7 +1059,7 @@ function createTestContext<T, U>(
     startTime: Date.now(),
     requestId: 'test-request-id',
     ...overrides
-  } as Context<T, U>;
+  } as Context<T>;
 }
 
 // Test individual middleware
@@ -1109,7 +1109,7 @@ describe('CreateUserHandler', () => {
       create: jest.fn().mockResolvedValue({ id: '123', name: 'John Doe' })
     };
     
-    const context = createTestContext<CreateUserRequest, AuthenticatedUser>({
+    const context = createTestContext<CreateUserRequest>({
       req: {
         validatedBody: {
           name: 'John Doe',
@@ -1164,7 +1164,7 @@ describe('CreateUserHandler', () => {
 // Integration test with real handler
 describe('Handler Integration', () => {
   it('should handle complete request flow', async () => {
-    const handler = new Handler<CreateUserRequest, AuthenticatedUser>()
+    const handler = new Handler<CreateUserRequest>()
       .use(new ErrorHandlerMiddleware())
       .use(new BodyValidationMiddleware(createUserSchema))
       .handle(async (context) => {

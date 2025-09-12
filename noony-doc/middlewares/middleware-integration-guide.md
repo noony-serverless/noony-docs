@@ -145,7 +145,7 @@ const basicIntegratedHandler = new Handler()
 
 ```typescript
 // Type-safe integration with full generic support
-interface RequestContext<TParams, TQuery, THeaders> {
+interface RequestContext<TParams> {
   params: TParams;
   query: TQuery;
   headers: THeaders;
@@ -160,14 +160,14 @@ function createIntegratedHandler<
   requiredHeaders: (keyof THeaders)[];
   requiredParams?: (keyof TParams)[];
   requiredQuery?: (keyof TQuery)[];
-  handler: (context: RequestContext<TParams, TQuery, THeaders>) => Promise<TResponse>;
+  handler: (context: RequestContext<TParams>) => Promise<TResponse>;
 }) {
-  return new Handler<TParams, TResponse>()
+  return new Handler<TParams>()
     .use(new HeaderVariablesMiddleware(config.requiredHeaders as string[]))
     .use(new PathParametersMiddleware())
     .use(new QueryParametersMiddleware(config.requiredQuery as string[] || []))
     .handle(async (context) => {
-      const requestContext: RequestContext<TParams, TQuery, THeaders> = {
+      const requestContext: RequestContext<TParams> = {
         params: context.req.params as TParams,
         query: context.req.query as TQuery,
         headers: context.req.headers as THeaders
@@ -189,7 +189,7 @@ interface UserHeaders {
   'accept': string;
 }
 
-const typedUserHandler = createIntegratedHandler<UserParams, UserQuery, UserHeaders, UserResponse>({
+const typedUserHandler = createIntegratedHandler<UserParams>({ // TResponse is inferred
   requiredHeaders: ['authorization', 'accept'],
   handler: async ({ params, query, headers }) => {
     const user = await authenticateAndGetUser(headers.authorization, params.userId);
@@ -217,7 +217,7 @@ const typedUserHandler = createIntegratedHandler<UserParams, UserQuery, UserHead
 ```typescript
 // Reusable factory for common integration patterns
 class MiddlewareFactory {
-  static createRESTHandler<TParams, TResponse>(
+  static createRESTHandler<TParams>(
     resourceConfig: {
       pathParams: (keyof TParams)[];
       requireAuth?: boolean;
@@ -246,7 +246,7 @@ class MiddlewareFactory {
       ...(resourceConfig.allowQuery ? [new QueryParametersMiddleware()] : [])
     ];
     
-    return new Handler<TParams, TResponse>()
+    return new Handler<TParams>()
       .use(...middlewares)
       .handle(async (context) => {
         let user;
@@ -262,7 +262,7 @@ class MiddlewareFactory {
       });
   }
   
-  static createSearchHandler<TQuery, TResponse>(
+  static createSearchHandler<TQuery>(
     searchConfig: {
       requiredQuery: (keyof TQuery)[];
       requireAuth?: boolean;
@@ -278,7 +278,7 @@ class MiddlewareFactory {
       requiredHeaders.push('authorization');
     }
     
-    return new Handler<any, TResponse>()
+    return new Handler<any>()
       .use(...(requiredHeaders.length > 0 ? [new HeaderVariablesMiddleware(requiredHeaders)] : []))
       .use(new QueryParametersMiddleware(searchConfig.requiredQuery as string[]))
       .handle(async (context) => {
@@ -300,7 +300,7 @@ interface ProductParams {
   productId: string; 
 }
 
-const productHandler = MiddlewareFactory.createRESTHandler<ProductParams, ProductResponse>({
+const productHandler = MiddlewareFactory.createRESTHandler<ProductParams>({ // TResponse is inferred
   pathParams: ['productId'],
   requireAuth: true,
   allowQuery: true
@@ -321,7 +321,7 @@ interface SearchQuery {
   sort?: string;
 }
 
-const searchHandler = MiddlewareFactory.createSearchHandler<SearchQuery, SearchResponse>({
+const searchHandler = MiddlewareFactory.createSearchHandler<SearchQuery>({ // TResponse is inferred
   requiredQuery: ['q'],
   requireAuth: false,
   allowFilters: true
@@ -376,7 +376,7 @@ interface ProductResponse {
   };
 }
 
-const ecommerceProductHandler = new Handler<ProductParams, ProductResponse>()
+const ecommerceProductHandler = new Handler<ProductParams>()
   .use(new HeaderVariablesMiddleware(['authorization', 'accept-language']))
   .use(new PathParametersMiddleware())
   .use(new QueryParametersMiddleware()) // No required query params
@@ -465,7 +465,7 @@ interface AnalyticsQuery {
   format?: 'json' | 'csv' | 'excel';
 }
 
-const analyticsHandler = new Handler<AnalyticsParams, AnalyticsResponse>()
+const analyticsHandler = new Handler<AnalyticsParams>()
   .use(new HeaderVariablesMiddleware(['authorization', 'x-tenant-id']))
   .use(new PathParametersMiddleware())
   .use(new QueryParametersMiddleware(['start_date', 'end_date']))
@@ -576,7 +576,7 @@ interface UserMgmtQuery {
   new_role?: string;
 }
 
-const userManagementHandler = new Handler<UserMgmtParams, UserMgmtResponse>()
+const userManagementHandler = new Handler<UserMgmtParams>()
   .use(new HeaderVariablesMiddleware(['authorization', 'x-admin-role', 'content-type']))
   .use(new PathParametersMiddleware())
   .use(new QueryParametersMiddleware())
@@ -725,7 +725,7 @@ function createTypedHandler<
 >(
   config: MiddlewareConfig<TParams, TQuery, THeaders>,
   handler: (data: CompleteRequestData<TParams, TQuery, THeaders, TBody>) => Promise<TResponse>
-): Handler<any, TResponse> {
+): Handler<any> {
   const middlewares: BaseMiddleware[] = [];
   
   // Add header validation
@@ -743,7 +743,7 @@ function createTypedHandler<
     middlewares.push(new QueryParametersMiddleware()); // Allow optional query params
   }
   
-  return new Handler<any, TResponse>()
+  return new Handler<any>()
     .use(...middlewares)
     .handle(async (context) => {
       const requestData: CompleteRequestData<TParams, TQuery, THeaders, TBody> = {
@@ -868,7 +868,7 @@ function createValidatedIntegration<
     headers: THeaders;
   }) => Promise<TResponse>;
 }) {
-  return new Handler<any, TResponse>()
+  return new Handler<any>()
     .use(new HeaderVariablesMiddleware(config.headers.required as string[]))
     .use(new PathParametersMiddleware())
     .use(new QueryParametersMiddleware(config.query.required as string[] || []))
@@ -1613,7 +1613,7 @@ interface CompleteAPIRequest {
   };
 }
 
-const typesSafeHandler = new Handler<any, APIResponse>()
+const typesSafeHandler = new Handler<any>()
   .use(new HeaderVariablesMiddleware(['authorization', 'content-type']))
   .use(new PathParametersMiddleware())
   .use(new QueryParametersMiddleware(['page', 'limit']))
@@ -1688,7 +1688,7 @@ function generateExamples(url: string): any {
       'Authorization': 'Bearer your-token-here',
       'Content-Type': 'application/json'
     },
-    validURL: url.replace(/:[^/]+/g, match => `{${match.slice(1)}}`),
+    validURL: url.replace(/:[^\/]+/g, match => `{${match.slice(1)}}`),
     validQuery: '?page=1&limit=10&sort=name'
   };
 }
@@ -1733,7 +1733,7 @@ function generateExamples(url: string): any {
  * @param context - Request context with validated headers, params, and query
  * @returns Promise<UserManagementResponse> - User data with pagination info
  */
-const documentedUserManagementHandler = new Handler<UserParams, UserManagementResponse>()
+const documentedUserManagementHandler = new Handler<UserParams>()
   .use(new HeaderVariablesMiddleware([
     'authorization',
     'content-type',

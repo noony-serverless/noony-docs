@@ -101,32 +101,24 @@ One of Noony's key strengths is end-to-end type safety:
 flowchart TB
     subgraph "Request Processing"
         A[Raw Request] --> B[Body Parser<T>]
-        B --> C[Validator<T, U>]
-        C --> D[Auth Middleware<U>]
-        D --> E[Handler<T, U, R>]
+        B --> C[Validator<T>]
+        C --> D[Auth Middleware]
+        D --> E[Handler<T>]
     end
     
     subgraph "Type Information"
         F[T: Request Body Type]
-        G[U: User/Context Type]
-        H[R: Response Type]
     end
     
     B -.-> F
     C -.-> F
-    C -.-> G
-    D -.-> G
     E -.-> F
-    E -.-> G
-    E -.-> H
     
-    E --> I[Type-Safe Response<R>]
+    E --> I[Type-Safe Response]
     
     style A fill:#ffebee
     style I fill:#e8f5e8
     style F fill:#e3f2fd
-    style G fill:#f3e5f5
-    style H fill:#fff8e1
 ```
 
 ## Deployment Targets

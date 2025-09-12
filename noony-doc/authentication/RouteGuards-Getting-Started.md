@@ -105,7 +105,7 @@ export const setupGuards = async () => {
 import { Handler, RouteGuards } from '@noony-serverless/core';
 
 // Simple permission check
-export const getUserProfile = new Handler<unknown, User>()
+export const getUserProfile = new Handler<unknown>()
   .use(RouteGuards.requirePermissions(['user:read']))
   .handle(async (context) => {
     const user = context.user!; // Fully typed and authenticated
@@ -113,7 +113,7 @@ export const getUserProfile = new Handler<unknown, User>()
   });
 
 // Multiple permissions (OR logic)
-export const manageUsers = new Handler<unknown, User>()
+export const manageUsers = new Handler<unknown>()
   .use(RouteGuards.requirePermissions(['user:admin', 'admin:users']))
   .handle(async (context) => {
     // User has either 'user:admin' OR 'admin:users'
@@ -190,7 +190,7 @@ For endpoints that just need to verify the user is logged in:
 
 ```typescript
 // Just check if user is authenticated
-const getProfile = new Handler<unknown, User>()
+const getProfile = new Handler<unknown>()
   .use(RouteGuards.requireAuth())
   .handle(async (context) => {
     const user = context.user!; // Guaranteed to exist
@@ -202,7 +202,7 @@ const getProfile = new Handler<unknown, User>()
 
 ```typescript
 // READ - Basic permission
-const getUsers = new Handler<unknown, User>()
+const getUsers = new Handler<unknown>()
   .use(RouteGuards.requirePermissions(['user:read']))
   .handle(async (context) => {
     const users = await userService.getAll();
@@ -210,7 +210,7 @@ const getUsers = new Handler<unknown, User>()
   });
 
 // CREATE - Single permission
-const createUser = new Handler<CreateUserRequest, User>()
+const createUser = new Handler<CreateUserRequest>()
   .use(RouteGuards.requirePermissions(['user:create']))
   .handle(async (context) => {
     const userData = context.req.validatedBody!;
@@ -219,7 +219,7 @@ const createUser = new Handler<CreateUserRequest, User>()
   });
 
 // UPDATE - Multiple permissions (admin OR owner)
-const updateUser = new Handler<UpdateUserRequest, User>()
+const updateUser = new Handler<UpdateUserRequest>()
   .use(RouteGuards.requirePermissions(['user:update', 'admin:users']))
   .handle(async (context) => {
     // Business logic here
@@ -227,7 +227,7 @@ const updateUser = new Handler<UpdateUserRequest, User>()
   });
 
 // DELETE - Admin only
-const deleteUser = new Handler<DeleteUserRequest, User>()
+const deleteUser = new Handler<DeleteUserRequest>()
   .use(RouteGuards.requirePermissions(['admin:users']))
   .handle(async (context) => {
     // Admin-only operation
@@ -239,7 +239,7 @@ const deleteUser = new Handler<DeleteUserRequest, User>()
 
 ```typescript
 // Admin endpoints
-const adminDashboard = new Handler<unknown, User>()
+const adminDashboard = new Handler<unknown>()
   .use(RouteGuards.requireWildcardPermissions(['admin.*']))
   .handle(async (context) => {
     // Matches: admin.users, admin.reports, admin.settings, etc.
@@ -247,7 +247,7 @@ const adminDashboard = new Handler<unknown, User>()
   });
 
 // Department-specific access
-const departmentReports = new Handler<unknown, User>()
+const departmentReports = new Handler<unknown>()
   .use(RouteGuards.requireWildcardPermissions(['reports.finance.*', 'reports.hr.*']))
   .handle(async (context) => {
     // User has access to finance OR hr reports
@@ -268,7 +268,7 @@ interface TenantUser extends User {
 }
 
 // Tenant-aware permission checking
-const getTenantData = new Handler<TenantRequest, TenantUser>()
+const getTenantData = new Handler<TenantRequest>()
   .use(RouteGuards.requirePermissions(['tenant:read']))
   .handle(async (context) => {
     const user = context.user!;
@@ -287,7 +287,7 @@ const getTenantData = new Handler<TenantRequest, TenantUser>()
 
 ```typescript
 // Complex permission expressions
-const sensitiveOperation = new Handler<unknown, User>()
+const sensitiveOperation = new Handler<unknown>()
   .use(RouteGuards.requireComplexPermissions({
     and: [
       { permission: 'finance:read' },
@@ -351,7 +351,7 @@ const dynamicPermissionSource = {
 
 ```typescript
 // Batch permission checks for efficiency
-const batchOperations = new Handler<BatchRequest, User>()
+const batchOperations = new Handler<BatchRequest>()
   .use(RouteGuards.requirePermissions(['batch:process']))
   .handle(async (context) => {
     const requests = context.req.validatedBody!.requests;
@@ -411,7 +411,7 @@ await RouteGuards.configure(
 ```typescript
 import { ErrorHandlerMiddleware } from '@noony-serverless/core';
 
-const secureHandler = new Handler<unknown, User>()
+const secureHandler = new Handler<unknown>()
   .use(new ErrorHandlerMiddleware()) // Always add error handling first
   .use(RouteGuards.requirePermissions(['secure:access']))
   .handle(async (context) => {

@@ -4,7 +4,7 @@ description: Complete guide to using BodyParserMiddleware for type-safe request 
 sidebar_position: 1
 ---
 
-# Body Parser Middleware
+# BodyParserMiddleware Complete Guide
 
 This comprehensive guide shows you how to use the `BodyParserMiddleware` and `bodyParser` function with generics for type-safe request body parsing in your Noony Framework applications.
 
@@ -723,7 +723,7 @@ interface AuthenticatedUser {
 // handlers/authenticated-handlers.ts
 import { AuthenticationMiddleware } from '@/middlewares/authenticationMiddleware';
 
-async function handleUpdateProfile(context: Context<UpdateProfileRequest, AuthenticatedUser>) {
+async function handleUpdateProfile(context: Context<UpdateProfileRequest>) {
   const profileData = context.req.parsedBody as UpdateProfileRequest;
   const user = context.user!; // Populated by AuthenticationMiddleware
   
@@ -757,7 +757,7 @@ async function handleUpdateProfile(context: Context<UpdateProfileRequest, Authen
   return { success: true, profile: updatedProfile };
 }
 
-export const updateProfileHandler = new Handler<UpdateProfileRequest, AuthenticatedUser>()
+export const updateProfileHandler = new Handler<UpdateProfileRequest>()
   .use(new AuthenticationMiddleware(tokenVerifier))
   .use(new BodyParserMiddleware<UpdateProfileRequest>())
   .handle(handleUpdateProfile);
@@ -780,7 +780,7 @@ const createPostSchema = z.object({
 
 type CreatePostRequest = z.infer<typeof createPostSchema>;
 
-async function handleCreatePost(context: Context<CreatePostRequest, AuthenticatedUser>) {
+async function handleCreatePost(context: Context<CreatePostRequest>) {
   // Body is parsed by BodyParserMiddleware and validated by BodyValidationMiddleware
   const postData = context.req.validatedBody!; // From validation middleware
   const parsedData = context.req.parsedBody as CreatePostRequest; // From body parser
@@ -803,7 +803,7 @@ async function handleCreatePost(context: Context<CreatePostRequest, Authenticate
   return { success: true, post };
 }
 
-export const createPostHandler = new Handler<CreatePostRequest, AuthenticatedUser>()
+export const createPostHandler = new Handler<CreatePostRequest>()
   .use(new AuthenticationMiddleware(tokenVerifier))
   .use(new BodyParserMiddleware<CreatePostRequest>()) // Parse first
   .use(new BodyValidationMiddleware(createPostSchema)) // Then validate
@@ -876,7 +876,7 @@ import { ErrorHandlerMiddleware } from '@/middlewares/errorHandlerMiddleware';
 import { ResponseWrapperMiddleware } from '@/middlewares/responseWrapperMiddleware';
 
 // Complete production-ready handler
-const completeHandler = new Handler<CreatePostRequest, AuthenticatedUser>()
+const completeHandler = new Handler<CreatePostRequest>()
   .use(new ErrorHandlerMiddleware()) // 1. First - catches all errors
   .use(new DependencyInjectionMiddleware(services)) // 2. Setup services
   .use(new AuthenticationMiddleware(tokenVerifier)) // 3. Authenticate
@@ -1055,7 +1055,7 @@ interface CreateProductRequest {
 }
 
 // handlers/product-management-handlers.ts
-async function handleCreateProduct(context: Context<CreateProductRequest, AuthenticatedUser>) {
+async function handleCreateProduct(context: Context<CreateProductRequest>) {
   const productData = context.req.parsedBody as CreateProductRequest;
   const user = context.user!;
   
@@ -1138,7 +1138,7 @@ async function handleCreateProduct(context: Context<CreateProductRequest, Authen
   };
 }
 
-export const createProductHandler = new Handler<CreateProductRequest, AuthenticatedUser>()
+export const createProductHandler = new Handler<CreateProductRequest>()
   .use(new ErrorHandlerMiddleware())
   .use(new AuthenticationMiddleware(tokenVerifier))
   .use(new BodyParserMiddleware<CreateProductRequest>(5 * 1024 * 1024)) // 5MB for images
@@ -1375,7 +1375,8 @@ async function handleBatchAnalytics(context: Context<BatchAnalyticsRequest>) {
   const eventCounts = { page_view: 0, user_action: 0, conversion: 0 };
   
   for (const event of analyticsData.events) {
-    console.log(`\nProcessing ${event.eventName} event:`);
+    console.log(`
+Processing ${event.eventName} event:`);
     console.log(`  Timestamp: ${event.timestamp}`);
     console.log(`  Session: ${event.sessionId}`);
     
@@ -1442,7 +1443,8 @@ async function handleBatchAnalytics(context: Context<BatchAnalyticsRequest>) {
     processedEvents.push(processedEvent);
   }
   
-  console.log(`\nBatch Summary:`);
+  console.log(`
+Batch Summary:`);
   console.log(`  Page Views: ${eventCounts.page_view}`);
   console.log(`  User Actions: ${eventCounts.user_action}`);
   console.log(`  Conversions: ${eventCounts.conversion}`);
@@ -1558,7 +1560,7 @@ const fragileHandler = new Handler<RequestType>()
 
 ```typescript
 // ✅ Good: Logical middleware order
-const correctOrder = new Handler<RequestType, UserType>()
+const correctOrder = new Handler<RequestType>()
   .use(new ErrorHandlerMiddleware()) // 1. Error handling first
   .use(new DependencyInjectionMiddleware(services)) // 2. Setup services
   .use(new AuthenticationMiddleware(tokenVerifier)) // 3. Authentication
@@ -1568,7 +1570,7 @@ const correctOrder = new Handler<RequestType, UserType>()
   .handle(handleRequest);
 
 // ❌ Avoid: Incorrect middleware order
-const incorrectOrder = new Handler<RequestType, UserType>()
+const incorrectOrder = new Handler<RequestType>()
   .use(new BodyValidationMiddleware(schema)) // Can't validate unparsed body
   .use(new BodyParserMiddleware<RequestType>()) // Should be before validation
   .use(new AuthenticationMiddleware(tokenVerifier)) // Should be earlier

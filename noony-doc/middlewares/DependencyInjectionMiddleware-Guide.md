@@ -16,9 +16,8 @@ This comprehensive guide shows you how to use the `DependencyInjectionMiddleware
 4. [Automatic Service Registration (With @Service)](#automatic-service-registration-with-service)
 5. [Reusable Handler Patterns](#reusable-handler-patterns)
 6. [Testing Benefits](#testing-benefits)
-7. [Best Practices](#best-practices)
-8. [Migration Patterns](#migration-patterns)
-9. [Common Patterns](#common-patterns)
+7. [Migration Patterns](#migration-patterns)
+8. [Common Patterns](#common-patterns)
 
 ## Quick Comparison
 
@@ -329,7 +328,7 @@ async function handleCreateUser(context: Context) {
 
   const userData = context.req.parsedBody;
   
-  logger.info('Creating new user', { 
+  logger.info('Creating new user', {
     email: userData.email,
     requestId: context.requestId
   });
@@ -346,9 +345,9 @@ async function handleCreateUser(context: Context) {
     // Send welcome email
     await emailService.sendWelcomeEmail(user.email, user.name);
     
-    logger.info('User created successfully', { 
-      userId: user.id, 
-      email: userData.email 
+    logger.info('User created successfully', {
+      userId: user.id,
+      email: userData.email
     });
     
     return {
@@ -362,8 +361,8 @@ async function handleCreateUser(context: Context) {
       apiUrl: config.apiUrl
     };
   } catch (error) {
-    logger.error('User creation failed', { 
-      error: error.message, 
+    logger.error('User creation failed', {
+      error: error.message,
       userData: { ...userData, password: '[REDACTED]' }
     });
     throw error;
@@ -392,8 +391,8 @@ async function handleGetUser(context: Context) {
   
   logger.info('User retrieved successfully', { userId });
   
-  return { 
-    success: true, 
+  return {
+    success: true,
     user: {
       id: user.id,
       name: user.name,
@@ -478,10 +477,10 @@ async function handleListUsers(context: Context) {
   const startIndex = (page - 1) * limit;
   const paginatedUsers = users.slice(startIndex, startIndex + limit);
   
-  logger.info('User list retrieved', { 
+  logger.info('User list retrieved', {
     total, 
     returned: paginatedUsers.length, 
-    page 
+    page
   });
   
   return {
@@ -1097,7 +1096,12 @@ export class EmailService {
     return this.sendEmail(
       email,
       'Welcome to Our Platform!',
-      `Hello ${name},\n\nWelcome to our platform! We're excited to have you on board.\n\nBest regards,\nThe Team`
+      `Hello ${name},
+
+Welcome to our platform! We're excited to have you on board.
+
+Best regards,
+The Team`
     );
   }
 
@@ -1105,7 +1109,16 @@ export class EmailService {
     return this.sendEmail(
       email,
       'Password Reset Request',
-      `Hello,\n\nYou requested a password reset. Click the link below to reset your password:\n\nhttps://example.com/reset?token=${resetToken}\n\nIf you didn't request this, please ignore this email.\n\nBest regards,\nThe Team`
+      `Hello,
+
+You requested a password reset. Click the link below to reset your password:
+
+https://example.com/reset?token=${resetToken}
+
+If you didn't request this, please ignore this email.
+
+Best regards,
+The Team`
     );
   }
 
@@ -1338,7 +1351,7 @@ export function validateRequiredFields(data: any, requiredFields: string[]): str
 }
 
 export function validateEmail(email: string): boolean {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const emailRegex = /^[^\]+@[^\]+\.[^\]+$/;
   return emailRegex.test(email);
 }
 
@@ -2107,163 +2120,6 @@ describe('Decorated Handlers', () => {
     });
   });
 });
-```
-
-## Best Practices
-
-### 1. Service Organization
-
-```typescript
-// ✅ Good: Organized service structure
-services/
-├── core/
-│   ├── database.service.ts      # Database operations
-│   ├── cache.service.ts         # Caching operations
-│   └── logger.service.ts        # Logging operations
-├── business/
-│   ├── user.service.ts          # User business logic
-│   ├── notification.service.ts  # Notification logic
-│   └── auth.service.ts          # Authentication logic
-├── external/
-│   ├── email.service.ts         # External email API
-│   ├── payment.service.ts       # External payment API
-│   └── analytics.service.ts     # External analytics API
-└── utils/
-    ├── validation.service.ts    # Validation utilities
-    └── encryption.service.ts    # Encryption utilities
-```
-
-### 2. Environment-Based Configuration
-
-```typescript
-// config/services.config.ts
-import { UserService, EmailService, LoggerService } from '../services';
-
-export function createServicesConfig(env: string = process.env.NODE_ENV || 'development') {
-  const baseConfig = {
-    apiUrl: process.env.API_URL || 'http://localhost:3000',
-    version: process.env.APP_VERSION || '1.0.0'
-  };
-
-  if (env === 'production') {
-    return {
-      services: [
-        { id: UserService, value: new UserService(createProductionDatabase()) },
-        { id: EmailService, value: new EmailService(createProductionEmailConfig()) },
-        { id: LoggerService, value: new LoggerService('PROD') },
-        { id: 'config', value: { ...baseConfig, logLevel: 'warn' } }
-      ]
-    };
-  }
-
-  if (env === 'test') {
-    return {
-      services: [
-        { id: UserService, value: new UserService(createTestDatabase()) },
-        { id: EmailService, value: new MockEmailService() },
-        { id: LoggerService, value: new TestLoggerService() },
-        { id: 'config', value: { ...baseConfig, logLevel: 'silent' } }
-      ]
-    };
-  }
-
-  // Development
-  return {
-    services: [
-      { id: UserService, value: new UserService() },
-      { id: EmailService, value: new EmailService(createDevEmailConfig()) },
-      { id: LoggerService, value: new LoggerService('DEV') },
-      { id: 'config', value: { ...baseConfig, logLevel: 'debug' } }
-    ]
-  };
-}
-
-// Usage in handlers
-const servicesConfig = createServicesConfig();
-const diMiddleware = new DependencyInjectionMiddleware(servicesConfig.services);
-```
-
-### 3. Type Safety with Generics
-
-```typescript
-// types/di.types.ts
-export interface ServiceContainer {
-  get<T>(serviceId: new () => T): T;
-  get<T>(serviceId: string): T;
-  get<T>(serviceId: any): T;
-}
-
-export interface TypedContext extends Context {
-  container: ServiceContainer;
-}
-
-// Usage in handlers with proper typing
-async function handleTypedUserCreation(context: TypedContext) {
-  // Fully typed service access
-  const userService = context.container.get(UserService); // Type: UserService
-  const emailService = context.container.get(EmailService); // Type: EmailService
-  const config = context.container.get<AppConfig>('config'); // Type: AppConfig
-  
-  // Rest of handler logic...
-}
-```
-
-### 4. Service Health Checks
-
-```typescript
-// services/health.service.ts
-@Service()
-export class HealthService {
-  constructor(
-    @Inject(() => DatabaseService) private db: DatabaseService,
-    @Inject(() => CacheService) private cache: CacheService,
-    @Inject(() => EmailService) private email: EmailService
-  ) {}
-
-  async checkHealth() {
-    const checks = await Promise.allSettled([
-      this.checkDatabase(),
-      this.checkCache(),
-      this.checkEmail()
-    ]);
-
-    return {
-      status: checks.every(check => check.status === 'fulfilled') ? 'healthy' : 'unhealthy',
-      checks: {
-        database: checks[0].status === 'fulfilled' ? 'ok' : 'error',
-        cache: checks[1].status === 'fulfilled' ? 'ok' : 'error',
-        email: checks[2].status === 'fulfilled' ? 'ok' : 'error'
-      },
-      timestamp: new Date().toISOString()
-    };
-  }
-
-  private async checkDatabase() {
-    await this.db.query('SELECT 1');
-  }
-
-  private async checkCache() {
-    this.cache.set('health_check', 'ok', 1);
-    const result = this.cache.get('health_check');
-    if (result !== 'ok') throw new Error('Cache not working');
-  }
-
-  private async checkEmail() {
-    // Mock email service check
-    return true;
-  }
-}
-
-// Health check handler
-async function handleHealthCheck(context: Context) {
-  const healthService = context.container?.get(HealthService);
-  const health = await healthService.checkHealth();
-  
-  return {
-    success: true,
-    ...health
-  };
-}
 ```
 
 ## Migration Patterns
