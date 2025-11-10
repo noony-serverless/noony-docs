@@ -1,92 +1,159 @@
 /**
- * CloudFlow Functions - Modern Cloud-First Design System
- * Built for showcasing serverless framework benefits
+ * Prometheus-inspired Design System for Docusaurus
+ * Clean, professional documentation styling
  */
 
 /* Import Google Fonts for better typography */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
-/* Cloud-focused color palette and modern design variables */
+/* Prometheus-inspired color palette and modern design variables */
 :root {
-  /* Primary cloud-inspired color scheme */
-  --ifm-color-primary: #0066cc;
-  --ifm-color-primary-dark: #0052a3;
-  --ifm-color-primary-darker: #004d99;
-  --ifm-color-primary-darkest: #003d7a;
-  --ifm-color-primary-light: #1a75d1;
-  --ifm-color-primary-lighter: #3384d6;
-  --ifm-color-primary-lightest: #66a3e0;
+  /* Primary Prometheus color scheme */
+  --ifm-color-primary: #e64a22;
+  --ifm-color-primary-dark: #cf421e;
+  --ifm-color-primary-darker: #c33e1c;
+  --ifm-color-primary-darkest: #a13317;
+  --ifm-color-primary-light: #e85e38;
+  --ifm-color-primary-lighter: #ea6b4b;
+  --ifm-color-primary-lightest: #ef8c72;
 
-  /* Extended color palette */
-  --cloudflow-blue: #0066cc;
-  --cloudflow-blue-light: #e6f3ff;
-  --cloudflow-blue-dark: #003d7a;
-  --cloudflow-accent: #00d4aa;
-  --cloudflow-accent-light: #e6faf7;
-  --cloudflow-gray: #64748b;
-  --cloudflow-gray-light: #f8fafc;
-  --cloudflow-gray-dark: #334155;
-  --cloudflow-success: #10b981;
-  --cloudflow-warning: #f59e0b;
-  --cloudflow-error: #ef4444;
+  /* Extended color palette - Prometheus style */
+  --prometheus-orange: #e64a22;
+  --prometheus-orange-light: rgba(230, 74, 34, 0.1);
+  --prometheus-orange-dark: #b73311;
+  --prometheus-gray-0: #ffffff;
+  --prometheus-gray-1: #f8f9fa;
+  --prometheus-gray-2: #f1f3f5;
+  --prometheus-gray-3: #e9ecef;
+  --prometheus-gray-4: #dee2e6;
+  --prometheus-gray-5: #ced4da;
+  --prometheus-gray-6: #adb5bd;
+  --prometheus-gray-7: #868e96;
+  --prometheus-gray-8: #495057;
+  --prometheus-gray-9: #212529;
+  --prometheus-success: #10b981;
+  --prometheus-warning: #f59e0b;
+  --prometheus-error: #ef4444;
 
-  /* Typography improvements */
+  /* Typography improvements - Prometheus style */
   --ifm-font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --ifm-font-family-monospace: 'JetBrains Mono', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
-  --ifm-font-size-base: 16px;
+  --ifm-font-size-base: 15px;
   --ifm-line-height-base: 1.6;
+  --ifm-heading-font-weight: 600;
 
-  /* Enhanced spacing and layout */
-  --ifm-spacing-horizontal: 1.5rem;
-  --ifm-spacing-vertical: 1.5rem;
+  /* Background colors */
+  --ifm-background-color: #ffffff;
+  --ifm-background-surface-color: var(--prometheus-gray-0);
+
+  /* Text colors */
+  --ifm-font-color-base: var(--prometheus-gray-8);
+  --ifm-heading-color: var(--prometheus-gray-9);
+
+  /* Enhanced spacing and layout - Prometheus style */
+  --ifm-spacing-horizontal: 1rem;
+  --ifm-spacing-vertical: 1rem;
+  --ifm-global-spacing: 1rem;
   --ifm-container-width-xl: 1280px;
   --ifm-container-width: 1140px;
 
   /* Modern border radius and shadows */
-  --ifm-border-radius: 8px;
-  --ifm-button-border-radius: 6px;
-  --cloudflow-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --cloudflow-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --cloudflow-shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --ifm-border-radius: 0.5rem;
+  --ifm-button-border-radius: 0.5rem;
+  --prometheus-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --prometheus-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --prometheus-shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 
   /* Code highlighting improvements */
   --ifm-code-font-size: 14px;
-  --docusaurus-highlighted-code-line-bg: rgba(102, 163, 224, 0.1);
+  --ifm-code-padding-horizontal: 0.4rem;
+  --ifm-code-padding-vertical: 0.2rem;
+  --ifm-code-background: var(--prometheus-gray-1);
+  --ifm-code-border-radius: 0.25rem;
+  --docusaurus-highlighted-code-line-bg: rgba(230, 74, 34, 0.1);
 
-  /* Navbar enhancements */
-  --ifm-navbar-height: 70px;
-  --ifm-navbar-background-color: rgba(255, 255, 255, 0.95);
-  --ifm-navbar-shadow: var(--cloudflow-shadow);
+  /* Navbar enhancements - Prometheus style */
+  --ifm-navbar-height: 60px;
+  --ifm-navbar-background-color: #ffffff;
+  --ifm-navbar-shadow: 0 1px 0 var(--prometheus-gray-3);
+  --ifm-navbar-link-color: var(--prometheus-gray-8);
+  --ifm-navbar-link-hover-color: var(--prometheus-orange);
 
-  /* Hero section variables */
-  --cloudflow-hero-bg: linear-gradient(135deg, var(--cloudflow-blue) 0%, var(--cloudflow-blue-dark) 100%);
-  --cloudflow-hero-overlay: linear-gradient(135deg, rgba(0, 102, 204, 0.9) 0%, rgba(0, 61, 122, 0.9) 100%);
+  /* Sidebar styling */
+  --ifm-menu-color: var(--prometheus-gray-8);
+  --ifm-menu-color-active: var(--prometheus-orange);
+  --ifm-menu-color-background-active: var(--prometheus-orange-light);
+  --ifm-menu-link-padding-vertical: 0.5rem;
+  --ifm-menu-link-padding-horizontal: 1rem;
+
+  /* TOC styling */
+  --ifm-toc-border-color: var(--prometheus-gray-3);
+  --ifm-toc-link-color: var(--prometheus-gray-7);
+
+  /* Link colors */
+  --ifm-link-color: var(--prometheus-orange);
+  --ifm-link-hover-color: var(--prometheus-orange-dark);
+  --ifm-link-decoration: none;
+  --ifm-link-hover-decoration: underline;
 }
 
-/* Dark mode optimizations */
+/* Dark mode optimizations - Prometheus style */
 [data-theme='dark'] {
-  --ifm-color-primary: #4d9eff;
-  --ifm-color-primary-dark: #1a8aff;
-  --ifm-color-primary-darker: #0080ff;
-  --ifm-color-primary-darkest: #0066cc;
-  --ifm-color-primary-light: #66aaff;
-  --ifm-color-primary-lighter: #80b8ff;
-  --ifm-color-primary-lightest: #b3d1ff;
+  --ifm-color-primary: #ea6b4b;
+  --ifm-color-primary-dark: #e64a22;
+  --ifm-color-primary-darker: #cf421e;
+  --ifm-color-primary-darkest: #a13317;
+  --ifm-color-primary-light: #ed8567;
+  --ifm-color-primary-lighter: #ef9680;
+  --ifm-color-primary-lightest: #f4bdb0;
 
-  --cloudflow-blue: #4d9eff;
-  --cloudflow-blue-light: #1a2332;
-  --cloudflow-blue-dark: #b3d1ff;
-  --cloudflow-accent: #00f5d4;
-  --cloudflow-accent-light: #0a2d2a;
-  --cloudflow-gray: #94a3b8;
-  --cloudflow-gray-light: #1e293b;
-  --cloudflow-gray-dark: #cbd5e1;
+  /* Dark mode colors */
+  --prometheus-orange: #ea6b4b;
+  --prometheus-orange-light: rgba(230, 74, 34, 0.15);
+  --prometheus-orange-dark: #e85e38;
+  --prometheus-gray-0: #1a1b1e;
+  --prometheus-gray-1: #25262b;
+  --prometheus-gray-2: #2c2e33;
+  --prometheus-gray-3: #373a40;
+  --prometheus-gray-4: #424449;
+  --prometheus-gray-5: #5c5f66;
+  --prometheus-gray-6: #909296;
+  --prometheus-gray-7: #a6a7ab;
+  --prometheus-gray-8: #c1c2c5;
+  --prometheus-gray-9: #e9ecef;
 
-  --ifm-navbar-background-color: rgba(0, 0, 0, 0.9);
-  --docusaurus-highlighted-code-line-bg: rgba(77, 158, 255, 0.1);
+  /* Dark mode backgrounds */
+  --ifm-background-color: #1a1b1e;
+  --ifm-background-surface-color: var(--prometheus-gray-1);
+
+  /* Dark mode text */
+  --ifm-font-color-base: var(--prometheus-gray-8);
+  --ifm-heading-color: var(--prometheus-gray-9);
+
+  /* Dark mode navbar */
+  --ifm-navbar-background-color: var(--prometheus-gray-1);
+  --ifm-navbar-shadow: 0 1px 0 var(--prometheus-gray-3);
+  --ifm-navbar-link-color: var(--prometheus-gray-8);
+
+  /* Dark mode code */
+  --ifm-code-background: var(--prometheus-gray-2);
+  --docusaurus-highlighted-code-line-bg: rgba(230, 74, 34, 0.15);
+
+  /* Dark mode sidebar */
+  --ifm-menu-color: var(--prometheus-gray-8);
+  --ifm-menu-color-active: var(--prometheus-orange);
+  --ifm-menu-color-background-active: var(--prometheus-orange-light);
+
+  /* Dark mode TOC */
+  --ifm-toc-border-color: var(--prometheus-gray-3);
+  --ifm-toc-link-color: var(--prometheus-gray-6);
+
+  /* Dark mode links */
+  --ifm-link-color: var(--prometheus-orange);
+  --ifm-link-hover-color: var(--prometheus-orange-dark);
 }
 
-/* Global typography improvements */
+/* Global typography improvements - Prometheus style */
 body {
   font-feature-settings: 'kern' 1, 'liga' 1;
   text-rendering: optimizeLegibility;
@@ -96,237 +163,690 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
-  letter-spacing: -0.025em;
-  line-height: 1.2;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  color: var(--ifm-heading-color);
 }
 
-.hero__title {
-  font-size: 3.5rem;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1.1;
-  background: linear-gradient(135deg, #ffffff 0%, #e6f3ff 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+h1 {
+  font-size: 2.25rem;
+  margin-bottom: 1.5rem;
 }
 
-.hero__subtitle {
-  font-size: 1.25rem;
-  font-weight: 400;
-  opacity: 0.9;
-  margin-top: 1rem;
-  line-height: 1.5;
+h2 {
+  font-size: 1.75rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
 }
 
-/* Enhanced buttons */
+h3 {
+  font-size: 1.35rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+h4 {
+  font-size: 1.15rem;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Documentation content styling */
+.markdown {
+  line-height: 1.7;
+  color: var(--ifm-font-color-base);
+}
+
+.markdown > p {
+  margin-bottom: 1rem;
+}
+
+.markdown > ul,
+.markdown > ol {
+  margin-bottom: 1rem;
+}
+
+.markdown li {
+  margin-bottom: 0.25rem;
+}
+
+/* Enhanced buttons - Prometheus style */
 .button {
   font-weight: 500;
-  font-size: 0.95rem;
-  padding: 0.75rem 1.5rem;
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
   border-radius: var(--ifm-button-border-radius);
-  transition: all 0.2s ease-in-out;
-  border: none;
-  box-shadow: var(--cloudflow-shadow-sm);
+  transition: all 0.15s ease-in-out;
+  border: 1px solid var(--prometheus-gray-5);
 }
 
 .button:hover {
-  transform: translateY(-1px);
-  box-shadow: var(--cloudflow-shadow);
+  text-decoration: none;
+  opacity: 0.9;
 }
 
 .button--primary {
-  background: linear-gradient(135deg, var(--cloudflow-blue) 0%, var(--cloudflow-blue-dark) 100%);
+  background-color: var(--prometheus-orange);
+  color: white;
+  border-color: var(--prometheus-orange);
+}
+
+.button--primary:hover {
+  background-color: var(--prometheus-orange-dark);
+  border-color: var(--prometheus-orange-dark);
   color: white;
 }
 
 .button--secondary {
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
+  background-color: transparent;
+  color: var(--prometheus-orange);
+  border-color: var(--prometheus-orange);
 }
 
 .button--secondary:hover {
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
+  background-color: var(--prometheus-orange-light);
+  color: var(--prometheus-orange);
 }
 
-.button--lg {
-  font-size: 1.1rem;
-  padding: 1rem 2rem;
+.button--outline {
+  background-color: transparent;
+  color: var(--prometheus-gray-8);
+  border-color: var(--prometheus-gray-5);
 }
 
-/* Navbar enhancements */
+.button--outline:hover {
+  background-color: var(--prometheus-gray-1);
+  color: var(--prometheus-gray-9);
+}
+
+/* Navbar enhancements - Prometheus style */
 .navbar {
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid var(--prometheus-gray-3);
+  backdrop-filter: none;
+  background-color: var(--ifm-navbar-background-color);
 }
 
-/* Center the navbar brand (logo + title) */
+[data-theme='dark'] .navbar {
+  border-bottom-color: var(--prometheus-gray-3);
+}
+
 .navbar__inner {
-  justify-content: center;
-  position: relative;
+  max-width: 100%;
+  padding: 0 1rem;
 }
 
 .navbar__brand {
-  font-weight: 700;
-  font-size: 1.5rem;
-  color: var(--cloudflow-blue) !important;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  font-weight: 600;
+  font-size: 1.25rem;
+  color: var(--prometheus-gray-9) !important;
 }
 
-/* Hide the navbar logo */
+[data-theme='dark'] .navbar__brand {
+  color: var(--prometheus-gray-9) !important;
+}
+
 .navbar__logo {
-  display: none;
-}
-
-/* Position navbar items */
-.navbar__items--left {
-  position: absolute;
-  left: 0;
-}
-
-.navbar__items--right {
-  position: absolute;
-  right: 0;
+  margin-right: 0.5rem;
+  height: 32px;
 }
 
 .navbar__item {
-  font-weight: 500;
+  font-weight: 400;
+  font-size: 0.95rem;
 }
 
 .navbar__link {
-  transition: color 0.2s ease-in-out;
+  transition: color 0.15s ease-in-out;
+  color: var(--ifm-navbar-link-color);
+  padding: 0.5rem 0.75rem;
 }
 
-.navbar__link:hover {
-  color: var(--cloudflow-blue) !important;
+.navbar__link:hover,
+.navbar__link--active {
+  color: var(--ifm-navbar-link-hover-color) !important;
 }
 
-/* Cards and containers */
-.card {
-  border-radius: var(--ifm-border-radius);
-  box-shadow: var(--cloudflow-shadow);
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  transition: all 0.2s ease-in-out;
+/* Search bar styling */
+.navbar__search {
+  margin-right: 1rem;
 }
 
-.card:hover {
-  box-shadow: var(--cloudflow-shadow-lg);
-  transform: translateY(-2px);
+.navbar__search-input {
+  border: 1px solid var(--prometheus-gray-4);
+  border-radius: 0.375rem;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.9rem;
+  background-color: var(--prometheus-gray-1);
+  color: var(--prometheus-gray-8);
 }
 
-/* Feature sections */
-.features {
-  padding: 4rem 0;
-  background: var(--cloudflow-gray-light);
+[data-theme='dark'] .navbar__search-input {
+  background-color: var(--prometheus-gray-2);
+  border-color: var(--prometheus-gray-5);
+  color: var(--prometheus-gray-8);
 }
 
-.feature {
-  text-align: center;
-  padding: 2rem;
-  background: white;
-  border-radius: var(--ifm-border-radius);
-  box-shadow: var(--cloudflow-shadow);
-  transition: all 0.2s ease-in-out;
-  height: 100%;
+.navbar__search-input:focus {
+  border-color: var(--prometheus-orange);
+  outline: none;
+  box-shadow: 0 0 0 2px var(--prometheus-orange-light);
 }
 
-.feature:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--cloudflow-shadow-lg);
+/* Sidebar navigation - Prometheus style */
+.theme-doc-sidebar-container {
+  border-right: 1px solid var(--prometheus-gray-3);
+  background-color: var(--prometheus-gray-0);
 }
 
-.feature__icon {
-  width: 64px;
-  height: 64px;
-  margin: 0 auto 1rem;
-  background: var(--cloudflow-accent-light);
-  border-radius: 50%;
+[data-theme='dark'] .theme-doc-sidebar-container {
+  background-color: var(--prometheus-gray-1);
+}
+
+.menu {
+  padding: 1rem 0;
+  font-size: 0.875rem;
+}
+
+.menu__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.menu__link {
+  color: var(--prometheus-gray-8);
+  padding: 0.375rem 1rem;
+  border-radius: 0;
+  margin: 0;
+  transition: all 0.15s ease-in-out;
+  font-weight: 400;
+  line-height: 1.6;
+  border-left: 0;
   display: flex;
   align-items: center;
+}
+
+.menu__link:hover {
+  background-color: var(--prometheus-gray-2);
+  color: var(--prometheus-gray-9);
+  text-decoration: none;
+}
+
+[data-theme='dark'] .menu__link:hover {
+  background-color: var(--prometheus-gray-2);
+  color: var(--prometheus-gray-9);
+}
+
+.menu__link--active {
+  background-color: var(--prometheus-orange-light);
+  color: var(--prometheus-orange);
+  font-weight: 400;
+}
+
+.menu__link--active:hover {
+  background-color: var(--prometheus-orange-light);
+}
+
+/* Sidebar category (collapsible items) */
+.menu__list-item-collapsible {
+  border-radius: 0;
+  margin-top: 0.25rem;
+}
+
+.menu__list-item-collapsible > .menu__link {
+  font-weight: 400;
+  color: var(--prometheus-gray-8);
+  padding: 0.5rem 1rem;
+}
+
+.menu__list-item-collapsible > .menu__link:hover {
+  background-color: var(--prometheus-gray-2);
+  color: var(--prometheus-gray-9);
+}
+
+/* Separar visualmente las categorías principales */
+.menu__list > .menu__list-item {
+  margin-bottom: 0;
+}
+
+.menu__list > .menu__list-item-collapsible {
+  margin-top: 0.75rem;
+  border-top: 1px solid var(--prometheus-gray-2);
+  padding-top: 0.5rem;
+}
+
+.menu__list > .menu__list-item-collapsible:first-child {
+  border-top: none;
+  margin-top: 0;
+  padding-top: 0;
+}
+
+/* Nested menu items */
+.menu__list .menu__list {
+  margin-left: 0;
+  padding-left: 0;
+  margin-top: 0.25rem;
+}
+
+.menu__list .menu__list .menu__link {
+  padding-left: 1.75rem;
+  font-size: 0.875rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+.menu__list .menu__list .menu__list .menu__link {
+  padding-left: 2.5rem;
+}
+
+/* Caret icon for collapsible items */
+.menu__caret {
+  transition: transform 0.2s ease-in-out;
+  padding: 0.25rem;
+}
+
+.menu__caret::before {
+  background: var(--ifm-menu-link-sublist-icon) 50% / 1rem 1rem;
+}
+
+/* Sidebar heading/title */
+.sidebar_node_modules-\@docusaurus-theme-classic-lib-theme-DocSidebar-Desktop-Content-styles-module {
+  padding: 0;
+}
+
+.theme-doc-sidebar-menu {
+  padding: 0;
+}
+
+/* Items del menú con íconos (si los hay) */
+.menu__link svg {
+  margin-right: 0.5rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  opacity: 0.7;
+}
+
+.menu__link:hover svg,
+.menu__link--active svg {
+  opacity: 1;
+}
+
+/* Iconos para categorías principales del sidebar */
+.menu__list-item-collapsible > .menu__link::before {
+  content: '';
+  display: inline-flex;
+  align-items: center;
   justify-content: center;
-  font-size: 2rem;
-  color: var(--cloudflow-accent);
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-right: 0.5rem;
+  font-size: 1rem;
+  flex-shrink: 0;
 }
 
-/* Code blocks */
+/* Iconos específicos por categoría (basado en contenido del link) */
+.menu__list-item-collapsible > .menu__link[href*="intro"]::before,
+.menu__list-item-collapsible > .menu__link[href*="getting"]::before {
+  content: '📖';
+}
+
+.menu__list-item-collapsible > .menu__link[href*="concept"]::before {
+  content: '🧩';
+}
+
+.menu__list-item-collapsible > .menu__link[href*="middleware"]::before {
+  content: '⚙️';
+}
+
+.menu__list-item-collapsible > .menu__link[href*="authentication"]::before,
+.menu__list-item-collapsible > .menu__link[href*="security"]::before {
+  content: '🔒';
+}
+
+.menu__list-item-collapsible > .menu__link[href*="advanced"]::before {
+  content: '🚀';
+}
+
+.menu__list-item-collapsible > .menu__link[href*="example"]::before,
+.menu__list-item-collapsible > .menu__link[href*="recipe"]::before {
+  content: '💡';
+}
+
+.menu__list-item-collapsible > .menu__link[href*="guide"]::before,
+.menu__list-item-collapsible > .menu__link[href*="tutorial"]::before {
+  content: '📚';
+}
+
+.menu__list-item-collapsible > .menu__link[href*="api"]::before {
+  content: '🔌';
+}
+
+.menu__list-item-collapsible > .menu__link[href*="config"]::before {
+  content: '🔧';
+}
+
+/* Fallback para categorías sin ícono específico */
+.menu__list > .menu__list-item-collapsible > .menu__link:not([href])::before {
+  content: '📂';
+}
+
+/* Table of Contents (TOC) - Prometheus style */
+.table-of-contents {
+  border-left: 1px solid var(--ifm-toc-border-color);
+  padding-left: 1rem;
+  font-size: 0.875rem;
+}
+
+.table-of-contents__link {
+  color: var(--ifm-toc-link-color);
+  padding: 0.25rem 0.5rem;
+  display: block;
+  border-radius: 0.25rem;
+  transition: all 0.15s ease-in-out;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+.table-of-contents__link:hover {
+  color: var(--prometheus-orange);
+  text-decoration: none;
+  background-color: var(--prometheus-gray-1);
+}
+
+[data-theme='dark'] .table-of-contents__link:hover {
+  background-color: var(--prometheus-gray-2);
+}
+
+.table-of-contents__link--active {
+  color: var(--prometheus-orange);
+  font-weight: 500;
+}
+
+.table-of-contents__link code {
+  background: none;
+  padding: 0;
+  border: none;
+  font-size: 0.875em;
+}
+
+/* TOC sticky positioning */
+.theme-doc-toc-desktop {
+  position: sticky;
+  top: calc(var(--ifm-navbar-height) + 1rem);
+  max-height: calc(100vh - var(--ifm-navbar-height) - 2rem);
+  overflow-y: auto;
+  padding-top: 1rem;
+}
+
+/* Custom scrollbar for TOC */
+.theme-doc-toc-desktop::-webkit-scrollbar {
+  width: 4px;
+}
+
+.theme-doc-toc-desktop::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.theme-doc-toc-desktop::-webkit-scrollbar-thumb {
+  background: var(--prometheus-gray-4);
+  border-radius: 2px;
+}
+
+.theme-doc-toc-desktop::-webkit-scrollbar-thumb:hover {
+  background: var(--prometheus-gray-5);
+}
+
+/* Code blocks - Prometheus style */
+code {
+  background-color: var(--ifm-code-background);
+  border: 1px solid var(--prometheus-gray-3);
+  border-radius: var(--ifm-code-border-radius);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: var(--ifm-code-font-size);
+  padding: var(--ifm-code-padding-vertical) var(--ifm-code-padding-horizontal);
+  color: var(--prometheus-gray-9);
+}
+
+[data-theme='dark'] code {
+  color: var(--prometheus-gray-8);
+  border-color: var(--prometheus-gray-5);
+}
+
 .prism-code {
-  border-radius: var(--ifm-border-radius);
-  box-shadow: var(--cloudflow-shadow-sm);
+  border-radius: 0.5em;
+  border: 1px solid var(--prometheus-gray-3);
+  background-color: var(--prometheus-gray-1);
+  font-size: 14px;
+  line-height: 1.7;
+  padding: 1em;
+  overflow: auto;
 }
 
-/* Responsive design improvements */
-@media screen and (max-width: 996px) {
-  .hero__title {
-    font-size: 2.5rem;
-  }
-
-  .hero__subtitle {
-    font-size: 1.1rem;
-  }
-
-  .button--lg {
-    font-size: 1rem;
-    padding: 0.875rem 1.75rem;
-  }
+[data-theme='dark'] .prism-code {
+  background-color: var(--prometheus-gray-2);
+  border-color: var(--prometheus-gray-5);
 }
 
-@media screen and (max-width: 768px) {
-  .hero__title {
-    font-size: 2rem;
-  }
-
-  .feature {
-    padding: 1.5rem;
-  }
-
-  .features {
-    padding: 2rem 0;
-  }
+.theme-code-block {
+  margin-bottom: 1rem;
+  box-shadow: none;
 }
 
-/* Utilities */
-.text-gradient {
-  background: linear-gradient(135deg, var(--cloudflow-blue) 0%, var(--cloudflow-accent) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+.code-block-error-line {
+  background-color: rgba(239, 68, 68, 0.1);
+  border-left: 3px solid var(--prometheus-error);
+  display: block;
+  margin: 0 -1em;
+  padding: 0 1em;
 }
 
-.section-divider {
-  height: 1px;
-  background: linear-gradient(90deg, transparent 0%, var(--cloudflow-blue) 50%, transparent 100%);
-  margin: 3rem 0;
+.code-block-highlighted-line {
+  background-color: var(--docusaurus-highlighted-code-line-bg);
+  display: block;
+  margin: 0 -1em;
+  padding: 0 1em;
 }
 
-/* Hero section background animation */
-@keyframes cloudFloat {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+/* Inline code in markdown */
+.markdown code {
+  font-size: 0.9em;
 }
 
-.hero-cloud {
-  animation: cloudFloat 6s ease-in-out infinite;
+/* Code block container */
+.theme-code-block-highlighted-line .codeLineNumber {
+  color: var(--prometheus-gray-6);
 }
 
-/* Custom scrollbar */
+/* Documentation page layout */
+.theme-doc-markdown {
+  max-width: 100%;
+}
+
+.docMainContainer_node_modules-\@docusaurus-theme-classic-lib-theme-DocPage-Layout-Main-styles-module,
+.docMainContainer {
+  max-width: 100%;
+}
+
+/* Pagination navigation */
+.pagination-nav {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--prometheus-gray-3);
+}
+
+.pagination-nav__link {
+  border: 1px solid var(--prometheus-gray-3);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  transition: all 0.15s ease-in-out;
+}
+
+.pagination-nav__link:hover {
+  border-color: var(--prometheus-orange);
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(230, 74, 34, 0.1);
+}
+
+.pagination-nav__label {
+  color: var(--prometheus-gray-7);
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.pagination-nav__sublabel {
+  color: var(--prometheus-gray-9);
+  font-size: 1rem;
+  font-weight: 500;
+  margin-top: 0.25rem;
+}
+
+/* Admonitions (callouts) - Prometheus style */
+.admonition {
+  border-radius: 0.5rem;
+  border-left: 4px solid;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background-color: var(--prometheus-gray-1);
+}
+
+[data-theme='dark'] .admonition {
+  background-color: var(--prometheus-gray-2);
+}
+
+.admonition-heading {
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+
+.admonition-icon {
+  margin-right: 0.5rem;
+}
+
+.admonition-note {
+  border-left-color: var(--prometheus-orange);
+}
+
+.admonition-tip {
+  border-left-color: var(--prometheus-success);
+}
+
+.admonition-warning,
+.admonition-caution {
+  border-left-color: var(--prometheus-warning);
+}
+
+.admonition-danger {
+  border-left-color: var(--prometheus-error);
+}
+
+/* Breadcrumbs */
+.breadcrumbs {
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+}
+
+.breadcrumbs__link {
+  color: var(--prometheus-gray-7);
+  transition: color 0.15s ease-in-out;
+}
+
+.breadcrumbs__link:hover {
+  color: var(--prometheus-orange);
+  text-decoration: none;
+}
+
+.breadcrumbs__item--active .breadcrumbs__link {
+  color: var(--prometheus-gray-8);
+}
+
+/* Footer */
+.footer {
+  background-color: var(--prometheus-gray-1);
+  border-top: 1px solid var(--prometheus-gray-3);
+  padding: 2rem 0;
+}
+
+[data-theme='dark'] .footer {
+  background-color: var(--prometheus-gray-2);
+  border-top-color: var(--prometheus-gray-4);
+}
+
+.footer__title {
+  color: var(--prometheus-gray-9);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.footer__link-item {
+  color: var(--prometheus-gray-7);
+  font-size: 0.875rem;
+  line-height: 2;
+}
+
+.footer__link-item:hover {
+  color: var(--prometheus-orange);
+  text-decoration: none;
+}
+
+/* Custom scrollbar - Prometheus style */
 ::-webkit-scrollbar {
   width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--cloudflow-gray-light);
+  background: var(--prometheus-gray-1);
+}
+
+[data-theme='dark'] ::-webkit-scrollbar-track {
+  background: var(--prometheus-gray-2);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--cloudflow-gray);
+  background: var(--prometheus-gray-4);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--cloudflow-blue);
+  background: var(--prometheus-gray-5);
+}
+
+/* Responsive design improvements */
+@media screen and (max-width: 996px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.75rem;
+  }
+
+  h3 {
+    font-size: 1.35rem;
+  }
+
+  .navbar__inner {
+    padding: 0 0.5rem;
+  }
+
+  .menu__link {
+    margin: 0.125rem 0.25rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  .pagination-nav__link {
+    padding: 0.75rem;
+  }
 }

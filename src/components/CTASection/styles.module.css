@@ -1,8 +1,8 @@
-/* CloudFlow Call-to-Action Section Styles */
+/* Prometheus-style Call-to-Action Section */
 
 .ctaSection {
   padding: 6rem 0;
-  background: linear-gradient(135deg, var(--cloudflow-blue) 0%, var(--cloudflow-blue-dark) 100%);
+  background: linear-gradient(135deg, var(--prometheus-gray-9) 0%, var(--prometheus-gray-8) 100%);
   color: white;
   position: relative;
   overflow: hidden;
@@ -26,13 +26,16 @@
   font-weight: 700;
   line-height: 1.2;
   margin-bottom: 1.5rem;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .ctaSubtitle {
   font-size: 1.125rem;
   line-height: 1.6;
-  opacity: 0.9;
+  opacity: 0.95;
   margin-bottom: 2rem;
+  color: rgba(255, 255, 255, 0.95);
 }
 
 .ctaFeatures {
@@ -48,6 +51,7 @@
   gap: 0.75rem;
   font-size: 0.95rem;
   font-weight: 500;
+  color: white;
 }
 
 .ctaFeatureIcon {
@@ -63,41 +67,42 @@
 }
 
 .ctaPrimaryButton {
-  background: white;
-  color: var(--cloudflow-blue);
-  border: 2px solid white;
+  background: var(--prometheus-orange);
+  color: white;
+  border: 2px solid var(--prometheus-orange);
   font-weight: 600;
   padding: 1.25rem 2.5rem;
-  border-radius: 12px;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(230, 74, 34, 0.3);
   width: 100%;
   text-align: center;
 }
 
 .ctaPrimaryButton:hover {
-  background: var(--cloudflow-blue-light);
-  color: var(--cloudflow-blue-dark);
+  background: var(--prometheus-orange-dark);
+  border-color: var(--prometheus-orange-dark);
+  color: white;
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15), 0 5px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 20px rgba(230, 74, 34, 0.4);
 }
 
 .ctaSecondaryButton {
   background: transparent;
   color: white;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.5);
   font-weight: 600;
   padding: 1.25rem 2.5rem;
-  border-radius: 12px;
-  transition: all 0.3s ease;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
   backdrop-filter: blur(10px);
   width: 100%;
   text-align: center;
 }
 
 .ctaSecondaryButton:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.8);
   color: white;
   transform: translateY(-2px);
 }
@@ -117,15 +122,16 @@
   font-size: 0.875rem;
   font-weight: 500;
   padding: 0.5rem 1rem;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.15);
   border-radius: 20px;
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.2s ease;
+  color: white;
 }
 
 .trustBadge:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.25);
 }
 
 /* Background decorative elements */

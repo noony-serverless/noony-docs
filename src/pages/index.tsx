@@ -4,7 +4,7 @@ import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
-import ArchitectureDiagram from '@site/src/components/ArchitectureDiagram';
+// import ArchitectureDiagram from '@site/src/components/ArchitectureDiagram';
 import TestimonialsSection from '@site/src/components/TestimonialsSection';
 import CTASection from '@site/src/components/CTASection';
 import Heading from '@theme/Heading';
@@ -24,17 +24,15 @@ function HomepageHeader() {
           <Link
             className={clsx('button', styles.heroButton, styles.heroButtonPrimary)}
             to="/docs/intro">
-            🚀 Get Started
+            Get Started
           </Link>
           <Link
-            className="button button--secondary button--lg"
+            className={clsx('button', styles.heroButton, styles.heroButtonSecondary)}
             to="/docs/examples">
             Explore Examples
           </Link>
-        </div>
-        <div className={styles.button}>
           <Link
-            className="button button--secondary button--lg"
+            className={clsx('button', styles.heroButton, styles.heroButtonSecondary)}
             to="/docs/getting-started">
             Quick Start Guide
           </Link>
@@ -101,7 +99,7 @@ export default function Home(): ReactNode {
       <HomepageHeader />
       <main>
         <QuickStartSection />
-        <ArchitectureDiagram />
+        {/* <ArchitectureDiagram /> */}
         <HomepageFeatures />
         <TestimonialsSection />
         <CTASection />
