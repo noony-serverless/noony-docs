@@ -4,12 +4,12 @@
   display: flex;
   align-items: center;
   padding: 4rem 0;
-  background: var(--prometheus-gray-0);
+  background: transparent;
   position: relative;
 }
 
 [data-theme='dark'] .features {
-  background: var(--prometheus-gray-1);
+  background: transparent;
 }
 
 .featuresTitle {
@@ -17,12 +17,12 @@
   font-weight: 600;
   margin-bottom: 1rem;
   line-height: 1.2;
-  color: var(--prometheus-gray-9);
+  color: var(--theme-gray-9);
 }
 
 .featuresSubtitle {
   font-size: 1.125rem;
-  color: var(--prometheus-gray-7);
+  color: var(--theme-gray-7);
   max-width: 600px;
   margin: 0 auto;
   line-height: 1.6;
@@ -33,27 +33,27 @@
   border-radius: 0.5rem;
   padding: 2rem;
   margin-bottom: 2rem;
-  border: 1px solid var(--prometheus-gray-3);
+  border: 1px solid var(--theme-gray-3);
   transition: all 0.2s ease;
   height: 100%;
 }
 
 [data-theme='dark'] .feature {
-  background: var(--prometheus-gray-2);
-  border-color: var(--prometheus-gray-4);
+  background: var(--theme-gray-2);
+  border-color: var(--theme-gray-4);
 }
 
 .feature:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(230, 74, 34, 0.1);
-  border-color: var(--prometheus-orange);
+  box-shadow: 0 4px 12px rgba(255, 157, 0, 0.15);
+  border-color: var(--theme-primary);
 }
 
 .featureIcon {
   width: 48px;
   height: 48px;
   margin-bottom: 1rem;
-  color: var(--prometheus-orange);
+  color: var(--theme-primary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -72,34 +72,34 @@
   font-size: 1.25rem;
   font-weight: 600;
   margin-bottom: 0.75rem;
-  color: var(--prometheus-gray-9);
-  border-bottom: 2px solid var(--prometheus-orange);
+  color: var(--theme-gray-9);
+  border-bottom: 2px solid var(--theme-primary);
   padding-bottom: 0.5rem;
   display: inline-block;
 }
 
 .featureDescription {
-  color: var(--prometheus-gray-7);
+  color: var(--theme-gray-7);
   line-height: 1.6;
   margin: 0;
   font-size: 0.95rem;
 }
 
 [data-theme='dark'] .featureDescription {
-  color: var(--prometheus-gray-7);
+  color: var(--theme-gray-7);
 }
 
 /* Trust section - Prometheus style */
 .trustSection {
   margin-top: 3rem;
   padding-top: 2rem;
-  border-top: 1px solid var(--prometheus-gray-3);
+  border-top: 1px solid var(--theme-gray-3);
 }
 
 .trustTitle {
   font-size: 1.5rem;
   font-weight: 600;
-  color: var(--prometheus-gray-9);
+  color: var(--theme-gray-9);
   margin-bottom: 2rem;
 }
 
@@ -116,32 +116,32 @@
   padding: 1.5rem;
   background: white;
   border-radius: 0.5rem;
-  border: 1px solid var(--prometheus-gray-3);
+  border: 1px solid var(--theme-gray-3);
   transition: all 0.2s ease;
 }
 
 [data-theme='dark'] .trustMetric {
-  background: var(--prometheus-gray-2);
-  border-color: var(--prometheus-gray-4);
+  background: var(--theme-gray-2);
+  border-color: var(--theme-gray-4);
 }
 
 .trustMetric:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(230, 74, 34, 0.1);
-  border-color: var(--prometheus-orange);
+  box-shadow: 0 4px 12px rgba(255, 157, 0, 0.15);
+  border-color: var(--theme-primary);
 }
 
 .trustNumber {
   font-size: 2.5rem;
   font-weight: 700;
-  color: var(--prometheus-orange);
+  color: var(--theme-primary);
   line-height: 1;
   margin-bottom: 0.5rem;
 }
 
 .trustLabel {
   font-size: 0.875rem;
-  color: var(--prometheus-gray-7);
+  color: var(--theme-gray-7);
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.05em;

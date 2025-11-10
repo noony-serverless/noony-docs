@@ -6,34 +6,56 @@
 /* Import Google Fonts for better typography */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
-/* Prometheus-inspired color palette and modern design variables */
+/* Warm Brown/Orange/Yellow color palette and modern design variables */
+/* Based on: #7B542F, #B6771D, #FF9D00, #FFCF71 */
 :root {
-  /* Primary Prometheus color scheme */
-  --ifm-color-primary: #e64a22;
-  --ifm-color-primary-dark: #cf421e;
-  --ifm-color-primary-darker: #c33e1c;
-  --ifm-color-primary-darkest: #a13317;
-  --ifm-color-primary-light: #e85e38;
-  --ifm-color-primary-lighter: #ea6b4b;
-  --ifm-color-primary-lightest: #ef8c72;
+  /* ============================================
+     CONFIGURABLE COLOR PALETTE
+     Change these values to customize your theme
+     ============================================ */
 
-  /* Extended color palette - Prometheus style */
-  --prometheus-orange: #e64a22;
-  --prometheus-orange-light: rgba(230, 74, 34, 0.1);
-  --prometheus-orange-dark: #b73311;
-  --prometheus-gray-0: #ffffff;
-  --prometheus-gray-1: #f8f9fa;
-  --prometheus-gray-2: #f1f3f5;
-  --prometheus-gray-3: #e9ecef;
-  --prometheus-gray-4: #dee2e6;
-  --prometheus-gray-5: #ced4da;
-  --prometheus-gray-6: #adb5bd;
-  --prometheus-gray-7: #868e96;
-  --prometheus-gray-8: #495057;
-  --prometheus-gray-9: #212529;
-  --prometheus-success: #10b981;
-  --prometheus-warning: #f59e0b;
-  --prometheus-error: #ef4444;
+  /* Main palette colors - Change these to switch color schemes */
+  --color-brown-dark: #7B542F;     /* Deep brown */
+  --color-brown-medium: #B6771D;   /* Medium brown/bronze */
+  --color-orange: #FF9D00;         /* Bright orange */
+  --color-yellow-light: #FFCF71;   /* Light yellow/cream */
+
+  /* ============================================
+     DOCUSAURUS PRIMARY COLORS (based on palette)
+     ============================================ */
+  --ifm-color-primary: var(--color-orange);
+  --ifm-color-primary-dark: #e68d00;
+  --ifm-color-primary-darker: #d98500;
+  --ifm-color-primary-darkest: #b36e00;
+  --ifm-color-primary-light: #ffa719;
+  --ifm-color-primary-lighter: #ffb133;
+  --ifm-color-primary-lightest: var(--color-yellow-light);
+
+  /* ============================================
+     EXTENDED THEME COLORS
+     ============================================ */
+  --theme-primary: var(--color-orange);
+  --theme-primary-light: rgba(255, 157, 0, 0.1);
+  --theme-primary-dark: var(--color-brown-medium);
+  --theme-accent: var(--color-yellow-light);
+  --theme-deep: var(--color-brown-dark);
+
+  /* Grayscale palette */
+  --theme-gray-0: #ffffff;
+  --theme-gray-1: #f8f9fa;
+  --theme-gray-2: #f1f3f5;
+  --theme-gray-3: #e9ecef;
+  --theme-gray-4: #dee2e6;
+  --theme-gray-5: #ced4da;
+  --theme-gray-6: #adb5bd;
+  --theme-gray-7: #868e96;
+  --theme-gray-8: #495057;
+  --theme-gray-9: #212529;
+
+  /* Semantic colors */
+  --theme-success: #10b981;
+  --theme-warning: var(--color-orange);
+  --theme-error: #ef4444;
 
   /* Typography improvements - Prometheus style */
   --ifm-font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -44,11 +66,11 @@
 
   /* Background colors */
   --ifm-background-color: #ffffff;
-  --ifm-background-surface-color: var(--prometheus-gray-0);
+  --ifm-background-surface-color: var(--theme-gray-0);
 
   /* Text colors */
-  --ifm-font-color-base: var(--prometheus-gray-8);
-  --ifm-heading-color: var(--prometheus-gray-9);
+  --ifm-font-color-base: var(--theme-gray-8);
+  --ifm-heading-color: var(--theme-gray-9);
 
   /* Enhanced spacing and layout - Prometheus style */
   --ifm-spacing-horizontal: 1rem;
@@ -60,97 +82,108 @@
   /* Modern border radius and shadows */
   --ifm-border-radius: 0.5rem;
   --ifm-button-border-radius: 0.5rem;
-  --prometheus-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --prometheus-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --prometheus-shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --theme-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --theme-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --theme-shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 
   /* Code highlighting improvements */
   --ifm-code-font-size: 14px;
   --ifm-code-padding-horizontal: 0.4rem;
   --ifm-code-padding-vertical: 0.2rem;
-  --ifm-code-background: var(--prometheus-gray-1);
+  --ifm-code-background: var(--theme-gray-1);
   --ifm-code-border-radius: 0.25rem;
-  --docusaurus-highlighted-code-line-bg: rgba(230, 74, 34, 0.1);
+  --docusaurus-highlighted-code-line-bg: rgba(255, 157, 0, 0.1);
 
-  /* Navbar enhancements - Prometheus style */
+  /* Navbar enhancements */
   --ifm-navbar-height: 60px;
   --ifm-navbar-background-color: #ffffff;
-  --ifm-navbar-shadow: 0 1px 0 var(--prometheus-gray-3);
-  --ifm-navbar-link-color: var(--prometheus-gray-8);
-  --ifm-navbar-link-hover-color: var(--prometheus-orange);
+  --ifm-navbar-shadow: 0 1px 0 var(--theme-gray-3);
+  --ifm-navbar-link-color: var(--theme-gray-8);
+  --ifm-navbar-link-hover-color: var(--theme-primary);
 
   /* Sidebar styling */
-  --ifm-menu-color: var(--prometheus-gray-8);
-  --ifm-menu-color-active: var(--prometheus-orange);
-  --ifm-menu-color-background-active: var(--prometheus-orange-light);
+  --ifm-menu-color: var(--theme-gray-8);
+  --ifm-menu-color-active: var(--theme-primary);
+  --ifm-menu-color-background-active: var(--theme-primary-light);
   --ifm-menu-link-padding-vertical: 0.5rem;
   --ifm-menu-link-padding-horizontal: 1rem;
 
   /* TOC styling */
-  --ifm-toc-border-color: var(--prometheus-gray-3);
-  --ifm-toc-link-color: var(--prometheus-gray-7);
+  --ifm-toc-border-color: var(--theme-gray-3);
+  --ifm-toc-link-color: var(--theme-gray-7);
 
   /* Link colors */
-  --ifm-link-color: var(--prometheus-orange);
-  --ifm-link-hover-color: var(--prometheus-orange-dark);
+  --ifm-link-color: var(--theme-primary);
+  --ifm-link-hover-color: var(--theme-primary-dark);
   --ifm-link-decoration: none;
   --ifm-link-hover-decoration: underline;
 }
 
-/* Dark mode optimizations - Prometheus style */
+/* Dark mode optimizations - Warm palette */
 [data-theme='dark'] {
-  --ifm-color-primary: #ea6b4b;
-  --ifm-color-primary-dark: #e64a22;
-  --ifm-color-primary-darker: #cf421e;
-  --ifm-color-primary-darkest: #a13317;
-  --ifm-color-primary-light: #ed8567;
-  --ifm-color-primary-lighter: #ef9680;
-  --ifm-color-primary-lightest: #f4bdb0;
+  /* Dark mode color adjustments */
+  --color-brown-dark: #B6771D;      /* Lighter in dark mode */
+  --color-brown-medium: #D98500;    /* Brighter in dark mode */
+  --color-orange: #FFB133;          /* Softer orange for dark mode */
+  --color-yellow-light: #FFD485;    /* Adjusted for dark mode */
 
-  /* Dark mode colors */
-  --prometheus-orange: #ea6b4b;
-  --prometheus-orange-light: rgba(230, 74, 34, 0.15);
-  --prometheus-orange-dark: #e85e38;
-  --prometheus-gray-0: #1a1b1e;
-  --prometheus-gray-1: #25262b;
-  --prometheus-gray-2: #2c2e33;
-  --prometheus-gray-3: #373a40;
-  --prometheus-gray-4: #424449;
-  --prometheus-gray-5: #5c5f66;
-  --prometheus-gray-6: #909296;
-  --prometheus-gray-7: #a6a7ab;
-  --prometheus-gray-8: #c1c2c5;
-  --prometheus-gray-9: #e9ecef;
+  /* Primary colors - adjusted for dark mode */
+  --ifm-color-primary: var(--color-orange);
+  --ifm-color-primary-dark: #FF9D00;
+  --ifm-color-primary-darker: #e68d00;
+  --ifm-color-primary-darkest: #b36e00;
+  --ifm-color-primary-light: #FFC766;
+  --ifm-color-primary-lighter: #FFD485;
+  --ifm-color-primary-lightest: #FFE2A3;
+
+  /* Extended theme colors - dark mode */
+  --theme-primary: var(--color-orange);
+  --theme-primary-light: rgba(255, 157, 0, 0.15);
+  --theme-primary-dark: var(--color-yellow-light);
+  --theme-accent: var(--color-yellow-light);
+  --theme-deep: var(--color-brown-medium);
+
+  /* Dark mode grayscale */
+  --theme-gray-0: #1a1b1e;
+  --theme-gray-1: #25262b;
+  --theme-gray-2: #2c2e33;
+  --theme-gray-3: #373a40;
+  --theme-gray-4: #424449;
+  --theme-gray-5: #5c5f66;
+  --theme-gray-6: #909296;
+  --theme-gray-7: #a6a7ab;
+  --theme-gray-8: #c1c2c5;
+  --theme-gray-9: #e9ecef;
 
   /* Dark mode backgrounds */
   --ifm-background-color: #1a1b1e;
-  --ifm-background-surface-color: var(--prometheus-gray-1);
+  --ifm-background-surface-color: var(--theme-gray-1);
 
   /* Dark mode text */
-  --ifm-font-color-base: var(--prometheus-gray-8);
-  --ifm-heading-color: var(--prometheus-gray-9);
+  --ifm-font-color-base: var(--theme-gray-8);
+  --ifm-heading-color: var(--theme-gray-9);
 
   /* Dark mode navbar */
-  --ifm-navbar-background-color: var(--prometheus-gray-1);
-  --ifm-navbar-shadow: 0 1px 0 var(--prometheus-gray-3);
-  --ifm-navbar-link-color: var(--prometheus-gray-8);
+  --ifm-navbar-background-color: var(--theme-gray-1);
+  --ifm-navbar-shadow: 0 1px 0 var(--theme-gray-3);
+  --ifm-navbar-link-color: var(--theme-gray-8);
 
   /* Dark mode code */
-  --ifm-code-background: var(--prometheus-gray-2);
-  --docusaurus-highlighted-code-line-bg: rgba(230, 74, 34, 0.15);
+  --ifm-code-background: var(--theme-gray-2);
+  --docusaurus-highlighted-code-line-bg: rgba(255, 157, 0, 0.15);
 
   /* Dark mode sidebar */
-  --ifm-menu-color: var(--prometheus-gray-8);
-  --ifm-menu-color-active: var(--prometheus-orange);
-  --ifm-menu-color-background-active: var(--prometheus-orange-light);
+  --ifm-menu-color: var(--theme-gray-8);
+  --ifm-menu-color-active: var(--theme-primary);
+  --ifm-menu-color-background-active: var(--theme-primary-light);
 
   /* Dark mode TOC */
-  --ifm-toc-border-color: var(--prometheus-gray-3);
-  --ifm-toc-link-color: var(--prometheus-gray-6);
+  --ifm-toc-border-color: var(--theme-gray-3);
+  --ifm-toc-link-color: var(--theme-gray-6);
 
   /* Dark mode links */
-  --ifm-link-color: var(--prometheus-orange);
-  --ifm-link-hover-color: var(--prometheus-orange-dark);
+  --ifm-link-color: var(--theme-primary);
+  --ifm-link-hover-color: var(--theme-primary-dark);
 }
 
 /* Global typography improvements - Prometheus style */
@@ -159,6 +192,66 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  position: relative;
+}
+
+/* Fixed background gradient - ONLY for homepage */
+main:has(.hero--primary)::before,
+body:has(.hero--primary)::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg,
+    #ffffff 0%,
+    var(--theme-gray-1) 30%,
+    var(--theme-accent) 60%,
+    var(--theme-gray-1) 100%
+  );
+  z-index: -1;
+  pointer-events: none;
+}
+
+[data-theme='dark'] main:has(.hero--primary)::before,
+[data-theme='dark'] body:has(.hero--primary)::before {
+  background: linear-gradient(180deg,
+    var(--theme-gray-1) 0%,
+    var(--theme-gray-2) 30%,
+    var(--theme-deep) 60%,
+    var(--theme-gray-1) 100%
+  );
+}
+
+/* Very subtle warm gradient background for docs pages - lighter version */
+/* Apply to body when NOT on homepage */
+body:not(:has(.hero--primary))::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg,
+    #ffffff 0%,
+    rgba(255, 207, 113, 0.015) 25%,
+    rgba(255, 240, 200, 0.03) 50%,
+    rgba(255, 207, 113, 0.015) 75%,
+    #ffffff 100%
+  );
+  z-index: -1;
+  pointer-events: none;
+}
+
+[data-theme='dark'] body:not(:has(.hero--primary))::before {
+  background: linear-gradient(180deg,
+    var(--theme-gray-1) 0%,
+    rgba(182, 119, 29, 0.015) 25%,
+    rgba(182, 119, 29, 0.025) 50%,
+    rgba(123, 84, 47, 0.01) 75%,
+    var(--theme-gray-1) 100%
+  );
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -168,6 +261,49 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--ifm-heading-color);
 }
 
+/* Add subtle warm underline to h1 and h2 in docs */
+article h1 {
+  font-size: 2.25rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid rgba(255, 207, 113, 0.3);
+}
+
+article h2 {
+  font-size: 1.75rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(255, 207, 113, 0.2);
+}
+
+article h3 {
+  font-size: 1.35rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  position: relative;
+}
+
+article h3::before {
+  content: '';
+  position: absolute;
+  left: -1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 60%;
+  background: linear-gradient(180deg, var(--theme-primary) 0%, var(--theme-accent) 100%);
+  border-radius: 2px;
+  opacity: 0.6;
+}
+
+article h4 {
+  font-size: 1.15rem;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Non-article headings (homepage, etc.) keep simple styling */
 h1 {
   font-size: 2.25rem;
   margin-bottom: 1.5rem;
@@ -191,7 +327,7 @@ h4 {
   margin-bottom: 0.5rem;
 }
 
-/* Documentation content styling */
+/* Documentation content styling - Enhanced with warm organic style */
 .markdown {
   line-height: 1.7;
   color: var(--ifm-font-color-base);
@@ -210,6 +346,25 @@ h4 {
   margin-bottom: 0.25rem;
 }
 
+/* Enhanced links with warm hover effect */
+.markdown a {
+  color: var(--theme-primary);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 157, 0, 0.3);
+  transition: all 0.15s ease;
+  padding-bottom: 1px;
+}
+
+.markdown a:hover {
+  color: var(--theme-primary-dark);
+  border-bottom-color: var(--theme-primary);
+  background-color: rgba(255, 207, 113, 0.1);
+}
+
+[data-theme='dark'] .markdown a:hover {
+  background-color: rgba(182, 119, 29, 0.15);
+}
+
 /* Enhanced buttons - Prometheus style */
 .button {
   font-weight: 500;
@@ -217,7 +372,7 @@ h4 {
   padding: 0.5rem 1rem;
   border-radius: var(--ifm-button-border-radius);
   transition: all 0.15s ease-in-out;
-  border: 1px solid var(--prometheus-gray-5);
+  border: 1px solid var(--theme-gray-5);
 }
 
 .button:hover {
@@ -226,48 +381,48 @@ h4 {
 }
 
 .button--primary {
-  background-color: var(--prometheus-orange);
+  background-color: var(--theme-primary);
   color: white;
-  border-color: var(--prometheus-orange);
+  border-color: var(--theme-primary);
 }
 
 .button--primary:hover {
-  background-color: var(--prometheus-orange-dark);
-  border-color: var(--prometheus-orange-dark);
+  background-color: var(--theme-primary-dark);
+  border-color: var(--theme-primary-dark);
   color: white;
 }
 
 .button--secondary {
   background-color: transparent;
-  color: var(--prometheus-orange);
-  border-color: var(--prometheus-orange);
+  color: var(--theme-primary);
+  border-color: var(--theme-primary);
 }
 
 .button--secondary:hover {
-  background-color: var(--prometheus-orange-light);
-  color: var(--prometheus-orange);
+  background-color: var(--theme-primary-light);
+  color: var(--theme-primary);
 }
 
 .button--outline {
   background-color: transparent;
-  color: var(--prometheus-gray-8);
-  border-color: var(--prometheus-gray-5);
+  color: var(--theme-gray-8);
+  border-color: var(--theme-gray-5);
 }
 
 .button--outline:hover {
-  background-color: var(--prometheus-gray-1);
-  color: var(--prometheus-gray-9);
+  background-color: var(--theme-gray-1);
+  color: var(--theme-gray-9);
 }
 
-/* Navbar enhancements - Prometheus style */
+/* Navbar enhancements */
 .navbar {
-  border-bottom: 1px solid var(--prometheus-gray-3);
+  border-bottom: 1px solid var(--theme-gray-3);
   backdrop-filter: none;
   background-color: var(--ifm-navbar-background-color);
 }
 
 [data-theme='dark'] .navbar {
-  border-bottom-color: var(--prometheus-gray-3);
+  border-bottom-color: var(--theme-gray-3);
 }
 
 .navbar__inner {
@@ -278,11 +433,11 @@ h4 {
 .navbar__brand {
   font-weight: 600;
   font-size: 1.25rem;
-  color: var(--prometheus-gray-9) !important;
+  color: var(--theme-gray-9) !important;
 }
 
 [data-theme='dark'] .navbar__brand {
-  color: var(--prometheus-gray-9) !important;
+  color: var(--theme-gray-9) !important;
 }
 
 .navbar__logo {
@@ -312,34 +467,36 @@ h4 {
 }
 
 .navbar__search-input {
-  border: 1px solid var(--prometheus-gray-4);
+  border: 1px solid var(--theme-gray-4);
   border-radius: 0.375rem;
   padding: 0.375rem 0.75rem;
   font-size: 0.9rem;
-  background-color: var(--prometheus-gray-1);
-  color: var(--prometheus-gray-8);
+  background-color: var(--theme-gray-1);
+  color: var(--theme-gray-8);
 }
 
 [data-theme='dark'] .navbar__search-input {
-  background-color: var(--prometheus-gray-2);
-  border-color: var(--prometheus-gray-5);
-  color: var(--prometheus-gray-8);
+  background-color: var(--theme-gray-2);
+  border-color: var(--theme-gray-5);
+  color: var(--theme-gray-8);
 }
 
 .navbar__search-input:focus {
-  border-color: var(--prometheus-orange);
+  border-color: var(--theme-primary);
   outline: none;
-  box-shadow: 0 0 0 2px var(--prometheus-orange-light);
+  box-shadow: 0 0 0 2px var(--theme-primary-light);
 }
 
-/* Sidebar navigation - Prometheus style */
+/* Sidebar navigation - Enhanced with warm organic style */
 .theme-doc-sidebar-container {
-  border-right: 1px solid var(--prometheus-gray-3);
-  background-color: var(--prometheus-gray-0);
+  border-right: 1px solid var(--theme-gray-3);
+  background-color: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
 }
 
 [data-theme='dark'] .theme-doc-sidebar-container {
-  background-color: var(--prometheus-gray-1);
+  background-color: rgba(248, 249, 250, 0.05);
+  backdrop-filter: blur(10px);
 }
 
 .menu {
@@ -354,7 +511,7 @@ h4 {
 }
 
 .menu__link {
-  color: var(--prometheus-gray-8);
+  color: var(--theme-gray-8);
   padding: 0.375rem 1rem;
   border-radius: 0;
   margin: 0;
@@ -367,24 +524,28 @@ h4 {
 }
 
 .menu__link:hover {
-  background-color: var(--prometheus-gray-2);
-  color: var(--prometheus-gray-9);
+  background-color: rgba(255, 207, 113, 0.08);
+  color: var(--theme-gray-9);
   text-decoration: none;
+  border-left: 2px solid var(--theme-primary);
+  padding-left: calc(1rem - 2px);
 }
 
 [data-theme='dark'] .menu__link:hover {
-  background-color: var(--prometheus-gray-2);
-  color: var(--prometheus-gray-9);
+  background-color: rgba(182, 119, 29, 0.1);
+  color: var(--theme-gray-9);
 }
 
 .menu__link--active {
-  background-color: var(--prometheus-orange-light);
-  color: var(--prometheus-orange);
-  font-weight: 400;
+  background-color: var(--theme-primary-light);
+  color: var(--theme-primary);
+  font-weight: 500;
+  border-left: 3px solid var(--theme-primary);
+  padding-left: calc(1rem - 3px);
 }
 
 .menu__link--active:hover {
-  background-color: var(--prometheus-orange-light);
+  background-color: var(--theme-primary-light);
 }
 
 /* Sidebar category (collapsible items) */
@@ -395,13 +556,19 @@ h4 {
 
 .menu__list-item-collapsible > .menu__link {
   font-weight: 400;
-  color: var(--prometheus-gray-8);
+  color: var(--theme-gray-8);
   padding: 0.5rem 1rem;
 }
 
 .menu__list-item-collapsible > .menu__link:hover {
-  background-color: var(--prometheus-gray-2);
-  color: var(--prometheus-gray-9);
+  background-color: rgba(255, 207, 113, 0.08);
+  color: var(--theme-gray-9);
+  border-left: 2px solid var(--theme-primary);
+  padding-left: calc(1rem - 2px);
+}
+
+[data-theme='dark'] .menu__list-item-collapsible > .menu__link:hover {
+  background-color: rgba(182, 119, 29, 0.1);
 }
 
 /* Separar visualmente las categorías principales */
@@ -411,7 +578,7 @@ h4 {
 
 .menu__list > .menu__list-item-collapsible {
   margin-top: 0.75rem;
-  border-top: 1px solid var(--prometheus-gray-2);
+  border-top: 1px solid var(--theme-gray-2);
   padding-top: 0.5rem;
 }
 
@@ -530,9 +697,9 @@ h4 {
   content: '📂';
 }
 
-/* Table of Contents (TOC) - Prometheus style */
+/* Table of Contents (TOC) - Warm organic style */
 .table-of-contents {
-  border-left: 1px solid var(--ifm-toc-border-color);
+  border-left: 2px solid rgba(255, 207, 113, 0.2);
   padding-left: 1rem;
   font-size: 0.875rem;
 }
@@ -545,21 +712,26 @@ h4 {
   transition: all 0.15s ease-in-out;
   line-height: 1.5;
   font-weight: 400;
+  border-left: 2px solid transparent;
+  margin-left: -2px;
 }
 
 .table-of-contents__link:hover {
-  color: var(--prometheus-orange);
+  color: var(--theme-primary);
   text-decoration: none;
-  background-color: var(--prometheus-gray-1);
+  background-color: rgba(255, 207, 113, 0.06);
+  border-left-color: rgba(255, 157, 0, 0.3);
 }
 
 [data-theme='dark'] .table-of-contents__link:hover {
-  background-color: var(--prometheus-gray-2);
+  background-color: rgba(182, 119, 29, 0.08);
 }
 
 .table-of-contents__link--active {
-  color: var(--prometheus-orange);
+  color: var(--theme-primary);
   font-weight: 500;
+  background-color: rgba(255, 207, 113, 0.1);
+  border-left-color: var(--theme-primary);
 }
 
 .table-of-contents__link code {
@@ -588,43 +760,51 @@ h4 {
 }
 
 .theme-doc-toc-desktop::-webkit-scrollbar-thumb {
-  background: var(--prometheus-gray-4);
+  background: var(--theme-gray-4);
   border-radius: 2px;
 }
 
 .theme-doc-toc-desktop::-webkit-scrollbar-thumb:hover {
-  background: var(--prometheus-gray-5);
+  background: var(--theme-gray-5);
 }
 
-/* Code blocks - Prometheus style */
+/* Code blocks */
 code {
   background-color: var(--ifm-code-background);
-  border: 1px solid var(--prometheus-gray-3);
+  border: 1px solid var(--theme-gray-3);
   border-radius: var(--ifm-code-border-radius);
   font-family: var(--ifm-font-family-monospace);
   font-size: var(--ifm-code-font-size);
   padding: var(--ifm-code-padding-vertical) var(--ifm-code-padding-horizontal);
-  color: var(--prometheus-gray-9);
+  color: var(--theme-gray-9);
 }
 
 [data-theme='dark'] code {
-  color: var(--prometheus-gray-8);
-  border-color: var(--prometheus-gray-5);
+  color: var(--theme-gray-8);
+  border-color: var(--theme-gray-5);
 }
 
 .prism-code {
   border-radius: 0.5em;
-  border: 1px solid var(--prometheus-gray-3);
-  background-color: var(--prometheus-gray-1);
+  border: 1px solid var(--theme-gray-3);
+  background-color: rgba(248, 249, 250, 0.9);
+  backdrop-filter: blur(10px);
   font-size: 14px;
   line-height: 1.7;
   padding: 1em;
   overflow: auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease;
+}
+
+.prism-code:hover {
+  box-shadow: 0 4px 12px rgba(255, 157, 0, 0.06);
 }
 
 [data-theme='dark'] .prism-code {
-  background-color: var(--prometheus-gray-2);
-  border-color: var(--prometheus-gray-5);
+  background-color: rgba(44, 46, 51, 0.9);
+  backdrop-filter: blur(10px);
+  border-color: var(--theme-gray-5);
 }
 
 .theme-code-block {
@@ -634,7 +814,7 @@ code {
 
 .code-block-error-line {
   background-color: rgba(239, 68, 68, 0.1);
-  border-left: 3px solid var(--prometheus-error);
+  border-left: 3px solid var(--theme-error);
   display: block;
   margin: 0 -1em;
   padding: 0 1em;
@@ -654,10 +834,10 @@ code {
 
 /* Code block container */
 .theme-code-block-highlighted-line .codeLineNumber {
-  color: var(--prometheus-gray-6);
+  color: var(--theme-gray-6);
 }
 
-/* Documentation page layout */
+/* Documentation page layout - Enhanced with subtle warm cards */
 .theme-doc-markdown {
   max-width: 100%;
 }
@@ -667,28 +847,56 @@ code {
   max-width: 100%;
 }
 
-/* Pagination navigation */
+/* Add subtle warm card effect to main article content */
+article.theme-doc-markdown {
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  border-radius: 0.75rem;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(255, 157, 0, 0.03);
+  border: 1px solid rgba(255, 207, 113, 0.1);
+}
+
+[data-theme='dark'] article.theme-doc-markdown {
+  background-color: rgba(37, 38, 43, 0.7);
+  backdrop-filter: blur(10px);
+  border-color: rgba(182, 119, 29, 0.15);
+}
+
+/* Pagination navigation - Enhanced with warm style */
 .pagination-nav {
   margin-top: 3rem;
   padding-top: 2rem;
-  border-top: 1px solid var(--prometheus-gray-3);
+  border-top: 1px solid var(--theme-gray-3);
 }
 
 .pagination-nav__link {
-  border: 1px solid var(--prometheus-gray-3);
+  border: 1px solid var(--theme-gray-3);
   border-radius: 0.5rem;
   padding: 1rem;
-  transition: all 0.15s ease-in-out;
+  transition: all 0.2s ease;
+  background-color: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
 }
 
 .pagination-nav__link:hover {
-  border-color: var(--prometheus-orange);
+  border-color: var(--theme-primary);
   text-decoration: none;
-  box-shadow: 0 2px 8px rgba(230, 74, 34, 0.1);
+  box-shadow: 0 4px 12px rgba(255, 157, 0, 0.15);
+  transform: translateY(-2px);
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+[data-theme='dark'] .pagination-nav__link {
+  background-color: rgba(37, 38, 43, 0.6);
+}
+
+[data-theme='dark'] .pagination-nav__link:hover {
+  background-color: rgba(37, 38, 43, 0.9);
 }
 
 .pagination-nav__label {
-  color: var(--prometheus-gray-7);
+  color: var(--theme-gray-7);
   font-size: 0.85rem;
   font-weight: 500;
   text-transform: uppercase;
@@ -696,23 +904,32 @@ code {
 }
 
 .pagination-nav__sublabel {
-  color: var(--prometheus-gray-9);
+  color: var(--theme-gray-9);
   font-size: 1rem;
   font-weight: 500;
   margin-top: 0.25rem;
 }
 
-/* Admonitions (callouts) - Prometheus style */
+/* Admonitions (callouts) - Enhanced with warm colors */
 .admonition {
   border-radius: 0.5rem;
   border-left: 4px solid;
   margin-bottom: 1rem;
   padding: 1rem;
-  background-color: var(--prometheus-gray-1);
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease;
+}
+
+.admonition:hover {
+  box-shadow: 0 4px 12px rgba(255, 157, 0, 0.08);
+  transform: translateY(-1px);
 }
 
 [data-theme='dark'] .admonition {
-  background-color: var(--prometheus-gray-2);
+  background-color: rgba(37, 38, 43, 0.8);
+  backdrop-filter: blur(10px);
 }
 
 .admonition-heading {
@@ -726,92 +943,104 @@ code {
 }
 
 .admonition-note {
-  border-left-color: var(--prometheus-orange);
+  border-left-color: var(--theme-primary);
 }
 
 .admonition-tip {
-  border-left-color: var(--prometheus-success);
+  border-left-color: var(--theme-success);
 }
 
 .admonition-warning,
 .admonition-caution {
-  border-left-color: var(--prometheus-warning);
+  border-left-color: var(--theme-warning);
 }
 
 .admonition-danger {
-  border-left-color: var(--prometheus-error);
+  border-left-color: var(--theme-error);
 }
 
-/* Breadcrumbs */
+/* Breadcrumbs - Enhanced with warm style */
 .breadcrumbs {
   margin-bottom: 1.5rem;
   font-size: 0.875rem;
+  padding: 0.5rem 1rem;
+  background-color: rgba(255, 207, 113, 0.04);
+  border-radius: 0.5rem;
+  backdrop-filter: blur(10px);
+}
+
+[data-theme='dark'] .breadcrumbs {
+  background-color: rgba(182, 119, 29, 0.06);
 }
 
 .breadcrumbs__link {
-  color: var(--prometheus-gray-7);
-  transition: color 0.15s ease-in-out;
+  color: var(--theme-gray-7);
+  transition: all 0.15s ease-in-out;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
 }
 
 .breadcrumbs__link:hover {
-  color: var(--prometheus-orange);
+  color: var(--theme-primary);
   text-decoration: none;
+  background-color: rgba(255, 207, 113, 0.1);
 }
 
 .breadcrumbs__item--active .breadcrumbs__link {
-  color: var(--prometheus-gray-8);
+  color: var(--theme-primary);
+  font-weight: 500;
 }
 
 /* Footer */
 .footer {
-  background-color: var(--prometheus-gray-1);
-  border-top: 1px solid var(--prometheus-gray-3);
+  background-color: var(--theme-gray-1);
+  border-top: 1px solid var(--theme-gray-3);
   padding: 2rem 0;
 }
 
 [data-theme='dark'] .footer {
-  background-color: var(--prometheus-gray-2);
-  border-top-color: var(--prometheus-gray-4);
+  background-color: var(--theme-gray-2);
+  border-top-color: var(--theme-gray-4);
 }
 
 .footer__title {
-  color: var(--prometheus-gray-9);
+  color: var(--theme-gray-9);
   font-weight: 600;
   font-size: 0.9rem;
 }
 
 .footer__link-item {
-  color: var(--prometheus-gray-7);
+  color: var(--theme-gray-7);
   font-size: 0.875rem;
   line-height: 2;
 }
 
 .footer__link-item:hover {
-  color: var(--prometheus-orange);
+  color: var(--theme-primary);
   text-decoration: none;
 }
 
-/* Custom scrollbar - Prometheus style */
+/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--prometheus-gray-1);
+  background: var(--theme-gray-1);
 }
 
 [data-theme='dark'] ::-webkit-scrollbar-track {
-  background: var(--prometheus-gray-2);
+  background: var(--theme-gray-2);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--prometheus-gray-4);
+  background: var(--theme-gray-4);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--prometheus-gray-5);
+  background: var(--theme-gray-5);
 }
 
 /* Responsive design improvements */

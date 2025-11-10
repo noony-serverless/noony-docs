@@ -1,11 +1,28 @@
-/* Prometheus-style Call-to-Action Section */
+/* Warm Color Palette Call-to-Action Section */
 
 .ctaSection {
   padding: 6rem 0;
-  background: linear-gradient(135deg, var(--prometheus-gray-9) 0%, var(--prometheus-gray-8) 100%);
-  color: white;
+  background: transparent;
   position: relative;
   overflow: hidden;
+}
+
+/* Add a semi-transparent overlay for the CTA section to maintain readability */
+.ctaSection::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(123, 84, 47, 0.85) 0%, rgba(182, 119, 29, 0.85) 100%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.ctaSection,
+.ctaSection * {
+  color: white;
 }
 
 .ctaContent {
@@ -67,24 +84,24 @@
 }
 
 .ctaPrimaryButton {
-  background: var(--prometheus-orange);
+  background: var(--theme-primary);
   color: white;
-  border: 2px solid var(--prometheus-orange);
+  border: 2px solid var(--theme-primary);
   font-weight: 600;
   padding: 1.25rem 2.5rem;
   border-radius: 0.5rem;
   transition: all 0.2s ease;
-  box-shadow: 0 4px 12px rgba(230, 74, 34, 0.3);
+  box-shadow: 0 4px 12px rgba(255, 157, 0, 0.3);
   width: 100%;
   text-align: center;
 }
 
 .ctaPrimaryButton:hover {
-  background: var(--prometheus-orange-dark);
-  border-color: var(--prometheus-orange-dark);
+  background: var(--theme-primary-dark);
+  border-color: var(--theme-primary-dark);
   color: white;
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(230, 74, 34, 0.4);
+  box-shadow: 0 8px 20px rgba(255, 157, 0, 0.4);
 }
 
 .ctaSecondaryButton {
@@ -271,6 +288,10 @@
 }
 
 /* Enhanced button animations */
+.ctaPrimaryButton {
+  position: relative;
+}
+
 .ctaPrimaryButton::before {
   content: '';
   position: absolute;
@@ -278,7 +299,7 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(0, 102, 204, 0.1), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 207, 113, 0.2), transparent);
   transition: left 0.5s;
 }
 
@@ -288,7 +309,7 @@
 
 /* Gradient text effect for CTA title */
 .ctaTitle .text-gradient {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(0, 212, 170, 1) 100%);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, var(--theme-accent) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

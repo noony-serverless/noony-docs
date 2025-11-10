@@ -1,23 +1,14 @@
-/* CloudFlow Architecture Diagram Styles */
+/* Architecture Diagram with Warm Color Palette */
 
 .architectureSection {
   padding: 6rem 0;
-  background: linear-gradient(135deg, var(--cloudflow-blue-light) 0%, white 50%, var(--cloudflow-accent-light) 100%);
+  background: transparent;
   position: relative;
   overflow: hidden;
 }
 
-.architectureSection::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: 
-    radial-gradient(circle at 20% 20%, rgba(0, 102, 204, 0.05) 0%, transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(0, 212, 170, 0.05) 0%, transparent 50%);
-  pointer-events: none;
+[data-theme='dark'] .architectureSection {
+  background: transparent;
 }
 
 .architectureTitle {
@@ -29,7 +20,7 @@
 
 .architectureSubtitle {
   font-size: 1.125rem;
-  color: var(--cloudflow-gray);
+  color: var(--theme-gray-7);
   max-width: 600px;
   margin: 0 auto;
   line-height: 1.6;
@@ -41,9 +32,14 @@
   margin: 4rem 0;
   background: white;
   border-radius: 16px;
-  box-shadow: var(--cloudflow-shadow-lg);
-  border: 1px solid rgba(0, 102, 204, 0.1);
+  box-shadow: var(--theme-shadow-lg);
+  border: 1px solid var(--theme-gray-3);
   overflow: hidden;
+}
+
+[data-theme='dark'] .architectureDiagram {
+  background: var(--theme-gray-2);
+  border-color: var(--theme-gray-4);
 }
 
 .connectionSvg {
@@ -57,7 +53,7 @@
 }
 
 .connectionLine {
-  stroke: var(--cloudflow-blue);
+  stroke: var(--theme-primary);
   stroke-width: 2;
   stroke-dasharray: 5, 5;
   opacity: 0.6;
@@ -76,8 +72,8 @@
   border-radius: 12px;
   padding: 1rem;
   min-width: 160px;
-  box-shadow: var(--cloudflow-shadow);
-  border: 2px solid rgba(0, 102, 204, 0.2);
+  box-shadow: var(--theme-shadow);
+  border: 2px solid var(--theme-gray-3);
   cursor: pointer;
   transition: all 0.3s ease;
   z-index: 2;
@@ -86,12 +82,12 @@
 .architectureNode:hover,
 .architectureNode.active {
   transform: translate(-50%, -50%) scale(1.05);
-  box-shadow: var(--cloudflow-shadow-lg);
-  border-color: var(--cloudflow-blue);
+  box-shadow: var(--theme-shadow-lg);
+  border-color: var(--theme-primary);
 }
 
 .architectureNode.active {
-  background: linear-gradient(135deg, var(--cloudflow-blue-light) 0%, white 100%);
+  background: linear-gradient(135deg, var(--theme-accent) 0%, white 100%);
 }
 
 .nodeIcon {
@@ -104,14 +100,14 @@
 .nodeTitle {
   font-size: 1rem;
   font-weight: 600;
-  color: var(--cloudflow-gray-dark);
+  color: var(--theme-gray-9);
   margin-bottom: 0.25rem;
   text-align: center;
 }
 
 .nodeDescription {
   font-size: 0.75rem;
-  color: var(--cloudflow-gray);
+  color: var(--theme-gray-7);
   text-align: center;
   line-height: 1.3;
   margin: 0;
@@ -129,11 +125,16 @@
   border-radius: 12px;
   padding: 2rem;
   text-align: center;
-  box-shadow: var(--cloudflow-shadow);
-  border: 1px solid rgba(0, 102, 204, 0.1);
+  box-shadow: var(--theme-shadow);
+  border: 1px solid var(--theme-gray-3);
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+}
+
+[data-theme='dark'] .benefitCard {
+  background: var(--theme-gray-2);
+  border-color: var(--theme-gray-4);
 }
 
 .benefitCard::before {
@@ -143,14 +144,15 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--cloudflow-blue) 0%, var(--cloudflow-accent) 100%);
+  background: linear-gradient(90deg, var(--theme-primary) 0%, var(--theme-accent) 100%);
   transform: translateX(-100%);
   transition: transform 0.3s ease;
 }
 
 .benefitCard:hover {
   transform: translateY(-4px);
-  box-shadow: var(--cloudflow-shadow-lg);
+  box-shadow: var(--theme-shadow-lg);
+  border-color: var(--theme-primary);
 }
 
 .benefitCard:hover::before {
@@ -166,12 +168,12 @@
 .benefitCard h3 {
   font-size: 1.25rem;
   font-weight: 600;
-  color: var(--cloudflow-gray-dark);
+  color: var(--theme-gray-9);
   margin-bottom: 0.75rem;
 }
 
 .benefitCard p {
-  color: var(--cloudflow-gray);
+  color: var(--theme-gray-7);
   line-height: 1.5;
   margin: 0;
 }
