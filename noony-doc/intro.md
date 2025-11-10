@@ -54,29 +54,29 @@ interface User {
   tenantId: string;
 }
 
-// 4. Create handler with type-safe request handling
-const createUserHandler = new Handler<CreateUserRequest>()
-  .use(new ErrorHandlerMiddleware())
-  .use(new BodyValidationMiddleware(createUserSchema))
-  .use(new ResponseWrapperMiddleware())
-  .handle(async (context: Context<CreateUserRequest>) => {
+// 4. Create handler with full generics
+const createUserHandler = new Handler<CreateUserRequest, User>()
+  .use(new ErrorHandlerMiddleware<CreateUserRequest, User>())
+  .use(new BodyValidationMiddleware<CreateUserRequest, User>(createUserSchema))
+  .use(new ResponseWrapperMiddleware<CreateUserRequest, User>())
+  .handle(async (context: Context<CreateUserRequest, User>) => {
     // TypeScript knows exactly what types these are!
     const { name, email, age } = context.req.validatedBody!; // Type: CreateUserRequest
-    const user = context.user as User; // User type from authentication middleware
-    
+    const user = context.user!; // Type: User
+
     // Business logic with full type safety
     const newUser = await userService.create({ name, email, age, createdBy: user.id });
-    
+
     context.res.json({ user: newUser });
   });
 
 // 5. Export for Google Cloud Functions
-export const createUser = http('createUser', (req, res) => 
+export const createUser = http('createUser', (req, res) =>
   createUserHandler.execute(req, res)
 );
 ```
 
-**Key Takeaway**: Always use `Handler<RequestType>` and `Context<RequestType>` for type safety. User types are inferred from authentication middleware and accessed via `context.user`.
+**Key Takeaway**: Always use `Handler<RequestType, UserType>` and `Context<RequestType, UserType>` for complete type safety.
 
 ---
 
@@ -185,7 +185,7 @@ graph LR
     style O fill:#fce4ec
 ```
 
-### `Handler<T>`
+### `Handler<T, U>`
 
 The Handler is the core orchestrator with two generic types:
 - **T**: The validated request body type
@@ -193,19 +193,19 @@ The Handler is the core orchestrator with two generic types:
 
 ```typescript
 // Generic Handler signature
-class Handler<T = unknown> {
-  use(middleware: BaseMiddleware<T>): Handler<T>
-  handle(businessLogic: (context: Context<T>) => Promise<void>): void
+class Handler<T = unknown, U = unknown> {
+  use<NewT = T, NewU = U>(middleware: BaseMiddleware<NewT, NewU>): Handler<NewT, NewU>
+  handle(businessLogic: (context: Context<T, U>) => Promise<void>): void
   execute(req: any, res: any): Promise<void>
 }
 ```
 
-### `Context<T>`
+### `Context<T, U>`
 
 The Context carries type-safe data through the middleware chain:
 
 ```typescript
-interface Context<T = unknown> {
+interface Context<T = unknown, U = unknown> {
   req: {
     body?: any;
     parsedBody?: any;
@@ -226,28 +226,28 @@ interface Context<T = unknown> {
 }
 ```
 
-### `BaseMiddleware<T>`
+### `BaseMiddleware<T, U>`
 
 All middleware implements this generic interface:
 
 ```typescript
-interface BaseMiddleware<T = unknown> {
-  before?(context: Context<T>): Promise<void>;
-  after?(context: Context<T>): Promise<void>;
-  onError?(error: Error, context: Context<T>): Promise<void>;
+interface BaseMiddleware<T = unknown, U = unknown> {
+  before?(context: Context<T, U>): Promise<void>;
+  after?(context: Context<T, U>): Promise<void>;
+  onError?(error: Error, context: Context<T, U>): Promise<void>;
 }
 ```
 
 **Custom Middleware Example**:
 
 ```typescript
-class LoggingMiddleware<T, U> implements BaseMiddleware<T> {
-  async before(context: Context<T>): Promise<void> {
+class LoggingMiddleware<T, U> implements BaseMiddleware<T, U> {
+  async before(context: Context<T, U>): Promise<void> {
     console.log(`Request ${context.requestId} started`);
     console.log('User:', context.user); // Type: U | undefined
   }
-  
-  async after(context: Context<T>): Promise<void> {
+
+  async after(context: Context<T, U>): Promise<void> {
     const duration = Date.now() - context.startTime;
     console.log(`Request ${context.requestId} completed in ${duration}ms`);
   }
@@ -283,34 +283,34 @@ interface AuthenticatedUser {
 }
 
 // Create User Handler
-const createUserHandler = new Handler<CreateUserRequest>()
-  .use(new ErrorHandlerMiddleware<CreateUserRequest>())
-  .use(new AuthenticationMiddleware<CreateUserRequest>(tokenVerifier))
-  .use(new BodyValidationMiddleware<CreateUserRequest>(createUserSchema))
-  .use(new ResponseWrapperMiddleware<CreateUserRequest>())
-  .handle(async (context: Context<CreateUserRequest>) => {
+const createUserHandler = new Handler<CreateUserRequest, AuthenticatedUser>()
+  .use(new ErrorHandlerMiddleware<CreateUserRequest, AuthenticatedUser>())
+  .use(new AuthenticationMiddleware<CreateUserRequest, AuthenticatedUser>(tokenVerifier))
+  .use(new BodyValidationMiddleware<CreateUserRequest, AuthenticatedUser>(createUserSchema))
+  .use(new ResponseWrapperMiddleware<CreateUserRequest, AuthenticatedUser>())
+  .handle(async (context: Context<CreateUserRequest, AuthenticatedUser>) => {
     const userData = context.req.validatedBody!; // Type: CreateUserRequest
-    const currentUser = context.user! as AuthenticatedUser;
-    
+    const currentUser = context.user!; // Type: AuthenticatedUser
+
     // Permission check with full typing
     if (!currentUser.permissions.includes('user:create')) {
       throw new AuthenticationError('Insufficient permissions');
     }
-    
+
     const newUser = await userRepository.create(userData);
     context.res.status(201).json({ user: newUser });
   });
 
-// Update User Handler  
-const updateUserHandler = new Handler<UpdateUserRequest>()
-  .use(new ErrorHandlerMiddleware<UpdateUserRequest>())
-  .use(new AuthenticationMiddleware<UpdateUserRequest>(tokenVerifier))
-  .use(new BodyValidationMiddleware<UpdateUserRequest>(updateUserSchema))
-  .use(new ResponseWrapperMiddleware<UpdateUserRequest>())
-  .handle(async (context: Context<UpdateUserRequest>) => {
+// Update User Handler
+const updateUserHandler = new Handler<UpdateUserRequest, AuthenticatedUser>()
+  .use(new ErrorHandlerMiddleware<UpdateUserRequest, AuthenticatedUser>())
+  .use(new AuthenticationMiddleware<UpdateUserRequest, AuthenticatedUser>(tokenVerifier))
+  .use(new BodyValidationMiddleware<UpdateUserRequest, AuthenticatedUser>(updateUserSchema))
+  .use(new ResponseWrapperMiddleware<UpdateUserRequest, AuthenticatedUser>())
+  .handle(async (context: Context<UpdateUserRequest, AuthenticatedUser>) => {
     const { id, ...updates } = context.req.validatedBody!; // Type: UpdateUserRequest
-    const currentUser = context.user! as AuthenticatedUser;
-    
+    const currentUser = context.user!; // Type: AuthenticatedUser
+
     // Business logic with type safety
     const updatedUser = await userRepository.update(id, updates);
     context.res.json({ user: updatedUser });

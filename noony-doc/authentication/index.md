@@ -35,30 +35,58 @@ Advanced token processing:
 - **Token refresh** - Handle token renewal
 - **Blacklisting** - Revoke compromised tokens
 
-## Quick Start
+## Type-Safe Authentication with Generics
 
-Here's a simple JWT authentication example:
+All authentication components support TypeScript generics for complete type safety:
 
 ```typescript
-import { Handler } from '@noony/core';
-import { jwtMiddleware } from '@noony/auth';
+import { Handler, Context } from '@noony-serverless/core';
+import { AuthenticationMiddleware, TokenVerifier } from '@noony-serverless/core';
 
-const handler = new Handler()
-  .use(jwtMiddleware({
-    secret: process.env.JWT_SECRET,
-    algorithms: ['HS256']
-  }))
-  .handle(async (context) => {
-    // context.user is now available with decoded JWT data
-    const { userId, email } = context.user;
-    
+// Define your user type
+interface AuthenticatedUser {
+  id: string;
+  email: string;
+  role: 'user' | 'admin';
+  permissions: string[];
+}
+
+// Define your request type
+interface CreateResourceRequest {
+  name: string;
+  description: string;
+}
+
+// Create token verifier
+const tokenVerifier: TokenVerifier<AuthenticatedUser> = {
+  async verifyToken(token: string): Promise<AuthenticatedUser> {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!);
     return {
-      statusCode: 200,
-      body: JSON.stringify({ 
-        message: `Welcome, ${email}!`,
-        userId 
-      })
+      id: decoded.sub,
+      email: decoded.email,
+      role: decoded.role,
+      permissions: decoded.permissions || []
     };
+  }
+};
+
+// Use with full generics
+const handler = new Handler<CreateResourceRequest, AuthenticatedUser>()
+  .use(new AuthenticationMiddleware<CreateResourceRequest, AuthenticatedUser>(tokenVerifier))
+  .handle(async (context: Context<CreateResourceRequest, AuthenticatedUser>) => {
+    // context.user is fully typed!
+    const user = context.user!; // Type: AuthenticatedUser
+    const { email, role, permissions } = user;
+
+    // Fully typed business logic
+    if (!permissions.includes('resource:create')) {
+      throw new SecurityError('Insufficient permissions');
+    }
+
+    context.res.json({
+      message: `Welcome, ${email}!`,
+      role
+    });
   });
 ```
 
